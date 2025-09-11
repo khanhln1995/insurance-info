@@ -1,38 +1,101 @@
+import HeaderBack from "@/components/HeaderBack";
+import InfoCard from "@/components/InfoCard";
 import SafeArea from "@/components/SafeArea";
+import SideMenu from "@/components/SideMenu";
+import Spacer from "@/components/Spacer";
+import { Colors } from "@/constants/Colors";
+import Entypo from "@expo/vector-icons/Entypo";
+import Ionicons from "@expo/vector-icons/Ionicons";
 import { useRouter } from "expo-router";
 import React from "react";
-import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
-import { Colors } from "react-native/Libraries/NewAppScreen";
+import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 const Home = () => {
+  const [visible, setVisible] = React.useState(false);
   const router = useRouter();
+  const RenderSelect = ({ text, source }: { text?: string; source?: any }) => {
+    return (
+      <View style={{ flexDirection: "row", alignItems: "center", gap: 10 }}>
+        <View
+          style={{
+            width: 60,
+            height: 60,
+            padding: 10,
+            borderWidth: 2,
+            borderColor: Colors.primary,
+            borderRadius: 50,
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+        >
+          <Image source={source} style={{ width: 40, height: 40 }} />
+        </View>
+
+        <TouchableOpacity
+          activeOpacity={0.7}
+          style={{
+            flex: 1, // ⬅️ take remaining space instead of width: "100%"
+            flexDirection: "row",
+            alignItems: "center",
+          }}
+        >
+          <View
+            style={{
+              flex: 1, // ⬅️ lets the border span the remaining row
+              borderBottomWidth: 1,
+              borderBottomColor: Colors.txtDark,
+              paddingBottom: 10,
+              marginRight: 8, // space before chevron
+            }}
+          >
+            <Text numberOfLines={1} style={{ color: Colors.txtDark }}>
+              {text}
+            </Text>
+          </View>
+
+          <Entypo
+            name="chevron-right"
+            size={24}
+            color={Colors.txtDark}
+            style={{ flexShrink: 0 }}
+          />
+        </TouchableOpacity>
+      </View>
+    );
+  };
   return (
     <SafeArea>
-      <View
-        style={{
-          marginTop: 20,
-          paddingHorizontal: 20,
-          alignItems: "center",
+      <HeaderBack
+        title="QUẢN LÝ CÁ NHÂN"
+        iconLeft={<Ionicons name="menu" size={24} color="white" />}
+        styleContainer={{ backgroundColor: Colors.primary }}
+        textColor="white"
+        onGoBack={() => {
+          setVisible(true);
         }}
-      >
-        <Text>Home</Text>
-        <View>
-          <TouchableOpacity activeOpacity={0.7} style={styles.button}>
-            <Text
-              style={{
-                color: Colors.primary,
-                fontWeight: "bold",
-                fontSize: 16,
-              }}
-              onPress={() => {
-                console.log("Logout");
-                router.replace("/auth");
-              }}
-            >
-              Đăng Xuất
-            </Text>
-          </TouchableOpacity>
-        </View>
+      />
+      <View style={{ padding: 20 }}>
+        <InfoCard type="user" />
+        <Spacer size={20} />
+        <RenderSelect
+          text="Thẻ BHYT"
+          source={require("@/assets/images/icon/card.png")}
+        />
+        <Spacer size={20} />
+
+        <RenderSelect
+          text="QUÁ TRÌNH THAM GIA"
+          source={require("@/assets/images/icon/time.png")}
+        />
       </View>
+
+      <SideMenu
+        visible={visible}
+        onClose={() => setVisible(false)}
+        onLogout={() => {
+          router.replace("/auth");
+        }}
+        user={{ name: "Nguyễn Văn A", phone: "", avatar: "" }}
+      />
     </SafeArea>
   );
 };

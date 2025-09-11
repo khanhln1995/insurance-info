@@ -54,6 +54,7 @@ const HeaderBack = (props: HeaderBackProps) => {
         {isGoBack && (
           <TouchableOpacity
             onPress={() => {
+              console.log("onGoBack");
               onGoBack ? onGoBack?.() : router.back();
             }}
             style={{

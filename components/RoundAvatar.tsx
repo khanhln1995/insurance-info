@@ -1,4 +1,3 @@
-import { Colors } from "@/constants/Colors";
 import React from "react";
 import { Image, StyleSheet, View, ViewStyle } from "react-native";
 interface RoundAvatarProps {
@@ -24,7 +23,6 @@ const RoundAvatar = ({
 
           justifyContent: "center",
           alignItems: "center",
-          backgroundColor: Colors.primary,
         },
         ...containerStyle,
       ]}

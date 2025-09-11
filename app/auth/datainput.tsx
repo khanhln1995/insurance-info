@@ -4,10 +4,10 @@ import { useRouter } from "expo-router";
 import React, { useState } from "react";
 import {
   Dimensions,
+  ScrollView,
   StyleSheet,
   Text,
   TextInput,
-  TouchableOpacity,
   View,
 } from "react-native";
 const { width, height } = Dimensions.get("window");
@@ -16,28 +16,28 @@ const DataInput = () => {
   const router = useRouter();
   const [text, setText] = useState("");
   return (
-    <View style={{ flex: 1, backgroundColor: "white" }}>
-      <HeaderBack title="Nhập dữ liệu" />
+    <ScrollView style={{ flex: 1, backgroundColor: "white" }}>
+      <HeaderBack title="Data" />
+      <Text
+        style={{
+          fontSize: 20,
+          fontWeight: "bold",
+          textAlign: "center",
+          marginTop: 20,
+        }}
+      >
+        Thông tin cá nhân
+      </Text>
       <View style={styles.container}>
         <TextInput
           style={styles.textArea}
           placeholder="Nhập dữ liệu tại đây"
-          multiline={true}
-          numberOfLines={10} // optional, shows initial height
           value={text}
           onChangeText={setText}
+          multiline
         />
-        <TouchableOpacity
-          style={[styles.button, { opacity: text ? 1 : 0.5 }]}
-          onPress={() => {
-            router.back();
-          }}
-          disabled={!text}
-        >
-          <Text style={styles.txtBtn}>Xác Nhận</Text>
-        </TouchableOpacity>
       </View>
-    </View>
+    </ScrollView>
   );
 };
 
@@ -54,7 +54,6 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderRadius: 8,
     padding: 10,
-    height: height / 2, // control height like a textarea
     textAlignVertical: "top", // 👈 ensures text starts from the top
   },
   button: {
