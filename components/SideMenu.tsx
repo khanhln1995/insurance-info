@@ -15,6 +15,8 @@ import {
   View,
 } from "react-native";
 
+import { useUser } from "@/hooks/user";
+
 const { width } = Dimensions.get("window");
 const DRAWER_W = Math.min(360, Math.floor(width * 0.78));
 
@@ -22,15 +24,12 @@ type Props = {
   visible: boolean;
   onClose: () => void;
   onLogout: () => void;
-  user: {
-    name: string;
-    phone: string;
-    avatar: any; // require('...') or { uri: '...' }
-  };
 };
 
-const SideMenu: React.FC<Props> = ({ visible, onClose, onLogout, user }) => {
+const SideMenu: React.FC<Props> = ({ visible, onClose, onLogout }) => {
   const slideX = useRef(new Animated.Value(-DRAWER_W)).current;
+
+  const { userInfo } = useUser();
 
   useEffect(() => {
     Animated.timing(slideX, {
@@ -66,8 +65,8 @@ const SideMenu: React.FC<Props> = ({ visible, onClose, onLogout, user }) => {
               <View style={styles.avatarRing}>
                 <AntDesign name="user" size={40} color="white" />
               </View>
-              <Text style={styles.name}>{user.name}</Text>
-              <Text style={styles.phone}>{user.phone}</Text>
+              <Text style={styles.name}>{userInfo.ten}</Text>
+              <Text style={styles.phone}>{userInfo.sdt}</Text>
             </View>
 
             {/* Divider */}

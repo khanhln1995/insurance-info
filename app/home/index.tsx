@@ -11,8 +11,16 @@ import React from "react";
 import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 const Home = () => {
   const [visible, setVisible] = React.useState(false);
-  const router = useRouter();
-  const RenderSelect = ({ text, source }: { text?: string; source?: any }) => {
+  const router: any = useRouter();
+  const RenderSelect = ({
+    text,
+    source,
+    route,
+  }: {
+    text?: string;
+    source?: any;
+    route?: string;
+  }) => {
     return (
       <View style={{ flexDirection: "row", alignItems: "center", gap: 10 }}>
         <View
@@ -36,6 +44,9 @@ const Home = () => {
             flex: 1, // ⬅️ take remaining space instead of width: "100%"
             flexDirection: "row",
             alignItems: "center",
+          }}
+          onPress={() => {
+            router.push(route);
           }}
         >
           <View
@@ -79,12 +90,14 @@ const Home = () => {
         <RenderSelect
           text="Thẻ BHYT"
           source={require("@/assets/images/icon/card.png")}
+          route="/home/medinsurance"
         />
         <Spacer size={20} />
 
         <RenderSelect
           text="QUÁ TRÌNH THAM GIA"
           source={require("@/assets/images/icon/time.png")}
+          route="/home/progress"
         />
       </View>
 
@@ -94,7 +107,6 @@ const Home = () => {
         onLogout={() => {
           router.replace("/auth");
         }}
-        user={{ name: "Nguyễn Văn A", phone: "", avatar: "" }}
       />
     </SafeArea>
   );

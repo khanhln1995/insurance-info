@@ -67,7 +67,7 @@ const HeaderBack = (props: HeaderBackProps) => {
             {iconLeft ? (
               iconLeft
             ) : (
-              <Entypo name="arrow-left" size={24} color="white" />
+              <Entypo name="chevron-thin-left" size={24} color="white" />
             )}
           </TouchableOpacity>
         )}

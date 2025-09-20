@@ -1,0 +1,94 @@
+import { createSlice } from "@reduxjs/toolkit";
+
+interface userInfo {
+  taikhoan: string;
+  matkhau: string;
+  ten: string;
+  masoBHXH: string;
+  ngaysinh: string;
+  cmnd: string;
+  sdt: string;
+  diachi: string;
+  tongthoigianthamgia: string;
+  tongthoigianchamdong: string;
+}
+
+interface medInsurance {
+  ten: string;
+  ngaysinh: string;
+  gioitinh: string;
+  sothebhyt: string;
+  thoigian: string;
+  noidk: string;
+  thoidiem5namlientuc: string;
+}
+
+interface progress {
+  tuthang: string;
+  denthang: string;
+  donvi: string;
+  chucvu: string;
+  tiendongbhxh: string;
+  mucluong: string;
+  noilamviec: string;
+}
+
+interface userState {
+  userInfo: userInfo;
+  medInsurance: medInsurance;
+  progressList: progress[];
+}
+
+const initialUserState: userState = {
+  userInfo: {
+    taikhoan: "",
+    matkhau: "",
+    ten: "",
+    masoBHXH: "",
+    ngaysinh: "",
+    cmnd: "",
+    sdt: "",
+    diachi: "",
+    tongthoigianthamgia: "",
+    tongthoigianchamdong: "",
+  },
+  medInsurance: {
+    ten: "",
+    ngaysinh: "",
+    gioitinh: "",
+    sothebhyt: "",
+    thoigian: "",
+    noidk: "",
+    thoidiem5namlientuc: "",
+  },
+  progressList: [],
+};
+
+const userSlice = createSlice({
+  name: "user",
+  initialState: initialUserState,
+  reducers: {
+    updateUserInfo: (state, action) => {
+      return {
+        ...state,
+        userInfo: action.payload,
+      };
+    },
+    updateMedInsurance: (state, action) => {
+      return {
+        ...state,
+        medInsurance: action.payload,
+      };
+    },
+    updateProgressList: (state, action) => {
+      return {
+        ...state,
+        progressList: action.payload,
+      };
+    },
+  },
+});
+
+export const { updateMedInsurance, updateProgressList, updateUserInfo } =
+  userSlice.actions;
+export default userSlice.reducer;

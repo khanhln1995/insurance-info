@@ -1,6 +1,7 @@
 // app/_layout.tsx
 import SafeArea from "@/components/SafeArea";
 import { useColorScheme } from "@/hooks/useColorScheme";
+import { store } from "@/store/index";
 import {
   DarkTheme,
   DefaultTheme,
@@ -10,6 +11,7 @@ import { useFonts } from "expo-font";
 import { Stack } from "expo-router";
 import * as SplashScreen from "expo-splash-screen";
 import { useEffect } from "react";
+import { Provider } from "react-redux";
 
 SplashScreen.preventAutoHideAsync().catch(() => {});
 
@@ -26,10 +28,14 @@ export default function RootLayout() {
 
   // ✅ Always render a navigator on first render
   return (
-    <SafeArea>
-      <ThemeProvider value={colorScheme === "dark" ? DarkTheme : DefaultTheme}>
-        <Stack screenOptions={{ headerShown: false }} />
-      </ThemeProvider>
-    </SafeArea>
+    <Provider store={store}>
+      <SafeArea>
+        <ThemeProvider
+          value={colorScheme === "dark" ? DarkTheme : DefaultTheme}
+        >
+          <Stack screenOptions={{ headerShown: false }} />
+        </ThemeProvider>
+      </SafeArea>
+    </Provider>
   );
 }

@@ -1,4 +1,5 @@
 import { Colors } from "@/constants/Colors";
+import { useUser } from "@/hooks/user";
 import AntDesign from "@expo/vector-icons/AntDesign";
 import React from "react";
 import { StyleSheet, Text, View } from "react-native";
@@ -9,6 +10,7 @@ interface Props {
 }
 
 const InfoCard = ({ type }: Props) => {
+  const { userInfo } = useUser();
   let subInfo: any;
   let contentCard: any;
   const RenderInfoLine = ({
@@ -47,18 +49,15 @@ const InfoCard = ({ type }: Props) => {
     case "user":
       subInfo = (
         <View>
-          <Text style={styles.txtSubInfo}>Mã BHXH : </Text>
+          <Text style={styles.txtSubInfo}>Mã BHXH : {userInfo?.masoBHXH}</Text>
         </View>
       );
       contentCard = (
         <View>
-          <RenderInfoLine title="Ngày sinh" value="01/01/2000" />
-          <RenderInfoLine title="ĐDCN/CCCD/Hộ chiếu" value="123456789" />
-          <RenderInfoLine title="Số điện thoại" value="091938293" />
-          <RenderInfoLine
-            title="Địa chỉ"
-            value="Số 3 ngách 23 phường 5 quần 1 Thành phố Hồ Chí Minh"
-          />
+          <RenderInfoLine title="Ngày sinh" value={userInfo?.ngaysinh} />
+          <RenderInfoLine title="ĐDCN/CCCD/Hộ chiếu" value={userInfo?.cmnd} />
+          <RenderInfoLine title="Số điện thoại" value={userInfo?.sdt} />
+          <RenderInfoLine title="Địa chỉ" value={userInfo?.diachi} />
         </View>
       );
       break;
@@ -66,7 +65,19 @@ const InfoCard = ({ type }: Props) => {
       subInfo = (
         <View>
           <Text style={styles.txtSubInfo}>Thời hạn có giá trị</Text>
-          <Text></Text>
+          <Text style={styles.txtSubInfo}>1/1/2025 đến 31/12/2025</Text>
+        </View>
+      );
+      contentCard = (
+        <View>
+          <RenderInfoLine title="Ngày sinh" value="01/01/2000" />
+          <RenderInfoLine title="GIới tính" value="Nam" />
+          <RenderInfoLine title="Số thẻ BHYT" value="123213123" />
+          <RenderInfoLine
+            title="Nơi ĐKKCB BĐ"
+            value="Bệnh viện đa khoa Sài gòn"
+          />
+          <RenderInfoLine title="Thời điểm 5 năm liên tục" value="01/01/2000" />
         </View>
       );
   }
@@ -88,7 +99,7 @@ const InfoCard = ({ type }: Props) => {
           <AntDesign name="user" size={24} color="white" />
         </View>
         <View style={{ justifyContent: "space-between" }}>
-          <Text style={{ fontWeight: "bold" }}>Nguyễn Văn A</Text>
+          <Text style={{ fontWeight: "bold" }}>{userInfo?.ten}</Text>
           {subInfo}
         </View>
       </View>
