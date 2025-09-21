@@ -9,8 +9,8 @@ import {
 } from "react-native";
 // import Text from '~components/Text';
 
-import { Colors } from "@/constants/Colors";
 import Entypo from "@expo/vector-icons/Entypo";
+import { LinearGradient } from "expo-linear-gradient";
 import { useRouter } from "expo-router";
 
 export interface HeaderBackProps {
@@ -39,16 +39,7 @@ const HeaderBack = (props: HeaderBackProps) => {
     iconLeft,
   } = props;
   return (
-    <View
-      style={[
-        {
-          backgroundColor: Colors.primary,
-          borderBottomColor: Colors.border,
-          borderBottomWidth: 1,
-        },
-        containerStyle,
-      ]}
-    >
+    <LinearGradient colors={["#00ABF0", "#0074C7"]} start={{ x: 0, y: 0 }}>
       <SafeAreaView />
       <View style={[styles.container, styleContainer]}>
         {isGoBack && (
@@ -98,7 +89,7 @@ const HeaderBack = (props: HeaderBackProps) => {
           </View>
         )}
       </View>
-    </View>
+    </LinearGradient>
   );
 };
 export default HeaderBack;

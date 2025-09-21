@@ -1,3 +1,4 @@
+import BottomMenuBar from "@/components/BottomMenuBar";
 import HeaderBack from "@/components/HeaderBack";
 import InfoCard from "@/components/InfoCard";
 import SafeArea from "@/components/SafeArea";
@@ -78,29 +79,30 @@ const Home = () => {
       <HeaderBack
         title="QUẢN LÝ CÁ NHÂN"
         iconLeft={<Ionicons name="menu" size={24} color="white" />}
-        styleContainer={{ backgroundColor: Colors.primary }}
         textColor="white"
         onGoBack={() => {
           setVisible(true);
         }}
       />
-      <View style={{ padding: 20 }}>
-        <InfoCard type="user" />
-        <Spacer size={20} />
-        <RenderSelect
-          text="Thẻ BHYT"
-          source={require("@/assets/images/icon/card.png")}
-          route="/home/medinsurance"
-        />
-        <Spacer size={20} />
+      <View style={{ justifyContent: "space-between", flex: 1 }}>
+        <View style={{ padding: 20 }}>
+          <InfoCard type="user" />
+          <Spacer size={20} />
+          <RenderSelect
+            text="Thẻ BHYT"
+            source={require("@/assets/images/icon/card.png")}
+            route="/home/medinsurance"
+          />
+          <Spacer size={20} />
 
-        <RenderSelect
-          text="QUÁ TRÌNH THAM GIA"
-          source={require("@/assets/images/icon/time.png")}
-          route="/home/progress"
-        />
+          <RenderSelect
+            text="QUÁ TRÌNH THAM GIA"
+            source={require("@/assets/images/icon/time.png")}
+            route="/home/progress"
+          />
+        </View>
+        <BottomMenuBar />
       </View>
-
       <SideMenu
         visible={visible}
         onClose={() => setVisible(false)}

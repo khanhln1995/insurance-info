@@ -1,3 +1,4 @@
+import BottomMenuBar from "@/components/BottomMenuBar";
 import EmploymentHistoryTable, {
   EmploymentRow,
 } from "@/components/EmploymenHistoryTable";
@@ -71,67 +72,72 @@ const Progress = () => {
       <HeaderBack title="QUÁ TRÌNH THAM GIA" />
 
       {/* Use horizontal ScrollView to avoid squeezing when labels wrap */}
-      <View>
-        <ScrollView
-          horizontal
-          showsHorizontalScrollIndicator={false}
-          contentContainerStyle={styles.tabsRow}
-        >
-          {progressData.map((tab) => {
-            const isSelected = selectedTab.id === tab.id;
-            return (
-              <View key={tab.id} style={styles.tabItem}>
-                <TouchableOpacity
-                  style={[
-                    styles.tab,
-                    {
-                      borderColor: isSelected ? Colors.primary : Colors.border,
-                    },
-                  ]}
-                  onPress={() => setSelectedTab(tab)}
-                  activeOpacity={0.8}
-                >
-                  <Image
-                    source={isSelected ? tab.tabActiveIcon : tab.tabIcon}
-                    style={{ width: 45, height: 45 }}
-                    resizeMode="contain"
-                  />
-                </TouchableOpacity>
+      <View style={{ flex: 1, justifyContent: "space-between" }}>
+        <View>
+          <ScrollView
+            horizontal
+            showsHorizontalScrollIndicator={false}
+            contentContainerStyle={styles.tabsRow}
+          >
+            {progressData.map((tab) => {
+              const isSelected = selectedTab.id === tab.id;
+              return (
+                <View key={tab.id} style={styles.tabItem}>
+                  <TouchableOpacity
+                    style={[
+                      styles.tab,
+                      {
+                        borderColor: isSelected
+                          ? Colors.primary
+                          : Colors.border,
+                      },
+                    ]}
+                    onPress={() => setSelectedTab(tab)}
+                    activeOpacity={0.8}
+                  >
+                    <Image
+                      source={isSelected ? tab.tabActiveIcon : tab.tabIcon}
+                      style={{ width: 45, height: 45 }}
+                      resizeMode="contain"
+                    />
+                  </TouchableOpacity>
 
-                {/* Constrain width + wrap up to 2 lines, then ellipsize */}
-                <Text
-                  style={styles.tabLabel}
-                  numberOfLines={2}
-                  ellipsizeMode="tail"
-                >
-                  {tab.tabTitle}
-                </Text>
-              </View>
-            );
-          })}
-        </ScrollView>
-        <Spacer size={20} />
-        <View style={{ paddingHorizontal: 10 }}>
-          <View style={styles.description}>
-            <Text
-              style={{
-                fontSize: 16,
-                fontWeight: "bold",
-                color: Colors.primary,
-              }}
-            >
-              Quá trình tham gia {selectedTab.title}
-            </Text>
-            <Text>Tổng thời gian tham gia: 1 năm 3 tháng</Text>
-            <Text style={{ color: "red" }}>
-              Tổng thời gian chậm đóng : 1 năm 2 tháng
-            </Text>
-          </View>
-          <EmploymentHistoryTable
-            data={rows}
-            onPressView={(row) => console.log("View row:", row.id)}
-          />
+                  {/* Constrain width + wrap up to 2 lines, then ellipsize */}
+                  <Text
+                    style={styles.tabLabel}
+                    numberOfLines={2}
+                    ellipsizeMode="tail"
+                  >
+                    {tab.tabTitle}
+                  </Text>
+                </View>
+              );
+            })}
+          </ScrollView>
+          <Spacer size={20} />
+          <ScrollView style={{ paddingHorizontal: 10 }}>
+            <View style={styles.description}>
+              <Text
+                style={{
+                  fontSize: 16,
+                  fontWeight: "bold",
+                  color: Colors.primary,
+                }}
+              >
+                Quá trình tham gia {selectedTab.title}
+              </Text>
+              <Text>Tổng thời gian tham gia: 1 năm 3 tháng</Text>
+              <Text style={{ color: "red" }}>
+                Tổng thời gian chậm đóng : 1 năm 2 tháng
+              </Text>
+            </View>
+            <EmploymentHistoryTable
+              data={rows}
+              onPressView={(row) => console.log("View row:", row.id)}
+            />
+          </ScrollView>
         </View>
+        <BottomMenuBar />
       </View>
     </View>
   );

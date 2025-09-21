@@ -1,8 +1,7 @@
 import { Colors } from "@/constants/Colors";
 import { useUser } from "@/hooks/user";
-import AntDesign from "@expo/vector-icons/AntDesign";
 import React from "react";
-import { StyleSheet, Text, View } from "react-native";
+import { Image, StyleSheet, Text, View } from "react-native";
 import Spacer from "./Spacer";
 
 interface Props {
@@ -31,10 +30,10 @@ const InfoCard = ({ type }: Props) => {
           paddingVertical: 8,
         }}
       >
-        <Text style={{ color: Colors.border, flex: 1 }}>{title}</Text>
+        <Text style={{ color: Colors.txtDark, flex: 1 }}>{title}</Text>
         <Text
           style={{
-            color: Colors.border,
+            color: Colors.txtDark,
             flex: 2, // let value take remaining space
             textAlign: "right", // align to right if you want
           }}
@@ -88,7 +87,7 @@ const InfoCard = ({ type }: Props) => {
       <View style={{ flexDirection: "row", gap: 10 }}>
         <View
           style={{
-            backgroundColor: Colors.primary,
+            backgroundColor: "white",
             width: 50,
             height: 50,
             borderRadius: 1000,
@@ -96,7 +95,10 @@ const InfoCard = ({ type }: Props) => {
             alignItems: "center",
           }}
         >
-          <AntDesign name="user" size={24} color="white" />
+          <Image
+            source={require("@/assets/images/icon/avatar-male.png")}
+            style={{ width: 50, height: 50 }}
+          />
         </View>
         <View style={{ justifyContent: "space-between" }}>
           <Text style={{ fontWeight: "bold" }}>{userInfo?.ten}</Text>
@@ -113,6 +115,6 @@ export default InfoCard;
 
 const styles = StyleSheet.create({
   txtSubInfo: {
-    color: Colors.border,
+    color: Colors.txtDark,
   },
 });
