@@ -1,10 +1,10 @@
 import BottomMenuBar from "@/components/BottomMenuBar";
-import EmploymentHistoryTable, {
-  EmploymentRow,
-} from "@/components/EmploymenHistoryTable";
+import EmploymentHistoryTable from "@/components/EmploymenHistoryTable";
 import HeaderBack from "@/components/HeaderBack";
 import Spacer from "@/components/Spacer";
 import { Colors } from "@/constants/Colors";
+import { useUser } from "@/hooks/user";
+import { useRouter } from "expo-router";
 import React from "react";
 import {
   Image,
@@ -15,56 +15,50 @@ import {
   View,
 } from "react-native";
 
-const progressData = [
-  {
-    id: 1,
-    tabTitle: "BHXH",
-    tabIcon: require("@/assets/images/tab/bhxh-inactive.png"),
-    tabActiveIcon: require("@/assets/images/tab/bhxh-active.png"),
-    title: "Bảo hiểm xã hội",
-  },
-  {
-    id: 2,
-    tabTitle: "BHTN",
-    tabIcon: require("@/assets/images/tab/bhtn-inactive.png"),
-    tabActiveIcon: require("@/assets/images/tab/bhtn-active.png"),
-    title: "Bảo hiểm trách nhiệm",
-  },
-  {
-    id: 3,
-    tabTitle: "BHTNLD-BNN",
-    tabIcon: require("@/assets/images/tab/bhtnldbnn-inactive.png"),
-    tabActiveIcon: require("@/assets/images/tab/bhtnldbnn-active.png"),
-    title: "Bảo hiểm tai nạn lao động, bệnh nghề nghiệp",
-  },
-  {
-    id: 4,
-    tabTitle: "BHYT",
-    tabIcon: require("@/assets/images/tab/bhyt-inactive.png"),
-    tabActiveIcon: require("@/assets/images/tab/bhyt-active.png"),
-    title: "Bảo hiểm y tế",
-  },
-  {
-    id: 5,
-    tabTitle: "C14-TS",
-    tabIcon: require("@/assets/images/tab/c14ts-inactive.png"),
-    tabActiveIcon: require("@/assets/images/tab/c14ts-active.png"),
-    title: "Bảo hiểm xã hội",
-  },
-];
-
-const rows: EmploymentRow[] = [
-  {
-    id: 1,
-    fromMonth: "07/2024",
-    toMonth: "09/2025",
-    company: "CÔNG TY TNHH KINH DOANH THIẾT BỊ TECHNOLOGY VN",
-    position: "Nhân viên",
-  },
-  // more rows...
-];
-
 const Progress = () => {
+  const router: any = useRouter();
+  const { progressList } = useUser();
+  const progressData = [
+    {
+      id: 1,
+      tabTitle: "BHXH",
+      tabIcon: require("@/assets/images/tab/bhxh-inactive.png"),
+      tabActiveIcon: require("@/assets/images/tab/bhxh-active.png"),
+      title: "Bảo hiểm xã hội",
+      data: progressList.bhxh,
+    },
+    {
+      id: 2,
+      tabTitle: "BHTN",
+      tabIcon: require("@/assets/images/tab/bhtn-inactive.png"),
+      tabActiveIcon: require("@/assets/images/tab/bhtn-active.png"),
+      title: "Bảo hiểm trách nhiệm",
+      data: progressList.bhtn,
+    },
+    {
+      id: 3,
+      tabTitle: "BHTNLD-BNN",
+      tabIcon: require("@/assets/images/tab/bhtnldbnn-inactive.png"),
+      tabActiveIcon: require("@/assets/images/tab/bhtnldbnn-active.png"),
+      title: "Bảo hiểm tai nạn lao động, bệnh nghề nghiệp",
+      data: progressList.bhtnldbnn,
+    },
+    {
+      id: 4,
+      tabTitle: "BHYT",
+      tabIcon: require("@/assets/images/tab/bhyt-inactive.png"),
+      tabActiveIcon: require("@/assets/images/tab/bhyt-active.png"),
+      title: "Bảo hiểm y tế",
+      data: progressList.bhyt,
+    },
+    {
+      id: 5,
+      tabTitle: "C14-TS",
+      tabIcon: require("@/assets/images/tab/c14ts-inactive.png"),
+      tabActiveIcon: require("@/assets/images/tab/c14ts-active.png"),
+      title: "Bảo hiểm xã hội",
+    },
+  ];
   const [selectedTab, setSelectedTab] = React.useState(progressData[0]);
 
   return (
@@ -116,25 +110,39 @@ const Progress = () => {
           </ScrollView>
           <Spacer size={20} />
           <ScrollView style={{ paddingHorizontal: 10 }}>
-            <View style={styles.description}>
-              <Text
-                style={{
-                  fontSize: 16,
-                  fontWeight: "bold",
-                  color: Colors.primary,
-                }}
-              >
-                Quá trình tham gia {selectedTab.title}
-              </Text>
-              <Text>Tổng thời gian tham gia: 1 năm 3 tháng</Text>
-              <Text style={{ color: "red" }}>
-                Tổng thời gian chậm đóng : 1 năm 2 tháng
-              </Text>
-            </View>
-            <EmploymentHistoryTable
-              data={rows}
-              onPressView={(row) => console.log("View row:", row.id)}
-            />
+            {selectedTab.id != 5 && (
+              <>
+                <View style={styles.description}>
+                  <Text
+                    style={{
+                      fontSize: 16,
+                      fontWeight: "bold",
+                      color: Colors.primary,
+                    }}
+                  >
+                    Quá trình tham gia {selectedTab.title}
+                  </Text>
+                  <Text>
+                    Tổng thời gian tham gia: {selectedTab?.data?.totalTime}
+                  </Text>
+                  <Text style={{ color: "red" }}>
+                    Tổng thời gian chậm đóng : {selectedTab?.data?.totalDueTime}
+                  </Text>
+                </View>
+                <EmploymentHistoryTable
+                  data={selectedTab.data?.progress}
+                  onPressView={(detail) => {
+                    router.push({
+                      pathname: "/home/progress/detail",
+                      params: {
+                        detail: JSON.stringify(detail),
+                      },
+                    });
+                  }}
+                  isBHYT={selectedTab.id === 4}
+                />
+              </>
+            )}
           </ScrollView>
         </View>
         <BottomMenuBar />

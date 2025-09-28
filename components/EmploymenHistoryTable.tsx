@@ -13,10 +13,10 @@ import {
 // Types
 export type EmploymentRow = {
   id: string | number;
-  fromMonth: string; // e.g. "07/2024"
-  toMonth: string; // e.g. "09/2025"
-  company: string; // long names wrap
-  position: string; // e.g. "Nhân viên"
+  tuthang: string; // e.g. "07/2024"
+  denthang: string; // e.g. "09/2025"
+  donvi: string; // long names wrap
+  chucvu: string; // e.g. "Nhân viên"
   // you can add more fields and map them in columns if needed
 };
 
@@ -40,25 +40,26 @@ type Props = {
   cellTextStyle?: TextStyle;
   // Optional: supply your own columns (default provided below)
   columns?: Column<EmploymentRow>[];
+  isBHYT?: boolean;
 };
 
 const defaultColumns: Column<EmploymentRow>[] = [
   {
-    key: "fromMonth",
+    key: "tuthang",
     label: "Từ tháng",
     flex: 1,
     align: "center",
     headerLines: 1,
   },
   {
-    key: "toMonth",
+    key: "denthang",
     label: "Đến tháng",
     flex: 1,
     align: "center",
     headerLines: 1,
   },
   {
-    key: "company",
+    key: "donvi",
     label: "Đơn vị",
     flex: 2.4,
     align: "center",
@@ -66,7 +67,7 @@ const defaultColumns: Column<EmploymentRow>[] = [
     numberOfLines: 3,
   },
   {
-    key: "position",
+    key: "chucvu",
     label: "Nghề nghiệp\nChức vụ",
     flex: 1.4,
     align: "center",
@@ -83,10 +84,15 @@ const EmploymentHistoryTable: React.FC<Props> = ({
   headerTextStyle,
   cellTextStyle,
   columns = defaultColumns,
+  isBHYT = false,
 }) => {
+  const displayColumns = React.useMemo(
+    () => (isBHYT ? columns.filter((c) => c.key !== "chucvu") : columns),
+    [isBHYT, columns]
+  );
   const renderHeader = () => (
     <View style={[styles.row, { backgroundColor: headerColor }]}>
-      {columns.map((col, idx) => (
+      {displayColumns.map((col, idx) => (
         <View
           key={`h-${String(col.key)}`}
           style={[
@@ -105,15 +111,13 @@ const EmploymentHistoryTable: React.FC<Props> = ({
           styles.borderLeftWhite,
           { width: 44, flexGrow: 0 },
         ]}
-      >
-        {/* empty header cell (just keep blue bg) */}
-      </View>
+      />
     </View>
   );
 
   const renderItem = ({ item }: { item: EmploymentRow }) => (
     <View style={[styles.row, { backgroundColor: "white" }]}>
-      {columns.map((col, idx) => {
+      {displayColumns.map((col, idx) => {
         const value = String(item[col.key] ?? "");
         const alignStyle: TextStyle =
           col.align === "right"
@@ -131,18 +135,14 @@ const EmploymentHistoryTable: React.FC<Props> = ({
               idx !== 0 && styles.borderLeftGrey,
             ]}
           >
-            <Text
-              style={[styles.cellText, alignStyle, cellTextStyle]}
-              //   numberOfLines={col.numberOfLines ?? 2}
-              //   ellipsizeMode="tail"
-            >
+            <Text style={[styles.cellText, alignStyle, cellTextStyle]}>
               {value}
             </Text>
           </View>
         );
       })}
 
-      {/* Action cell (eye) */}
+      {/* Action cell */}
       <View
         style={[styles.cell, styles.borderLeftGrey, { width: 44, flexGrow: 0 }]}
       >
@@ -159,7 +159,11 @@ const EmploymentHistoryTable: React.FC<Props> = ({
                 resizeMode="contain"
               />
             ) : (
-              <Text style={{ fontSize: 16 }}>👁</Text>
+              <Image
+                source={require("@/assets/images/icon/eye.png")}
+                style={{ width: 18, height: 18 }}
+                resizeMode="contain"
+              />
             )}
           </TouchableOpacity>
         ) : null}
@@ -173,7 +177,7 @@ const EmploymentHistoryTable: React.FC<Props> = ({
       <FlatList
         data={data}
         renderItem={renderItem}
-        keyExtractor={(it) => String(it.id)}
+        keyExtractor={(item, index) => String(index)}
         ItemSeparatorComponent={() => <View style={styles.separator} />}
         scrollEnabled={false}
       />

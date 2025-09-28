@@ -1,0 +1,155 @@
+{
+  "bhxh": {
+    "totalTime": "1 năm 1 tháng",
+    "totalDueTime": "2 tháng",
+    "progress": [
+      {
+        "tuthang": "1/2024",
+        "denthang": "2/2025",
+        "donvi": "Công ty A",
+        "chucvu": "Quản lý",
+        "chitiet": {
+          "noilamviec": "Quan 1",
+          "loaitien": "VND",
+          "tienluong": ["4.960.000", "4.960.000"]
+        }
+      },
+      {
+        "tuthang": "1/2025",
+        "denthang": "2/2026",
+        "donvi": "Công ty B",
+        "chucvu": "Quản lý",
+        "chitiet": {
+          "noilamviec": "Quan 1",
+          "loaitien": "VND",
+          "tienluong": ["4.960.000", "4.960.000"]
+        }
+      },
+      {
+        "tuthang": "1/2026",
+        "denthang": "2/2027",
+        "donvi": "Công ty C",
+        "chucvu": "Quản lý",
+        "chitiet": {
+          "noilamviec": "Quan 1",
+          "loaitien": "VND",
+          "tienluong": ["4.960.000", "4.960.000"]
+        }
+      }
+    ]
+  },
+  "bhtn": {
+    "totalTime": "3 năm 4 tháng",
+    "totalDueTime": "1 năm 8 tháng",
+    "progress": [
+      {
+        "tuthang": "1/2024",
+        "denthang": "2/2025",
+        "donvi": "Công ty A",
+        "chucvu": "Quản lý",
+        "chitiet": {
+          "noilamviec": "Quan 1",
+          "loaitien": "VND",
+          "tienluong": ["4.960.000", "4.960.000"]
+        }
+      },
+      {
+        "tuthang": "1/2025",
+        "denthang": "2/2026",
+        "donvi": "Công ty B",
+        "chucvu": "Quản lý",
+        "chitiet": {
+          "noilamviec": "Quan 1",
+          "loaitien": "VND",
+          "tienluong": ["4.960.000", "4.960.000"]
+        }
+      },
+      {
+        "tuthang": "1/2026",
+        "denthang": "2/2027",
+        "donvi": "Công ty C",
+        "chucvu": "Quản lý",
+        "chitiet": {
+          "noilamviec": "Quan 1",
+          "loaitien": "VND",
+          "tienluong": ["4.960.000", "4.960.000"]
+        }
+      }
+    ]
+  },
+  "bhtnldbnn": {
+    "totalTime": "2 năm 3 tháng",
+    "totalDueTime": "1 năm 5 tháng",
+    "progress": [
+      {
+        "tuthang": "1/2024",
+        "denthang": "2/2025",
+        "donvi": "Công ty A",
+        "chucvu": "Quản lý",
+        "chitiet": {
+          "noilamviec": "Quan 1",
+          "loaitien": "VND",
+          "tienluong": ["4.960.000", "4.960.000"]
+        }
+      },
+      {
+        "tuthang": "1/2025",
+        "denthang": "2/2026",
+        "donvi": "Công ty B",
+        "chucvu": "Quản lý",
+        "chitiet": {
+          "noilamviec": "Quan 1",
+          "loaitien": "VND",
+          "tienluong": ["4.960.000", "4.960.000"]
+        }
+      },
+      {
+        "tuthang": "1/2026",
+        "denthang": "2/2027",
+        "donvi": "Công ty C",
+        "chucvu": "Quản lý",
+        "chitiet": {
+          "noilamviec": "Quan 1",
+          "loaitien": "VND",
+          "tienluong": ["4.960.000", "4.960.000"]
+        }
+      }
+    ]
+  },
+  "bhyt": {
+    "totalTime": "112 năm 5 tháng",
+    "totalDueTime": "1 năm 1 tháng",
+    "progress": [
+      {
+        "tuthang": "1/2024",
+        "denthang": "2/2025",
+        "donvi": "Công ty A",
+        "chitiet": {
+          "noilamviec": "Quan 1",
+          "loaitien": "VND",
+          "tienluong": ["4.960.000", "4.960.000"]
+        }
+      },
+      {
+        "tuthang": "1/2025",
+        "denthang": "2/2026",
+        "donvi": "Công ty B",
+        "chitiet": {
+          "noilamviec": "Quan 1",
+          "loaitien": "VND",
+          "tienluong": ["4.960.000", "4.960.000"]
+        }
+      },
+      {
+        "tuthang": "1/2026",
+        "denthang": "2/2027",
+        "donvi": "Công ty C",
+        "chitiet": {
+          "noilamviec": "Quan 1",
+          "loaitien": "VND",
+          "tienluong": ["4.960.000", "4.960.000"]
+        }
+      }
+    ]
+  }
+}

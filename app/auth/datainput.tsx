@@ -20,14 +20,14 @@ const DataInput = () => {
   const [userInfoInput, setUserInfoInput] = useState("");
   const [progressInput, setProgressInput] = useState("");
   const [medInsuranceInput, setMedInsuranceInput] = useState("");
-  const { setUserInfo } = useUser();
+  const { setUserInfo, setProgressList } = useUser();
 
   const onSubmit = () => {
     if (userInfoInput.length > 0) {
       setUserInfo(JSON.parse(userInfoInput));
     }
     if (progressInput.length > 0) {
-      setProgressInput(JSON.parse(progressInput));
+      setProgressList(JSON.parse(progressInput));
     }
     if (medInsuranceInput.length > 0) {
       setMedInsuranceInput(JSON.parse(medInsuranceInput));

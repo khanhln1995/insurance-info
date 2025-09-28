@@ -24,13 +24,10 @@ interface medInsurance {
 }
 
 interface progress {
-  tuthang: string;
-  denthang: string;
-  donvi: string;
-  chucvu: string;
-  tiendongbhxh: string;
-  mucluong: string;
-  noilamviec: string;
+  bhxh: any;
+  totalTime: any;
+  totalDueTime: any;
+  progress: any[];
 }
 
 interface userState {
@@ -61,7 +58,14 @@ const initialUserState: userState = {
     noidk: "",
     thoidiem5namlientuc: "",
   },
-  progressList: [],
+  progressList: [
+    {
+      bhxh: {},
+      totalTime: {},
+      totalDueTime: {},
+      progress: [],
+    },
+  ],
 };
 
 const userSlice = createSlice({
