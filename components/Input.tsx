@@ -23,6 +23,7 @@ const Input = ({
         style={styles.input}
         secureTextEntry={secureTextEntry}
         keyboardType={keyboardType}
+        placeholderTextColor={Colors.border}
       />
     </View>
   );

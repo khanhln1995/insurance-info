@@ -37,10 +37,17 @@ const MedInSurance = () => {
             </Text>
             <Spacer size={10} />
             <Text style={{ marginLeft: 10, lineHeight: 18 }}>
-              Lorem ipsum dolor, sit amet consectetur adipisicing elit.
-              Doloribus perferendis voluptas, iusto ratione adipisci neque alias
-              consequuntur reprehenderit quam vitae, eaque aliquam non, ad
-              architecto ab sint quia provident? Corporis.
+              Được hưởng 80% chi phí khám bệnh, chữa bệnh trong phạm vi được
+              hường BHYT (áp dụng tỷ lệ thanh toán một sô thuôc, hóa chât, vật
+              tư y tê và dịch vụ kỹ thuật theo quy định của Bộ trưởng Bộ Y tế).
+              Trong trường hợp điều trị nội trú trái tuyến tại CSKCB tuyến TW sẽ
+              được hưởng 32% (TH trên thẻ có mã nơi sinh sông là K1 hoặc K2 hoặc
+              K3 sẽ được 80%), CSKCB tuyến tỉnh sẽ được hưởng 48% (TH trên thẻ
+              có mã nơi sinh sống là K1 hoặc K2 hoặc K3 sẽ được 80%), từ ngày
+              01/01/2021 sẽ hưởng 80%, CSKCB là bệnh viện tuyến huyện sẽ hưởng
+              80% Chi phí trong phạm vi hưởng BHYT (áp dụng tỷ lệ thanh toán một
+              số thuốc, hóa chất, vật tư y tế và dịch vụ kỹ thuật theo quy định
+              của Bộ trưởng Bộ Y tế).
             </Text>
           </View>
         </View>

@@ -1,4 +1,4 @@
-package com.ccbin283.insuranceinfo
+package com.insuranceinfo
 
 import android.app.Application
 import android.content.res.Configuration

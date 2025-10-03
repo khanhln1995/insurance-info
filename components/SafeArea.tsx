@@ -11,6 +11,7 @@ const SafeArea = ({ children, style }: SafeAreaProps) => {
   return (
     <SafeAreaProvider>
       <SafeAreaView
+        edges={[]}
         style={[
           {
             flex: 1,

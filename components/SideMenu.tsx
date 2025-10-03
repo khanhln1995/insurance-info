@@ -1,11 +1,9 @@
-import AntDesign from "@expo/vector-icons/AntDesign";
-import FontAwesome from "@expo/vector-icons/FontAwesome";
-import Ionicons from "@expo/vector-icons/Ionicons";
 import { LinearGradient } from "expo-linear-gradient";
 import React, { useEffect, useRef } from "react";
 import {
   Animated,
   Dimensions,
+  Image,
   Modal,
   Pressable,
   SafeAreaView,
@@ -16,6 +14,7 @@ import {
 } from "react-native";
 
 import { useUser } from "@/hooks/user";
+import AntDesign from "@expo/vector-icons/AntDesign";
 
 const { width } = Dimensions.get("window");
 const DRAWER_W = Math.min(360, Math.floor(width * 0.78));
@@ -39,6 +38,46 @@ const SideMenu: React.FC<Props> = ({ visible, onClose, onLogout }) => {
     }).start();
   }, [visible]);
 
+  const renderItemMenu = ({
+    text,
+    icon,
+    onPress,
+  }: {
+    text: string;
+    icon: any;
+    onPress: () => void;
+  }) => {
+    return (
+      <TouchableOpacity
+        style={styles.itemRow}
+        activeOpacity={0.7}
+        onPress={onPress}
+      >
+        {icon}
+        <View
+          style={{
+            flexDirection: "row",
+            alignItems: "center",
+            justifyContent: "space-between",
+            flex: 1,
+            borderBottomColor: "#28B9F0",
+            borderBottomWidth: 1,
+            paddingBottom: 8,
+          }}
+        >
+          <Text style={styles.itemText}>{text}</Text>
+
+          <AntDesign
+            name="arrow-right"
+            size={24}
+            color="#04B0FE"
+            style={{ opacity: 0.9 }}
+          />
+        </View>
+      </TouchableOpacity>
+    );
+  };
+
   return (
     <Modal
       transparent
@@ -54,16 +93,19 @@ const SideMenu: React.FC<Props> = ({ visible, onClose, onLogout }) => {
         style={[styles.drawerWrap, { transform: [{ translateX: slideX }] }]}
       >
         <LinearGradient
-          colors={["#0DA5E7", "#0593DB", "#007EC8"]}
+          colors={["#0D71C7", "#01AAED"]}
           start={{ x: 0, y: 0 }}
           end={{ x: 0, y: 1 }}
           style={styles.drawer}
         >
-          <SafeAreaView>
+          <SafeAreaView style={{ flex: 1 }}>
             {/* Header: avatar + name + phone */}
             <View style={styles.header}>
               <View style={styles.avatarRing}>
-                <AntDesign name="user" size={40} color="white" />
+                <Image
+                  source={require("@/assets/images/icon/avatar-male.png")}
+                  style={{ width: 80, height: 80 }}
+                />
               </View>
               <Text style={styles.name}>{userInfo.ten}</Text>
               <Text style={styles.phone}>{userInfo.sdt}</Text>
@@ -71,32 +113,145 @@ const SideMenu: React.FC<Props> = ({ visible, onClose, onLogout }) => {
 
             {/* Divider */}
             <View style={styles.hr} />
+            <View style={{ flex: 1 }}>
+              {renderItemMenu({
+                text: "Thông báo",
+                icon: (
+                  <Image
+                    source={require("@/assets/images/icon/icon-speaker.png")}
+                    style={{
+                      width: 24,
+                      height: 24,
+                      marginRight: 10,
+                    }}
+                  />
+                ),
+                onPress: () => {},
+              })}
+              {renderItemMenu({
+                text: "Tin tức",
+                icon: (
+                  <Image
+                    source={require("@/assets/images/icon/icon-new.png")}
+                    style={{
+                      width: 24,
+                      height: 24,
+                      marginRight: 10,
+                    }}
+                  />
+                ),
+                onPress: () => {},
+              })}
+              {renderItemMenu({
+                text: "Quản lý cá nhân",
+                icon: (
+                  <Image
+                    source={require("@/assets/images/icon/icon-setting.png")}
+                    style={{
+                      width: 24,
+                      height: 24,
+                      marginRight: 10,
+                    }}
+                  />
+                ),
+                onPress: () => {},
+              })}
+              {renderItemMenu({
+                text: "Dịch vụ công",
+                icon: (
+                  <Image
+                    source={require("@/assets/images/icon/icon-list.png")}
+                    style={{
+                      width: 24,
+                      height: 24,
+                      marginRight: 10,
+                    }}
+                  />
+                ),
+                onPress: () => {},
+              })}
+              {renderItemMenu({
+                text: "Tra cứu",
+                icon: (
+                  <Image
+                    source={require("@/assets/images/icon/icon-global.png")}
+                    style={{
+                      width: 24,
+                      height: 24,
+                      marginRight: 10,
+                    }}
+                  />
+                ),
+                onPress: () => {},
+              })}
+              {renderItemMenu({
+                text: "Tra cứu",
+                icon: (
+                  <Image
+                    source={require("@/assets/images/icon/icon-support.png")}
+                    style={{
+                      width: 24,
+                      height: 24,
+                      marginRight: 10,
+                    }}
+                  />
+                ),
+                onPress: () => {},
+              })}
+              {renderItemMenu({
+                text: "Cài đặt",
+                icon: (
+                  <Image
+                    source={require("@/assets/images/icon/icon-st.png")}
+                    style={{
+                      width: 24,
+                      height: 24,
+                      marginRight: 10,
+                    }}
+                  />
+                ),
+                onPress: () => {},
+              })}
+              <View style={{ justifyContent: "space-between", marginTop: 20 }}>
+                {renderItemMenu({
+                  text: "Đổi mật khẩu",
+                  icon: (
+                    <Image
+                      source={require("@/assets/images/icon/icon-lock.png")}
+                      style={{
+                        width: 24,
+                        height: 24,
+                        marginRight: 10,
+                      }}
+                    />
+                  ),
+                  onPress: () => {},
+                })}
+                {renderItemMenu({
+                  text: "Đăng xuất",
+                  icon: (
+                    <Image
+                      source={require("@/assets/images/icon/icon-logout.png")}
+                      style={{
+                        width: 24,
+                        height: 24,
+                        marginRight: 10,
+                      }}
+                    />
+                  ),
+                  onPress: onLogout,
+                })}
 
+                {/* Footer small line (optional) */}
+              </View>
+            </View>
             {/* Only one menu item: Đăng xuất */}
-            <View style={{ justifyContent: "space-between" }}>
-              <TouchableOpacity
-                style={styles.itemRow}
-                activeOpacity={0.7}
-                onPress={onLogout}
-              >
-                <FontAwesome
-                  name="power-off"
-                  size={24}
-                  color="white"
-                  style={{ marginRight: 10, opacity: 0.9 }}
-                />
 
-                <Text style={styles.itemText}>Đăng xuất</Text>
-                <Ionicons
-                  name="chevron-forward"
-                  size={18}
-                  color="white"
-                  style={{ marginLeft: "auto", opacity: 0.9 }}
-                />
-              </TouchableOpacity>
-
-              {/* Footer small line (optional) */}
-              {/* <Text style={styles.footer}>Phiên bản 2.5</Text> */}
+            <View style={styles.footerWrap}>
+              <Text style={styles.footer}>Phiên bản 2.5</Text>
+              <Text style={styles.footer}>
+                Bản quyền thuộc về Bảo hiểm xã hội Việt Nam.
+              </Text>
             </View>
           </SafeAreaView>
         </LinearGradient>
@@ -125,7 +280,6 @@ const styles = StyleSheet.create({
   },
   header: {
     alignItems: "center",
-    paddingTop: 50,
     paddingBottom: 18,
   },
   avatarRing: {
@@ -136,6 +290,7 @@ const styles = StyleSheet.create({
     borderColor: "rgba(255,255,255,0.7)",
     justifyContent: "center",
     alignItems: "center",
+    backgroundColor: "#fff",
   },
   avatar: {
     width: 74,
@@ -162,17 +317,23 @@ const styles = StyleSheet.create({
   itemRow: {
     flexDirection: "row",
     alignItems: "center",
-    paddingVertical: 14,
+    paddingVertical: 10,
+    width: "100%",
   },
   itemText: {
     color: "white",
     fontSize: 15,
     fontWeight: "600",
+    flexShrink: 1,
   },
   footer: {
-    color: "rgba(255,255,255,0.8)",
+    color: "#FFFFFF",
     fontSize: 12,
     bottom: 10,
     left: 16,
+  },
+  footerWrap: {
+    paddingVertical: 12,
+    alignItems: "flex-start",
   },
 });

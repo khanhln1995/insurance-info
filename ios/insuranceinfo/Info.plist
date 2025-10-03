@@ -28,7 +28,7 @@
         <key>CFBundleURLSchemes</key>
         <array>
           <string>insuranceinfo</string>
-          <string>com.ccbin283.insuranceinfo</string>
+          <string>com.insuranceinfo</string>
         </array>
       </dict>
     </array>

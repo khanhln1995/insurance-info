@@ -9,9 +9,12 @@ interface Props {
 }
 
 const InfoCard = ({ type }: Props) => {
-  const { userInfo } = useUser();
+  const { userInfo, medInsurance } = useUser();
+  console.log("medInsurance", medInsurance);
+
   let subInfo: any;
   let contentCard: any;
+  let name: any;
   const RenderInfoLine = ({
     title,
     value,
@@ -59,26 +62,29 @@ const InfoCard = ({ type }: Props) => {
           <RenderInfoLine title="Địa chỉ" value={userInfo?.diachi} />
         </View>
       );
+      name = userInfo?.ten;
       break;
     case "insurance":
       subInfo = (
         <View>
           <Text style={styles.txtSubInfo}>Thời hạn có giá trị</Text>
-          <Text style={styles.txtSubInfo}>1/1/2025 đến 31/12/2025</Text>
+          <Text style={styles.txtSubInfo}>{medInsurance?.thoigian}</Text>
         </View>
       );
       contentCard = (
         <View>
-          <RenderInfoLine title="Ngày sinh" value="01/01/2000" />
-          <RenderInfoLine title="GIới tính" value="Nam" />
-          <RenderInfoLine title="Số thẻ BHYT" value="123213123" />
+          <RenderInfoLine title="Ngày sinh" value={medInsurance?.ngaysinh} />
+          <RenderInfoLine title="GIới tính" value={medInsurance?.gioitinh} />
+          <RenderInfoLine title="Số thẻ BHYT" value={medInsurance?.sothebhyt} />
+          <RenderInfoLine title="Nơi ĐKKCB BĐ" value={medInsurance?.noidk} />
           <RenderInfoLine
-            title="Nơi ĐKKCB BĐ"
-            value="Bệnh viện đa khoa Sài gòn"
+            title="Thời điểm 5 năm liên tục"
+            value={medInsurance?.thoidiem5namlientuc}
           />
-          <RenderInfoLine title="Thời điểm 5 năm liên tục" value="01/01/2000" />
         </View>
       );
+      name = medInsurance?.ten;
+      break;
   }
   return (
     <View
@@ -101,7 +107,7 @@ const InfoCard = ({ type }: Props) => {
           />
         </View>
         <View style={{ justifyContent: "space-between" }}>
-          <Text style={{ fontWeight: "bold" }}>{userInfo?.ten}</Text>
+          <Text style={{ fontWeight: "bold" }}>{name}</Text>
           {subInfo}
         </View>
       </View>

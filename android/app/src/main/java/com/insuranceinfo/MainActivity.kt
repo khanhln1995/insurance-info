@@ -1,4 +1,4 @@
-package com.ccbin283.insuranceinfo
+package com.insuranceinfo
 import expo.modules.splashscreen.SplashScreenManager
 
 import android.os.Build

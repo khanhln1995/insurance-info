@@ -87,9 +87,9 @@ android {
     buildToolsVersion rootProject.ext.buildToolsVersion
     compileSdk rootProject.ext.compileSdkVersion
 
-    namespace 'com.ccbin283.insuranceinfo'
+    namespace 'com.insuranceinfo'
     defaultConfig {
-        applicationId 'com.ccbin283.insuranceinfo'
+        applicationId 'com.insuranceinfo'
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 1
