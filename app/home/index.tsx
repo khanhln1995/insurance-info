@@ -17,10 +17,14 @@ const Home = () => {
     text,
     source,
     route,
+    isTop = true,
+    isBottom = true,
   }: {
     text?: string;
     source?: any;
     route?: string;
+    isTop?: boolean;
+    isBottom?: boolean;
   }) => {
     return (
       <View style={{ flexDirection: "row", alignItems: "center", gap: 10 }}>
@@ -55,13 +59,17 @@ const Home = () => {
           <View
             style={{
               flex: 1, // ⬅️ lets the border span the remaining row
-              borderBottomWidth: 1,
+              borderTopWidth: isTop ? 1 : 0,
+              borderBottomWidth: isBottom ? 1 : 0,
               borderBottomColor: Colors.txtDark,
-              paddingBottom: 10,
+              paddingVertical: 25,
               marginRight: 8, // space before chevron
             }}
           >
-            <Text numberOfLines={1} style={{ color: Colors.txtDark }}>
+            <Text
+              numberOfLines={1}
+              style={{ color: Colors.txtDark, fontSize: 16 }}
+            >
               {text}
             </Text>
           </View>
@@ -80,7 +88,7 @@ const Home = () => {
     <SafeArea>
       <HeaderBack
         title="QUẢN LÝ CÁ NHÂN"
-        textStyle={{ fontWeight: 400 }}
+        textStyle={{ fontWeight: 400, fontSize: 14 }}
         iconLeft={<Ionicons name="menu" size={24} color="white" />}
         textColor="white"
         onGoBack={() => {
@@ -93,24 +101,25 @@ const Home = () => {
           <InfoCard type="user" />
           <Spacer size={20} />
           <RenderSelect
-            text="Thẻ BHYT"
+            text="THẺ BHYT"
             source={require("@/assets/images/icon/card.png")}
             route="/home/medinsurance"
+            isTop={false}
+            isBottom={false}
           />
-          <Spacer size={20} />
 
           <RenderSelect
             text="QUÁ TRÌNH THAM GIA"
             source={require("@/assets/images/icon/time.png")}
             route="/home/progress"
+            isBottom={false}
           />
-          <Spacer size={20} />
 
           <RenderSelect
             text="THÔNG TIN HƯỞNG"
             source={require("@/assets/images/icon/user-info.png")}
+            isBottom={false}
           />
-          <Spacer size={20} />
 
           <RenderSelect
             text="SỔ KHÁM CHỮA BỆNH"

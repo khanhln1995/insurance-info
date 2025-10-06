@@ -32,7 +32,7 @@ const Progress = () => {
       tabTitle: "BHTN",
       tabIcon: require("@/assets/images/tab/bhtn-inactive.png"),
       tabActiveIcon: require("@/assets/images/tab/bhtn-active.png"),
-      title: "Bảo hiểm trách nhiệm",
+      title: "Bảo hiểm thất nghiệp",
       data: progressList.bhtn,
     },
     {
@@ -65,17 +65,14 @@ const Progress = () => {
     <View style={{ flex: 1, backgroundColor: "white" }}>
       <HeaderBack
         title="QUÁ TRÌNH THAM GIA"
-        textStyle={{ fontWeight: "500" }}
+        textStyle={{ fontWeight: "400", fontSize: 20, marginBottom: 10 }}
+        containerStyle={{ height: 60 }}
       />
 
       {/* Use horizontal ScrollView to avoid squeezing when labels wrap */}
       <View style={{ flex: 1, justifyContent: "space-between" }}>
         <View>
-          <ScrollView
-            horizontal
-            showsHorizontalScrollIndicator={false}
-            contentContainerStyle={styles.tabsRow}
-          >
+          <View style={styles.tabsRow}>
             {progressData.map((tab) => {
               const isSelected = selectedTab.id === tab.id;
               return (
@@ -94,7 +91,7 @@ const Progress = () => {
                   >
                     <Image
                       source={isSelected ? tab.tabActiveIcon : tab.tabIcon}
-                      style={{ width: 35, height: 35 }}
+                      style={{ width: 40, height: 40 }}
                       resizeMode="contain"
                     />
                   </TouchableOpacity>
@@ -113,7 +110,7 @@ const Progress = () => {
                 </View>
               );
             })}
-          </ScrollView>
+          </View>
           <Spacer size={20} />
           <ScrollView style={{ paddingHorizontal: 10 }}>
             {selectedTab.id != 5 && (
@@ -121,17 +118,21 @@ const Progress = () => {
                 <View style={styles.description}>
                   <Text
                     style={{
-                      fontSize: 16,
+                      fontSize: 18,
                       color: Colors.primary,
                     }}
                   >
                     Quá trình tham gia {selectedTab.title}
                   </Text>
-                  <Text>
+                  <Text
+                    style={{
+                      fontSize: 16,
+                    }}
+                  >
                     Tổng thời gian tham gia: {selectedTab?.data?.totalTime}
                   </Text>
-                  {selectedTab.id !== 4 && (
-                    <Text style={{ color: "red" }}>
+                  {!(selectedTab.id == 4 || selectedTab.id == 3) && (
+                    <Text style={{ color: "red", fontSize: 16 }}>
                       Tổng thời gian chậm đóng :{" "}
                       {selectedTab?.data?.totalDueTime}
                     </Text>
@@ -165,6 +166,8 @@ const TAB_ITEM_WIDTH = 60; // wide enough for 2-line titles like "BHTNLD-BNN"
 
 const styles = StyleSheet.create({
   tabsRow: {
+    flexDirection: "row",
+    justifyContent: "space-between",
     paddingHorizontal: 20,
     paddingVertical: 16,
     gap: 14, // if gap unsupported in your RN version, replace with margins on tabItem
@@ -175,8 +178,8 @@ const styles = StyleSheet.create({
   },
   tab: {
     borderRadius: 99,
-    width: 45,
-    height: 45,
+    width: 50,
+    height: 50,
     justifyContent: "center",
     alignItems: "center",
     borderWidth: 2,

@@ -80,7 +80,7 @@ const styles = StyleSheet.create({
   },
   rangeText: {
     color: "#111827",
-    fontSize: 14,
+    fontSize: 21,
   },
 
   infoCard: {
@@ -94,7 +94,7 @@ const styles = StyleSheet.create({
   infoLine: {
     color: "#E6F0FF",
     lineHeight: 22,
-    marginBottom: 6,
+    fontSize: 20,
   },
   infoLabel: {
     color: "#E6F0FF",
@@ -132,21 +132,21 @@ const styles = StyleSheet.create({
     flex: 0.8,
     fontSize: 16,
     color: "#111827",
-    fontWeight: "600",
+    fontWeight: "400",
     textAlign: "right",
     paddingLeft: 12, // add spacing after the line
   },
   cellLeftWrapper: {
     flex: 1,
     justifyContent: "center",
-    paddingVertical: 14,
+    paddingVertical: 8,
     paddingRight: 8,
   },
 
   cellRightWrapper: {
     flex: 1,
     justifyContent: "center",
-    paddingVertical: 14,
+    paddingVertical: 8,
     paddingLeft: 8,
   },
 

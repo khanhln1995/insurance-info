@@ -181,7 +181,7 @@ const SideMenu: React.FC<Props> = ({ visible, onClose, onLogout }) => {
                 onPress: () => {},
               })}
               {renderItemMenu({
-                text: "Trợ giúp",
+                text: "Tra cứu",
                 icon: (
                   <Image
                     source={require("@/assets/images/icon/icon-global.png")}
@@ -195,7 +195,7 @@ const SideMenu: React.FC<Props> = ({ visible, onClose, onLogout }) => {
                 onPress: () => {},
               })}
               {renderItemMenu({
-                text: "Tra cứu",
+                text: "Trợ giúp",
                 icon: (
                   <Image
                     source={require("@/assets/images/icon/icon-support.png")}
@@ -326,7 +326,7 @@ const styles = StyleSheet.create({
   },
   itemRow: {
     flexDirection: "row",
-    alignItems: "center",
+    alignItems: "flex-start",
     paddingVertical: 10,
     width: "100%",
   },

@@ -2738,6 +2738,49 @@ __metadata:
   languageName: node
   linkType: hard
 
+"VssiID@workspace:.":
+  version: 0.0.0-use.local
+  resolution: "VssiID@workspace:."
+  dependencies:
+    "@babel/core": ^7.25.2
+    "@expo/vector-icons": ^15.0.2
+    "@react-native-async-storage/async-storage": ^2.2.0
+    "@react-navigation/bottom-tabs": ^7.3.10
+    "@react-navigation/elements": ^2.3.8
+    "@react-navigation/native": ^7.1.6
+    "@reduxjs/toolkit": ^2.9.0
+    "@types/react": ~19.0.10
+    eslint: ^9.25.0
+    eslint-config-expo: ~9.2.0
+    expo: ~53.0.22
+    expo-blur: ~14.1.5
+    expo-constants: ~17.1.7
+    expo-font: ~13.3.2
+    expo-haptics: ~14.1.4
+    expo-image: ~2.4.0
+    expo-linear-gradient: ^15.0.6
+    expo-linking: ~7.1.7
+    expo-router: ~5.1.5
+    expo-splash-screen: ~0.30.10
+    expo-status-bar: ~2.2.3
+    expo-symbols: ~0.4.5
+    expo-system-ui: ~5.0.11
+    expo-web-browser: ~14.2.0
+    react: 19.0.0
+    react-dom: 19.0.0
+    react-native: 0.79.6
+    react-native-gesture-handler: ~2.24.0
+    react-native-reanimated: ~3.17.4
+    react-native-safe-area-context: 5.3.0
+    react-native-screens: ~4.11.1
+    react-native-web: ~0.20.0
+    react-native-webview: 13.13.5
+    react-redux: ^9.2.0
+    redux-persist: ^6.0.0
+    typescript: ~5.8.3
+  languageName: unknown
+  linkType: soft
+
 "abbrev@npm:^3.0.0":
   version: 3.0.1
   resolution: "abbrev@npm:3.0.1"
@@ -5526,49 +5569,6 @@ __metadata:
   checksum: 07a72573dfdac5e08fa18f5ce71d922861716955e230175ac415db227d9ed49443c764356cb407a92f4c85b30ebf39604165260b4dfbf3196b7736d7332c5c06
   languageName: node
   linkType: hard
-
-"insurance-info@workspace:.":
-  version: 0.0.0-use.local
-  resolution: "insurance-info@workspace:."
-  dependencies:
-    "@babel/core": ^7.25.2
-    "@expo/vector-icons": ^15.0.2
-    "@react-native-async-storage/async-storage": ^2.2.0
-    "@react-navigation/bottom-tabs": ^7.3.10
-    "@react-navigation/elements": ^2.3.8
-    "@react-navigation/native": ^7.1.6
-    "@reduxjs/toolkit": ^2.9.0
-    "@types/react": ~19.0.10
-    eslint: ^9.25.0
-    eslint-config-expo: ~9.2.0
-    expo: ~53.0.22
-    expo-blur: ~14.1.5
-    expo-constants: ~17.1.7
-    expo-font: ~13.3.2
-    expo-haptics: ~14.1.4
-    expo-image: ~2.4.0
-    expo-linear-gradient: ^15.0.6
-    expo-linking: ~7.1.7
-    expo-router: ~5.1.5
-    expo-splash-screen: ~0.30.10
-    expo-status-bar: ~2.2.3
-    expo-symbols: ~0.4.5
-    expo-system-ui: ~5.0.11
-    expo-web-browser: ~14.2.0
-    react: 19.0.0
-    react-dom: 19.0.0
-    react-native: 0.79.6
-    react-native-gesture-handler: ~2.24.0
-    react-native-reanimated: ~3.17.4
-    react-native-safe-area-context: 5.3.0
-    react-native-screens: ~4.11.1
-    react-native-web: ~0.20.0
-    react-native-webview: 13.13.5
-    react-redux: ^9.2.0
-    redux-persist: ^6.0.0
-    typescript: ~5.8.3
-  languageName: unknown
-  linkType: soft
 
 "internal-slot@npm:^1.1.0":
   version: 1.1.0

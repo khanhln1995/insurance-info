@@ -104,11 +104,11 @@ const InfoCard = ({ type }: Props) => {
         >
           <Image
             source={require("@/assets/images/icon/avatar-male.png")}
-            style={{ width: 50, height: 50 }}
+            style={{ width: 60, height: 60 }}
           />
         </View>
-        <View style={{ justifyContent: "space-between" }}>
-          <Text style={{ fontWeight: "bold" }}>{name}</Text>
+        <View>
+          <Text style={{ fontWeight: "bold", marginVertical: 5 }}>{name}</Text>
           {subInfo}
         </View>
       </View>
