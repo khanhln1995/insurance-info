@@ -141,7 +141,7 @@ const LoginScreen = () => {
           <View
             style={{
               backgroundColor: "#DA1B13",
-              padding: 2,
+              padding: 5,
               width: "100%",
               borderRadius: 5,
               flexDirection: "row",
@@ -155,6 +155,7 @@ const LoginScreen = () => {
                 fontWeight: 600,
                 textAlign: "center",
                 flex: 1,
+                fontSize: 16,
               }}
             >
               {"Đăng nhập bằng tài khoản\n định danh điện tử"}

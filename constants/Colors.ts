@@ -25,6 +25,6 @@ export const Colors = {
   },
   primary: "#1A67AB",
   border: "#BAB8B8",
-  bgInfo: "#EAEDF4",
+  bgInfo: "#EEF1F7",
   txtDark: "#303030",
 };

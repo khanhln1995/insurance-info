@@ -10,7 +10,6 @@ interface Props {
 
 const InfoCard = ({ type }: Props) => {
   const { userInfo, medInsurance } = useUser();
-  console.log("medInsurance", medInsurance);
 
   let subInfo: any;
   let contentCard: any;
@@ -18,9 +17,11 @@ const InfoCard = ({ type }: Props) => {
   const RenderInfoLine = ({
     title,
     value,
+    isFlex = true,
   }: {
     title: string;
     value: string;
+    isFlex?: boolean;
   }) => {
     return (
       <View
@@ -37,7 +38,7 @@ const InfoCard = ({ type }: Props) => {
         <Text
           style={{
             color: Colors.txtDark,
-            flex: 2, // let value take remaining space
+            flex: isFlex ? 1 : 2, // let value take remaining space
             textAlign: "right", // align to right if you want
           }}
         >
@@ -74,7 +75,7 @@ const InfoCard = ({ type }: Props) => {
       contentCard = (
         <View>
           <RenderInfoLine title="Ngày sinh" value={medInsurance?.ngaysinh} />
-          <RenderInfoLine title="GIới tính" value={medInsurance?.gioitinh} />
+          <RenderInfoLine title="Giới tính" value={medInsurance?.gioitinh} />
           <RenderInfoLine title="Số thẻ BHYT" value={medInsurance?.sothebhyt} />
           <RenderInfoLine title="Nơi ĐKKCB BĐ" value={medInsurance?.noidk} />
           <RenderInfoLine

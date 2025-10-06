@@ -23,6 +23,7 @@ export interface HeaderBackProps {
   goBackColor?: string;
   containerStyle?: any;
   iconLeft?: any;
+  textStyle?: any;
 }
 
 const HeaderBack = (props: HeaderBackProps) => {
@@ -37,9 +38,10 @@ const HeaderBack = (props: HeaderBackProps) => {
     goBackColor,
     containerStyle,
     iconLeft,
+    textStyle,
   } = props;
   return (
-    <LinearGradient colors={["#00ABF0", "#0074C7"]} start={{ x: 0, y: 0 }}>
+    <LinearGradient colors={["#00ABF0", "#26BDF3"]} start={{ x: 0, y: 0 }}>
       <SafeAreaView />
       <View style={[styles.container, styleContainer]}>
         {isGoBack && (
@@ -52,7 +54,7 @@ const HeaderBack = (props: HeaderBackProps) => {
               zIndex: 9999,
               position: "absolute",
               left: "5%",
-              top: 12,
+              top: 2,
             }}
           >
             {iconLeft ? (
@@ -72,6 +74,7 @@ const HeaderBack = (props: HeaderBackProps) => {
               flex: 1,
             },
             { color: textColor || "" },
+            textStyle,
           ]}
         >
           {title ?? ""}
@@ -97,7 +100,7 @@ export default HeaderBack;
 const styles = StyleSheet.create({
   container: {
     width: "100%",
-    height: 50,
+    height: 30,
     paddingHorizontal: "8%",
     alignItems: "center",
     alignSelf: "center",

@@ -4,7 +4,14 @@ import InfoCard from "@/components/InfoCard";
 import Spacer from "@/components/Spacer";
 import { Colors } from "@/constants/Colors";
 import React from "react";
-import { ScrollView, StyleSheet, Text, View } from "react-native";
+import {
+  Image,
+  ScrollView,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from "react-native";
 
 const MedInSurance = () => {
   return (
@@ -14,7 +21,7 @@ const MedInSurance = () => {
         backgroundColor: "white",
       }}
     >
-      <HeaderBack title="THẺ BẢO HIỂM Y TẾ" />
+      <HeaderBack title="THẺ BẢO HIỂM Y TẾ" textStyle={{ fontWeight: "500" }} />
       <ScrollView
         style={{
           padding: 20,
@@ -49,6 +56,33 @@ const MedInSurance = () => {
               số thuốc, hóa chất, vật tư y tế và dịch vụ kỹ thuật theo quy định
               của Bộ trưởng Bộ Y tế).
             </Text>
+          </View>
+          <Spacer size={20} />
+          <View
+            style={{
+              flexDirection: "row",
+              justifyContent: "space-between",
+              paddingHorizontal: 20,
+            }}
+          >
+            <TouchableOpacity
+              style={{ flexDirection: "row", alignItems: "center", gap: 10 }}
+            >
+              <Image
+                source={require("@/assets/images/icon/qr.png")}
+                style={{ width: 24, height: 24 }}
+              />
+              <Text style={{ color: Colors.primary }}>Sử dụng thẻ</Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={{ flexDirection: "row", alignItems: "center", gap: 10 }}
+            >
+              <Image
+                source={require("@/assets/images/icon/info-card.png")}
+                style={{ width: 24, height: 24 }}
+              />
+              <Text style={{ color: Colors.primary }}>Hình ảnh thẻ</Text>
+            </TouchableOpacity>
           </View>
         </View>
       </ScrollView>

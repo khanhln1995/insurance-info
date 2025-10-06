@@ -26,8 +26,8 @@ const Home = () => {
       <View style={{ flexDirection: "row", alignItems: "center", gap: 10 }}>
         <View
           style={{
-            width: 60,
-            height: 60,
+            width: 45,
+            height: 45,
             padding: 10,
             borderWidth: 2,
             borderColor: Colors.primary,
@@ -36,7 +36,7 @@ const Home = () => {
             alignItems: "center",
           }}
         >
-          <Image source={source} style={{ width: 40, height: 40 }} />
+          <Image source={source} style={{ width: 30, height: 30 }} />
         </View>
 
         <TouchableOpacity
@@ -47,7 +47,9 @@ const Home = () => {
             alignItems: "center",
           }}
           onPress={() => {
-            router.push(route);
+            if (route) {
+              router.push(route);
+            }
           }}
         >
           <View
@@ -78,11 +80,13 @@ const Home = () => {
     <SafeArea>
       <HeaderBack
         title="QUẢN LÝ CÁ NHÂN"
+        textStyle={{ fontWeight: 400 }}
         iconLeft={<Ionicons name="menu" size={24} color="white" />}
         textColor="white"
         onGoBack={() => {
           setVisible(true);
         }}
+        styleContainer={{ padding: 2 }}
       />
       <View style={{ justifyContent: "space-between", flex: 1 }}>
         <View style={{ padding: 20 }}>
@@ -99,6 +103,18 @@ const Home = () => {
             text="QUÁ TRÌNH THAM GIA"
             source={require("@/assets/images/icon/time.png")}
             route="/home/progress"
+          />
+          <Spacer size={20} />
+
+          <RenderSelect
+            text="THÔNG TIN HƯỞNG"
+            source={require("@/assets/images/icon/user-info.png")}
+          />
+          <Spacer size={20} />
+
+          <RenderSelect
+            text="SỔ KHÁM CHỮA BỆNH"
+            source={require("@/assets/images/icon/med-plus.png")}
           />
         </View>
         <BottomMenuBar />

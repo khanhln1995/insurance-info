@@ -4,7 +4,7 @@ import { Colors } from "@/constants/Colors";
 import Entypo from "@expo/vector-icons/Entypo";
 import { useLocalSearchParams } from "expo-router";
 import React from "react";
-import { ScrollView, StyleSheet, Text, View } from "react-native";
+import { SafeAreaView, ScrollView, StyleSheet, Text, View } from "react-native";
 
 const DetailProgress = () => {
   const { detail } = useLocalSearchParams();
@@ -19,9 +19,11 @@ const DetailProgress = () => {
 
   return (
     <View style={{ backgroundColor: "#fff", flex: 1 }}>
+      <SafeAreaView />
       <HeaderBack
         title="Chi tiết"
         textColor={Colors.primary}
+        textStyle={{ fontSize: 18 }}
         styleContainer={{ backgroundColor: "#fff" }}
         iconLeft={
           <Entypo name="chevron-thin-left" size={24} color={Colors.primary} />
@@ -51,8 +53,13 @@ const DetailProgress = () => {
               key={idx}
               style={[styles.row, idx === 0 && styles.rowTopBorder]}
             >
-              <Text style={styles.cellLeft}>Tiền lương đóng BHYT</Text>
-              <Text style={styles.cellRight}>{val}</Text>
+              <View style={styles.cellLeftWrapper}>
+                <Text style={styles.cellLeft}>Tiền lương đóng BHYT</Text>
+              </View>
+              <View style={styles.divider} />
+              <View style={styles.cellRightWrapper}>
+                <Text style={styles.cellRight}>{val}</Text>
+              </View>
             </View>
           ))}
         </View>
@@ -73,7 +80,7 @@ const styles = StyleSheet.create({
   },
   rangeText: {
     color: "#111827",
-    fontSize: 16,
+    fontSize: 14,
   },
 
   infoCard: {
@@ -81,8 +88,8 @@ const styles = StyleSheet.create({
     marginHorizontal: 12,
     borderTopLeftRadius: 6,
     borderTopRightRadius: 6,
-    paddingHorizontal: 16,
-    paddingVertical: 14,
+    paddingHorizontal: 10,
+    paddingVertical: 12,
   },
   infoLine: {
     color: "#E6F0FF",
@@ -111,19 +118,41 @@ const styles = StyleSheet.create({
   row: {
     flexDirection: "row",
     alignItems: "center",
-    paddingVertical: 14,
     paddingHorizontal: 16,
     borderTopWidth: 1,
     borderColor: "#E5E7EB",
     justifyContent: "space-between",
   },
   cellLeft: {
+    flex: 1.2,
     fontSize: 16,
     color: "#111827",
   },
   cellRight: {
+    flex: 0.8,
     fontSize: 16,
     color: "#111827",
     fontWeight: "600",
+    textAlign: "right",
+    paddingLeft: 12, // add spacing after the line
+  },
+  cellLeftWrapper: {
+    flex: 1,
+    justifyContent: "center",
+    paddingVertical: 14,
+    paddingRight: 8,
+  },
+
+  cellRightWrapper: {
+    flex: 1,
+    justifyContent: "center",
+    paddingVertical: 14,
+    paddingLeft: 8,
+  },
+
+  divider: {
+    width: 1,
+    backgroundColor: "#E5E7EB",
+    alignSelf: "stretch", // ensures it fills full row height
   },
 });

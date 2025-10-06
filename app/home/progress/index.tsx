@@ -63,7 +63,10 @@ const Progress = () => {
 
   return (
     <View style={{ flex: 1, backgroundColor: "white" }}>
-      <HeaderBack title="QUÁ TRÌNH THAM GIA" />
+      <HeaderBack
+        title="QUÁ TRÌNH THAM GIA"
+        textStyle={{ fontWeight: "500" }}
+      />
 
       {/* Use horizontal ScrollView to avoid squeezing when labels wrap */}
       <View style={{ flex: 1, justifyContent: "space-between" }}>
@@ -91,14 +94,17 @@ const Progress = () => {
                   >
                     <Image
                       source={isSelected ? tab.tabActiveIcon : tab.tabIcon}
-                      style={{ width: 45, height: 45 }}
+                      style={{ width: 35, height: 35 }}
                       resizeMode="contain"
                     />
                   </TouchableOpacity>
 
                   {/* Constrain width + wrap up to 2 lines, then ellipsize */}
                   <Text
-                    style={styles.tabLabel}
+                    style={[
+                      styles.tabLabel,
+                      { color: isSelected ? Colors.primary : Colors.border },
+                    ]}
                     numberOfLines={2}
                     ellipsizeMode="tail"
                   >
@@ -116,7 +122,6 @@ const Progress = () => {
                   <Text
                     style={{
                       fontSize: 16,
-                      fontWeight: "bold",
                       color: Colors.primary,
                     }}
                   >
@@ -125,9 +130,12 @@ const Progress = () => {
                   <Text>
                     Tổng thời gian tham gia: {selectedTab?.data?.totalTime}
                   </Text>
-                  <Text style={{ color: "red" }}>
-                    Tổng thời gian chậm đóng : {selectedTab?.data?.totalDueTime}
-                  </Text>
+                  {selectedTab.id !== 4 && (
+                    <Text style={{ color: "red" }}>
+                      Tổng thời gian chậm đóng :{" "}
+                      {selectedTab?.data?.totalDueTime}
+                    </Text>
+                  )}
                 </View>
                 <EmploymentHistoryTable
                   data={selectedTab.data?.progress}
@@ -153,7 +161,7 @@ const Progress = () => {
 
 export default Progress;
 
-const TAB_ITEM_WIDTH = 68; // wide enough for 2-line titles like "BHTNLD-BNN"
+const TAB_ITEM_WIDTH = 60; // wide enough for 2-line titles like "BHTNLD-BNN"
 
 const styles = StyleSheet.create({
   tabsRow: {
@@ -167,8 +175,8 @@ const styles = StyleSheet.create({
   },
   tab: {
     borderRadius: 99,
-    width: 60,
-    height: 60,
+    width: 45,
+    height: 45,
     justifyContent: "center",
     alignItems: "center",
     borderWidth: 2,
@@ -178,7 +186,7 @@ const styles = StyleSheet.create({
     marginTop: 6,
     textAlign: "center",
     color: Colors.border,
-    fontSize: 11, // slightly smaller to prevent ugly wraps
+    fontSize: 14, // slightly smaller to prevent ugly wraps
     lineHeight: 13, // tighter line height looks better in 2 lines
   },
   description: {

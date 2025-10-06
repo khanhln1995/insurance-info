@@ -13,11 +13,12 @@ import {
   View,
 } from "react-native";
 
+import { Colors } from "@/constants/Colors";
 import { useUser } from "@/hooks/user";
 import AntDesign from "@expo/vector-icons/AntDesign";
 
 const { width } = Dimensions.get("window");
-const DRAWER_W = Math.min(360, Math.floor(width * 0.78));
+const DRAWER_W = Math.min(360, Math.floor(width * 0.68));
 
 type Props = {
   visible: boolean;
@@ -28,7 +29,7 @@ type Props = {
 const SideMenu: React.FC<Props> = ({ visible, onClose, onLogout }) => {
   const slideX = useRef(new Animated.Value(-DRAWER_W)).current;
 
-  const { userInfo } = useUser();
+  const { userInfo, medInsurance } = useUser();
 
   useEffect(() => {
     Animated.timing(slideX, {
@@ -102,13 +103,22 @@ const SideMenu: React.FC<Props> = ({ visible, onClose, onLogout }) => {
             {/* Header: avatar + name + phone */}
             <View style={styles.header}>
               <View style={styles.avatarRing}>
-                <Image
-                  source={require("@/assets/images/icon/avatar-male.png")}
-                  style={{ width: 80, height: 80 }}
-                />
+                <View
+                  style={{
+                    borderRadius: 50,
+                    borderWidth: 1,
+                    borderColor: Colors.primary,
+                    backgroundColor: "white",
+                  }}
+                >
+                  <Image
+                    source={require("@/assets/images/icon/avatar-male.png")}
+                    style={{ width: 50, height: 50 }}
+                  />
+                </View>
               </View>
-              <Text style={styles.name}>{userInfo.ten}</Text>
-              <Text style={styles.phone}>{userInfo.sdt}</Text>
+              <Text style={styles.name}>{userInfo?.ten}</Text>
+              <Text style={styles.phone}>{userInfo?.masoBHXH}</Text>
             </View>
 
             {/* Divider */}
@@ -171,7 +181,7 @@ const SideMenu: React.FC<Props> = ({ visible, onClose, onLogout }) => {
                 onPress: () => {},
               })}
               {renderItemMenu({
-                text: "Tra cứu",
+                text: "Trợ giúp",
                 icon: (
                   <Image
                     source={require("@/assets/images/icon/icon-global.png")}
@@ -248,9 +258,9 @@ const SideMenu: React.FC<Props> = ({ visible, onClose, onLogout }) => {
             {/* Only one menu item: Đăng xuất */}
 
             <View style={styles.footerWrap}>
-              <Text style={styles.footer}>Phiên bản 2.5</Text>
+              <Text style={styles.footer}>Phiên bản 2.6</Text>
               <Text style={styles.footer}>
-                Bản quyền thuộc về Bảo hiểm xã hội Việt Nam.
+                © Bản quyền thuộc về Bảo hiểm xã hội Việt Nam.
               </Text>
             </View>
           </SafeAreaView>
@@ -283,14 +293,14 @@ const styles = StyleSheet.create({
     paddingBottom: 18,
   },
   avatarRing: {
-    width: 84,
-    height: 84,
+    width: 60,
+    height: 60,
     borderRadius: 999,
-    borderWidth: 3,
-    borderColor: "rgba(255,255,255,0.7)",
     justifyContent: "center",
     alignItems: "center",
-    backgroundColor: "#fff",
+    backgroundColor: Colors.primary,
+    borderWidth: 1,
+    borderColor: "white",
   },
   avatar: {
     width: 74,
@@ -328,9 +338,9 @@ const styles = StyleSheet.create({
   },
   footer: {
     color: "#FFFFFF",
-    fontSize: 12,
+    fontSize: 14,
     bottom: 10,
-    left: 16,
+    marginBottom: 10,
   },
   footerWrap: {
     paddingVertical: 12,

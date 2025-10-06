@@ -101,7 +101,13 @@ const EmploymentHistoryTable: React.FC<Props> = ({
             idx !== 0 && styles.borderLeftWhite,
           ]}
         >
-          <Text style={[styles.headerText, headerTextStyle]}>{col.label}</Text>
+          <Text
+            numberOfLines={2}
+            style={[styles.headerText, headerTextStyle]}
+            ellipsizeMode="tail"
+          >
+            {col.label}
+          </Text>
         </View>
       ))}
       {/* Action column */}
@@ -206,7 +212,7 @@ const styles = StyleSheet.create({
   headerText: {
     color: "white",
     fontWeight: "600",
-    fontSize: 12,
+    fontSize: 10,
     textAlign: "center",
   },
   cellText: {
