@@ -55,7 +55,11 @@ const DetailProgress = () => {
             >
               <View style={styles.cellLeftWrapper}>
                 <Text style={styles.cellLeft}>
-                  {idx === 1 ? "Tiền lương" : `Tiền lương đóng ${title}`}
+                  {idx === 1
+                    ? "Mức lương"
+                    : `Tiền lương đóng ${
+                        title == "BHTNLD-BNN" ? "quỹ" : ""
+                      } ${title}`}
                 </Text>
               </View>
               <View style={styles.divider} />
@@ -82,14 +86,12 @@ const styles = StyleSheet.create({
   },
   rangeText: {
     color: "#111827",
-    fontSize: 17,
+    fontSize: 16,
   },
 
   infoCard: {
     backgroundColor: Colors.primary, // matches the blue block in your screenshot
     marginHorizontal: 12,
-    borderTopLeftRadius: 6,
-    borderTopRightRadius: 6,
     paddingHorizontal: 10,
     paddingVertical: 12,
   },
@@ -109,7 +111,7 @@ const styles = StyleSheet.create({
   table: {
     backgroundColor: "#ffffff",
     marginHorizontal: 12,
-    borderRadius: 6,
+    // borderRadius: 6,
     overflow: "hidden",
     borderWidth: 1,
     borderColor: "#E5E7EB",
@@ -127,12 +129,13 @@ const styles = StyleSheet.create({
   },
   cellLeft: {
     flex: 1.2,
-    fontSize: 13,
+    fontSize: 14,
     color: "#111827",
+    textAlign: "center",
   },
   cellRight: {
     flex: 0.8,
-    fontSize: 13,
+    fontSize: 14,
     color: "#111827",
     fontWeight: "400",
     textAlign: "right",
