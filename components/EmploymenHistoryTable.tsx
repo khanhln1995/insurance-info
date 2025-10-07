@@ -1,3 +1,4 @@
+import FontAwesome from "@expo/vector-icons/FontAwesome";
 import React from "react";
 import {
   FlatList,
@@ -167,11 +168,7 @@ const EmploymentHistoryTable: React.FC<Props> = ({
                 resizeMode="contain"
               />
             ) : (
-              <Image
-                source={require("@/assets/images/icon/eye.png")}
-                style={{ width: 18, height: 18 }}
-                resizeMode="contain"
-              />
+              <FontAwesome name="eye" size={18} color={headerColor} />
             )}
           </TouchableOpacity>
         ) : null}
@@ -198,7 +195,7 @@ export default EmploymentHistoryTable;
 const styles = StyleSheet.create({
   container: {
     borderWidth: 1,
-    borderColor: "#DCE0E5",
+    borderColor: "#2F6EA6",
     overflow: "hidden",
   },
   row: {
@@ -222,7 +219,7 @@ const styles = StyleSheet.create({
   },
   separator: {
     height: 1,
-    backgroundColor: "#DCE0E5",
+    backgroundColor: "#2F6EA6",
   },
   borderLeftWhite: {
     borderLeftWidth: 1,
@@ -230,7 +227,7 @@ const styles = StyleSheet.create({
   },
   borderLeftGrey: {
     borderLeftWidth: 1,
-    borderLeftColor: "#DCE0E5",
+    borderLeftColor: "#2F6EA6",
   },
   eyeButton: { alignItems: "center", justifyContent: "center" },
 });

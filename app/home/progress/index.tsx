@@ -37,7 +37,7 @@ const Progress = () => {
     },
     {
       id: 3,
-      tabTitle: "BHTNLD-BNN",
+      tabTitle: "BHTNLĐ-BNN",
       tabIcon: require("@/assets/images/tab/bhtnldbnn-inactive.png"),
       tabActiveIcon: require("@/assets/images/tab/bhtnldbnn-active.png"),
       title: "Bảo hiểm tai nạn lao động, bệnh nghề nghiệp",

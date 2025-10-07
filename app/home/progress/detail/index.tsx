@@ -58,8 +58,8 @@ const DetailProgress = () => {
                   {idx === 1
                     ? "Mức lương"
                     : `Tiền lương đóng ${
-                        title == "BHTNLD-BNN" ? "quỹ" : ""
-                      } ${title}`}
+                        title == "BHTNLĐ-BNN" ? "quỹ TNLĐ, BNN" : title
+                      }`}
                 </Text>
               </View>
               <View style={styles.divider} />
