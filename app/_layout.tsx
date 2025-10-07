@@ -3,14 +3,21 @@ import SafeArea from "@/components/SafeArea";
 import { useColorScheme } from "@/hooks/useColorScheme";
 import { store } from "@/store/index";
 import {
+  Inter_400Regular,
+  Inter_500Medium,
+  Inter_600SemiBold,
+  Inter_700Bold,
+  useFonts,
+} from "@expo-google-fonts/inter";
+import {
   DarkTheme,
   DefaultTheme,
   ThemeProvider,
 } from "@react-navigation/native";
-import { useFonts } from "expo-font";
 import { Stack } from "expo-router";
 import * as SplashScreen from "expo-splash-screen";
 import { useEffect } from "react";
+import { Text, TextInput } from "react-native";
 import { Provider } from "react-redux";
 
 SplashScreen.preventAutoHideAsync().catch(() => {});
@@ -18,15 +25,33 @@ SplashScreen.preventAutoHideAsync().catch(() => {});
 export default function RootLayout() {
   const colorScheme = useColorScheme();
 
-  const [loaded] = useFonts({
-    SpaceMono: require("../assets/fonts/SpaceMono-Regular.ttf"),
+  const [fontsLoaded] = useFonts({
+    Inter_400Regular,
+    Inter_500Medium,
+    Inter_600SemiBold,
+    Inter_700Bold,
   });
 
   useEffect(() => {
-    if (loaded) SplashScreen.hideAsync().catch(() => {});
-  }, [loaded]);
+    if (fontsLoaded) {
+      // 👇 Cast to any to bypass TS check safely
+      (Text as any).defaultProps = (Text as any).defaultProps || {};
+      (Text as any).defaultProps.style = [
+        (Text as any).defaultProps.style || {},
+        { fontFamily: "Inter_400Regular" },
+      ];
 
-  // ✅ Always render a navigator on first render
+      (TextInput as any).defaultProps = (TextInput as any).defaultProps || {};
+      (TextInput as any).defaultProps.style = [
+        (TextInput as any).defaultProps.style || {},
+        { fontFamily: "Inter_400Regular" },
+      ];
+
+      SplashScreen.hideAsync().catch(() => {});
+    }
+  }, [fontsLoaded]);
+  if (!fontsLoaded) return null;
+
   return (
     <Provider store={store}>
       <SafeArea>

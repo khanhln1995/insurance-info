@@ -88,7 +88,7 @@ const Home = () => {
     <SafeArea>
       <HeaderBack
         title="QUẢN LÝ CÁ NHÂN"
-        textStyle={{ fontWeight: 400, fontSize: 14 }}
+        textStyle={{ fontWeight: 400, fontSize: 20 }}
         iconLeft={<Ionicons name="menu" size={24} color="white" />}
         textColor="white"
         onGoBack={() => {

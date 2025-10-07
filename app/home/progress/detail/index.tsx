@@ -7,7 +7,7 @@ import React from "react";
 import { SafeAreaView, ScrollView, StyleSheet, Text, View } from "react-native";
 
 const DetailProgress = () => {
-  const { detail } = useLocalSearchParams();
+  const { detail, title } = useLocalSearchParams();
   const data = JSON.parse(detail as string);
 
   const renderInfoLine = (label: string, value?: string) => (
@@ -54,7 +54,9 @@ const DetailProgress = () => {
               style={[styles.row, idx === 0 && styles.rowTopBorder]}
             >
               <View style={styles.cellLeftWrapper}>
-                <Text style={styles.cellLeft}>Tiền lương đóng BHYT</Text>
+                <Text style={styles.cellLeft}>
+                  {idx === 1 ? "Tiền lương" : `Tiền lương đóng ${title}`}
+                </Text>
               </View>
               <View style={styles.divider} />
               <View style={styles.cellRightWrapper}>
@@ -80,7 +82,7 @@ const styles = StyleSheet.create({
   },
   rangeText: {
     color: "#111827",
-    fontSize: 21,
+    fontSize: 17,
   },
 
   infoCard: {
@@ -94,7 +96,7 @@ const styles = StyleSheet.create({
   infoLine: {
     color: "#E6F0FF",
     lineHeight: 22,
-    fontSize: 20,
+    fontSize: 14,
   },
   infoLabel: {
     color: "#E6F0FF",
@@ -125,12 +127,12 @@ const styles = StyleSheet.create({
   },
   cellLeft: {
     flex: 1.2,
-    fontSize: 16,
+    fontSize: 13,
     color: "#111827",
   },
   cellRight: {
     flex: 0.8,
-    fontSize: 16,
+    fontSize: 13,
     color: "#111827",
     fontWeight: "400",
     textAlign: "right",

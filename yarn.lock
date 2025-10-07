@@ -1216,6 +1216,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@expo-google-fonts/inter@npm:^0.4.2":
+  version: 0.4.2
+  resolution: "@expo-google-fonts/inter@npm:0.4.2"
+  checksum: 3a8ea9cc3e3f0968bbd615f28a454ffd2bb0540a513ad64e0b7fa2f1b2b310d09ba1b9ad675ed5d5a9f4dc3210fa466bcd828395e527b1ddf373ce205dcbaf42
+  languageName: node
+  linkType: hard
+
 "@expo/cli@npm:0.24.21":
   version: 0.24.21
   resolution: "@expo/cli@npm:0.24.21"
@@ -2743,6 +2750,7 @@ __metadata:
   resolution: "VssiID@workspace:."
   dependencies:
     "@babel/core": ^7.25.2
+    "@expo-google-fonts/inter": ^0.4.2
     "@expo/vector-icons": ^15.0.2
     "@react-native-async-storage/async-storage": ^2.2.0
     "@react-navigation/bottom-tabs": ^7.3.10

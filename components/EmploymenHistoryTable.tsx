@@ -41,6 +41,7 @@ type Props = {
   // Optional: supply your own columns (default provided below)
   columns?: Column<EmploymentRow>[];
   isBHYT?: boolean;
+  title?: string;
 };
 
 const defaultColumns: Column<EmploymentRow>[] = [
@@ -85,6 +86,7 @@ const EmploymentHistoryTable: React.FC<Props> = ({
   cellTextStyle,
   columns = defaultColumns,
   isBHYT = false,
+  title,
 }) => {
   const displayColumns = React.useMemo(
     () => (isBHYT ? columns.filter((c) => c.key !== "chucvu") : columns),
@@ -98,7 +100,7 @@ const EmploymentHistoryTable: React.FC<Props> = ({
           style={[
             styles.cell,
             { flex: col.flex ?? 1 },
-            idx !== 0 && styles.borderLeftWhite,
+            idx !== 0 && isBHYT && styles.borderLeftWhite,
           ]}
         >
           <Text
@@ -114,7 +116,7 @@ const EmploymentHistoryTable: React.FC<Props> = ({
       <View
         style={[
           styles.cell,
-          styles.borderLeftWhite,
+          isBHYT && styles.borderLeftWhite,
           { width: 44, flexGrow: 0 },
         ]}
       />
@@ -197,7 +199,6 @@ const styles = StyleSheet.create({
   container: {
     borderWidth: 1,
     borderColor: "#DCE0E5",
-    borderRadius: 4,
     overflow: "hidden",
   },
   row: {

@@ -145,6 +145,7 @@ const Progress = () => {
                       pathname: "/home/progress/detail",
                       params: {
                         detail: JSON.stringify(detail),
+                        title: selectedTab.tabTitle,
                       },
                     });
                   }}
@@ -195,5 +196,9 @@ const styles = StyleSheet.create({
   description: {
     backgroundColor: Colors.bgInfo,
     padding: 20,
+    borderTopLeftRadius: 5,
+    borderTopRightRadius: 5,
+    borderWidth: 1,
+    borderColor: Colors.border,
   },
 });

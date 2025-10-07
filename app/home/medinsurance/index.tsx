@@ -14,7 +14,10 @@ const MedInSurance = () => {
         backgroundColor: "white",
       }}
     >
-      <HeaderBack title="THẺ BẢO HIỂM Y TẾ" textStyle={{ fontWeight: "500" }} />
+      <HeaderBack
+        title="THẺ BẢO HIỂM Y TẾ"
+        textStyle={{ fontWeight: "500", fontSize: 20 }}
+      />
       <View
         style={{
           padding: 20,
