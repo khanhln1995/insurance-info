@@ -92,8 +92,8 @@ const styles = StyleSheet.create({
   infoCard: {
     backgroundColor: Colors.primary, // matches the blue block in your screenshot
     marginHorizontal: 12,
-    paddingHorizontal: 10,
-    paddingVertical: 12,
+    paddingHorizontal: 5,
+    paddingVertical: 5,
   },
   infoLine: {
     color: "#E6F0FF",

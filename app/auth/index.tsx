@@ -238,7 +238,7 @@ const styles = StyleSheet.create({
   header: {
     flexDirection: "row",
     justifyContent: "space-between",
-    paddingVertical: 50,
+    paddingVertical: 40,
     paddingHorizontal: 15,
     zIndex: 100,
   },

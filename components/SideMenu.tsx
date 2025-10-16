@@ -29,7 +29,7 @@ type Props = {
 const SideMenu: React.FC<Props> = ({ visible, onClose, onLogout }) => {
   const slideX = useRef(new Animated.Value(-DRAWER_W)).current;
 
-  const { userInfo, medInsurance } = useUser();
+  const { userInfo, medInsurance, avatar } = useUser();
 
   useEffect(() => {
     Animated.timing(slideX, {
@@ -111,10 +111,17 @@ const SideMenu: React.FC<Props> = ({ visible, onClose, onLogout }) => {
                     backgroundColor: "white",
                   }}
                 >
-                  <Image
-                    source={require("@/assets/images/icon/avatar-male.png")}
-                    style={{ width: 50, height: 50 }}
-                  />
+                  {avatar?.uri ? (
+                    <Image
+                      source={{ uri: avatar?.uri }}
+                      style={{ width: 50, height: 50, borderRadius: 50 }}
+                    />
+                  ) : (
+                    <Image
+                      source={require("@/assets/images/icon/avatar-male.png")}
+                      style={{ width: 50, height: 50 }}
+                    />
+                  )}
                 </View>
               </View>
               <Text style={styles.name}>{userInfo?.ten}</Text>

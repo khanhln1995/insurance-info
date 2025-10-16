@@ -18,6 +18,7 @@ import { Stack } from "expo-router";
 import * as SplashScreen from "expo-splash-screen";
 import { useEffect } from "react";
 import { Text, TextInput } from "react-native";
+import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { Provider } from "react-redux";
 
 SplashScreen.preventAutoHideAsync().catch(() => {});
@@ -53,14 +54,16 @@ export default function RootLayout() {
   if (!fontsLoaded) return null;
 
   return (
-    <Provider store={store}>
-      <SafeArea>
-        <ThemeProvider
-          value={colorScheme === "dark" ? DarkTheme : DefaultTheme}
-        >
-          <Stack screenOptions={{ headerShown: false }} />
-        </ThemeProvider>
-      </SafeArea>
-    </Provider>
+    <GestureHandlerRootView style={{ flex: 1 }}>
+      <Provider store={store}>
+        <SafeArea>
+          <ThemeProvider
+            value={colorScheme === "dark" ? DarkTheme : DefaultTheme}
+          >
+            <Stack screenOptions={{ headerShown: false }} />
+          </ThemeProvider>
+        </SafeArea>
+      </Provider>
+    </GestureHandlerRootView>
   );
 }

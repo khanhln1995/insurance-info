@@ -100,7 +100,7 @@ export default HeaderBack;
 const styles = StyleSheet.create({
   container: {
     width: "100%",
-    height: 30,
+    height: 35,
     paddingHorizontal: "8%",
     alignItems: "center",
     alignSelf: "center",

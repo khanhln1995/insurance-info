@@ -62,7 +62,7 @@ const Home = () => {
               borderTopWidth: isTop ? 1 : 0,
               borderBottomWidth: isBottom ? 1 : 0,
               borderBottomColor: Colors.txtDark,
-              paddingVertical: 25,
+              paddingVertical: 20,
               marginRight: 8, // space before chevron
             }}
           >
@@ -99,7 +99,7 @@ const Home = () => {
       <View style={{ justifyContent: "space-between", flex: 1 }}>
         <View style={{ padding: 20 }}>
           <InfoCard type="user" />
-          <Spacer size={20} />
+          <Spacer size={10} />
           <RenderSelect
             text="THẺ BHYT"
             source={require("@/assets/images/icon/card.png")}

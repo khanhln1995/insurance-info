@@ -5,7 +5,7 @@
     "progress": [
       {
         "tuthang": "1/2024",
-        "denthang": "2/2025",
+        "denthang": "6/2024",
         "donvi": "Công ty A",
         "chucvu": "Quản lý",
         "chitiet": {
@@ -15,8 +15,8 @@
         }
       },
       {
-        "tuthang": "1/2025",
-        "denthang": "2/2026",
+        "tuthang": "7/2024",
+        "denthang": "12/2024",
         "donvi": "Công ty B",
         "chucvu": "Quản lý",
         "chitiet": {
@@ -44,7 +44,7 @@
     "progress": [
       {
         "tuthang": "1/2024",
-        "denthang": "2/2025",
+        "denthang": "6/2024",
         "donvi": "Công ty A",
         "chucvu": "Quản lý",
         "chitiet": {
@@ -54,8 +54,8 @@
         }
       },
       {
-        "tuthang": "1/2025",
-        "denthang": "2/2026",
+        "tuthang": "7/2024",
+        "denthang": "12/2024",
         "donvi": "Công ty B",
         "chucvu": "Quản lý",
         "chitiet": {
@@ -83,7 +83,7 @@
     "progress": [
       {
         "tuthang": "1/2024",
-        "denthang": "2/2025",
+        "denthang": "6/2024",
         "donvi": "Công ty A",
         "chucvu": "Quản lý",
         "chitiet": {
@@ -93,8 +93,8 @@
         }
       },
       {
-        "tuthang": "1/2025",
-        "denthang": "2/2026",
+        "tuthang": "7/2024",
+        "denthang": "12/2024",
         "donvi": "Công ty B",
         "chucvu": "Quản lý",
         "chitiet": {

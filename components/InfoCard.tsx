@@ -9,7 +9,8 @@ interface Props {
 }
 
 const InfoCard = ({ type }: Props) => {
-  const { userInfo, medInsurance } = useUser();
+  const { userInfo, medInsurance, avatar } = useUser();
+  console.log("avatar", avatar);
 
   let subInfo: any;
   let contentCard: any;
@@ -102,10 +103,17 @@ const InfoCard = ({ type }: Props) => {
             alignItems: "center",
           }}
         >
-          <Image
-            source={require("@/assets/images/icon/avatar-male.png")}
-            style={{ width: 60, height: 60 }}
-          />
+          {avatar?.uri ? (
+            <Image
+              source={{ uri: avatar.uri }}
+              style={{ width: 50, height: 50, borderRadius: 50 }}
+            />
+          ) : (
+            <Image
+              source={require("@/assets/images/icon/avatar-male.png")}
+              style={{ width: 60, height: 60 }}
+            />
+          )}
         </View>
         <View>
           <Text style={{ fontWeight: "bold", marginVertical: 5 }}>{name}</Text>

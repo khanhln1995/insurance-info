@@ -1,7 +1,6 @@
 import BottomMenuBar from "@/components/BottomMenuBar";
 import EmploymentHistoryTable from "@/components/EmploymenHistoryTable";
 import HeaderBack from "@/components/HeaderBack";
-import Spacer from "@/components/Spacer";
 import { Colors } from "@/constants/Colors";
 import { useUser } from "@/hooks/user";
 import { useRouter } from "expo-router";
@@ -14,6 +13,7 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
+const BOTTOM_BAR_HEIGHT = 150;
 
 const Progress = () => {
   const router: any = useRouter();
@@ -60,6 +60,27 @@ const Progress = () => {
     },
   ];
   const [selectedTab, setSelectedTab] = React.useState(progressData[0]);
+  const calculateTotalTime = (progress: any) => {
+    let totalMonths = 0;
+
+    progress.forEach((item: any) => {
+      const [startMonth, startYear] = item.tuthang.split("/").map(Number);
+      const [endMonth, endYear] = item.denthang.split("/").map(Number);
+
+      // Chuyển tất cả về tháng để tính toán
+      const startTotalMonths = startYear * 12 + (startMonth - 1);
+      const endTotalMonths = endYear * 12 + (endMonth - 1);
+
+      // Cộng thêm 1 để tính cả tháng bắt đầu và kết thúc (tùy yêu cầu)
+      const diff = endTotalMonths - startTotalMonths + 1;
+      totalMonths += diff;
+    });
+
+    const years = Math.floor(totalMonths / 12);
+    const months = totalMonths % 12;
+
+    return `${years} năm ${months} tháng`;
+  };
 
   return (
     <View style={{ flex: 1, backgroundColor: "white" }}>
@@ -71,7 +92,7 @@ const Progress = () => {
 
       {/* Use horizontal ScrollView to avoid squeezing when labels wrap */}
       <View style={{ flex: 1, justifyContent: "space-between" }}>
-        <View>
+        <View style={{ flex: 1 }}>
           <View style={styles.tabsRow}>
             {progressData.map((tab) => {
               const isSelected = selectedTab.id === tab.id;
@@ -111,14 +132,22 @@ const Progress = () => {
               );
             })}
           </View>
-          <Spacer size={20} />
-          <ScrollView style={{ paddingHorizontal: 10 }}>
+          {/* <Spacer size={20} /> */}
+          <ScrollView
+            style={{ flex: 1 }}
+            contentContainerStyle={{
+              paddingHorizontal: 15,
+              paddingTop: 10,
+              paddingBottom: BOTTOM_BAR_HEIGHT + 24, // room for bottom bar + a little spacing
+            }}
+            showsVerticalScrollIndicator={false}
+          >
             {selectedTab.id != 5 && (
               <>
                 <View style={styles.description}>
                   <Text
                     style={{
-                      fontSize: 18,
+                      fontSize: 16,
                       color: Colors.primary,
                     }}
                   >
@@ -126,13 +155,14 @@ const Progress = () => {
                   </Text>
                   <Text
                     style={{
-                      fontSize: 16,
+                      fontSize: 14,
                     }}
                   >
-                    Tổng thời gian tham gia: {selectedTab?.data?.totalTime}
+                    Tổng thời gian tham gia:{" "}
+                    {calculateTotalTime(selectedTab.data?.progress) || "-"}
                   </Text>
                   {!(selectedTab.id == 4 || selectedTab.id == 3) && (
-                    <Text style={{ color: "red", fontSize: 16 }}>
+                    <Text style={{ color: "red", fontSize: 14 }}>
                       Tổng thời gian chậm đóng :{" "}
                       {selectedTab?.data?.totalDueTime}
                     </Text>
@@ -195,7 +225,7 @@ const styles = StyleSheet.create({
   },
   description: {
     backgroundColor: Colors.bgInfo,
-    padding: 20,
+    padding: 10,
     borderTopLeftRadius: 5,
     borderTopRightRadius: 5,
     borderWidth: 1,
