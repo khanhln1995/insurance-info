@@ -3,11 +3,12 @@ import React from "react";
 import {
   Modal,
   StyleSheet,
-  Text,
   TouchableOpacity,
   TouchableWithoutFeedback,
   View,
 } from "react-native";
+
+import AppText from "@/components/AppText";
 
 const ActionPhoto = ({ isOpen, onClose, openGallery, openCamera }: any) => {
   return (
@@ -24,7 +25,9 @@ const ActionPhoto = ({ isOpen, onClose, openGallery, openCamera }: any) => {
       <View style={styles.sheet}>
         <TouchableOpacity style={styles.item} onPress={openGallery}>
           <Feather name="image" size={24} color="#a1a1aa" style={styles.icon} />
-          <Text style={styles.text}>Mở thư viện ảnh</Text>
+          <AppText variant="body" style={styles.text}>
+            Mở thư viện ảnh
+          </AppText>
         </TouchableOpacity>
 
         <TouchableOpacity style={styles.item} onPress={openCamera}>
@@ -34,12 +37,19 @@ const ActionPhoto = ({ isOpen, onClose, openGallery, openCamera }: any) => {
             color="#a1a1aa"
             style={styles.icon}
           />
-          <Text style={styles.text}>Mở Camera</Text>
+          <AppText variant="body" style={styles.text}>
+            Mở Camera
+          </AppText>
         </TouchableOpacity>
 
         <TouchableOpacity style={styles.item} onPress={onClose}>
           <Feather name="x" size={24} color="#f87171" style={styles.icon} />
-          <Text style={[styles.text, { color: "#f87171" }]}>Huỷ</Text>
+          <AppText
+            variant="body"
+            style={[styles.text, { color: "#f87171" }]}
+          >
+            Huỷ
+          </AppText>
         </TouchableOpacity>
       </View>
     </Modal>
@@ -70,7 +80,6 @@ const styles = StyleSheet.create({
     marginRight: 12,
   },
   text: {
-    fontSize: 16,
     color: "#1f2937",
   },
 });

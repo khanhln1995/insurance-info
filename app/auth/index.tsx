@@ -1,3 +1,4 @@
+import AppText from "@/components/AppText";
 import Input from "@/components/Input";
 import RoundAvatar from "@/components/RoundAvatar";
 import Spacer from "@/components/Spacer";
@@ -9,13 +10,13 @@ import {
   Image,
   ImageBackground,
   StyleSheet,
-  Text,
   TouchableOpacity,
   View,
 } from "react-native";
 const { width, height } = Dimensions.get("window");
 const HEADER_HEIGHT = height / 1.4;
 const LoginScreen = () => {
+  
   const router = useRouter();
   return (
     <View
@@ -34,19 +35,17 @@ const LoginScreen = () => {
         <View style={styles.header}>
           <Image
             source={require("../../assets/images/bell.png")}
-            width={30}
-            height={30}
+            style={{ width: 30, height: 30 }}
           />
           <TouchableOpacity
             onLongPress={() => {
-              console.log("Pressed");
               router.push("/auth/datainput");
             }}
+            hitSlop={{ top: 10, bottom: 10, left: 10, right: 10 }}
           >
             <Image
               source={require("../../assets/images/vn-flag.png")}
-              width={30}
-              height={30}
+              style={{ width: 30, height: 30 }}
             />
           </TouchableOpacity>
         </View>
@@ -70,19 +69,19 @@ const LoginScreen = () => {
                 <View>
                   <Image
                     source={require("../../assets/images/icon/user.png")}
-                    style={{ width: 18, height: 23 }}
+                    style={{ width: 18.87, height: 22.05 }}
                   />
                 </View>
               }
               placeholder="Mã số BHXH/ Số ĐDCN/ CCCD"
             />
-            <Spacer size={20} />
+            <Spacer size={13.23} />
             <Input
               iconLeft={
                 <View>
                   <Image
                     source={require("../../assets/images/icon/lock.png")}
-                    style={{ width: 18, height: 23 }}
+                    style={{ width: 18.87, height: 22.05 }}
                   />
                 </View>
               }
@@ -90,7 +89,7 @@ const LoginScreen = () => {
               placeholder="Mật khẩu"
             />
           </View>
-          <Spacer size={20} />
+          <Spacer size={5.36} />
           <View
             style={{
               flexDirection: "row",
@@ -99,87 +98,93 @@ const LoginScreen = () => {
             }}
           >
             <TouchableOpacity>
-              <Text style={{ color: Colors.primary }}>Quên mật khẩu ?</Text>
+              <AppText variant="microBold" style={{ color: Colors.textPrimary }}>
+                Quên mật khẩu ?
+              </AppText>
             </TouchableOpacity>
             <TouchableOpacity>
-              <Text style={{ color: Colors.primary }}>Đăng ký tài khoản</Text>
+              <AppText variant="microBold" style={{ color: Colors.textPrimary }}>
+                Đăng ký tài khoản
+              </AppText>
             </TouchableOpacity>
           </View>
-          <Spacer size={20} />
+          <Spacer size={21.43} />
 
           <View
             style={{
               flexDirection: "row",
               justifyContent: "space-between",
+              alignItems: "center",
               width: "100%",
-              gap: 20,
+              gap: 13.23,
             }}
           >
-            <TouchableOpacity activeOpacity={0.7} style={styles.button}>
-              <Text
+            <TouchableOpacity
+              activeOpacity={0.7}
+              style={styles.button}
+              onPress={() => router.replace("/home")}
+            >
+              <AppText
+                variant="textLoginBtn"
                 style={{
                   color: Colors.primary,
-                  fontWeight: "bold",
-                  fontSize: 16,
-                }}
-                onPress={() => {
-                  router.replace("/home");
                 }}
               >
                 Đăng Nhập
-              </Text>
+              </AppText>
             </TouchableOpacity>
             <TouchableOpacity activeOpacity={0.7}>
               <Image
                 source={require("../../assets/images/icon/face-id.png")}
-                style={{ width: 39, height: 39 }}
+                style={{ width: 40.69, height: 41.02 }}
               />
             </TouchableOpacity>
           </View>
-          <Spacer size={20} />
+          <Spacer size={17.64} />
 
           <View
             style={{
               backgroundColor: "#DA1B13",
-              padding: 5,
+              padding: 2.2,
               width: "100%",
-              borderRadius: 5,
+              height: 61.74,
+              borderRadius: 8.82,
               flexDirection: "row",
               justifyContent: "space-between",
               alignItems: "center",
             }}
           >
-            <Text
+            <AppText
               style={{
                 color: "white",
-                fontWeight: 600,
                 textAlign: "center",
                 flex: 1,
-                fontSize: 16,
+                fontSize: 15.44,
+                fontWeight: "500",
               }}
             >
               {"Đăng nhập bằng tài khoản\n định danh điện tử"}
-            </Text>
+            </AppText>
             <Image
               source={require("../../assets/images/vneid.png")}
-              style={{ width: 49, height: 52 }}
+              style={{ width: 54, height: 57.33 }}
             />
           </View>
         </View>
       </ImageBackground>
       <View style={{ padding: 20 }}>
         <TouchableOpacity activeOpacity={0.7}>
-          <Text style={{ color: Colors.primary, textAlign: "center" }}>
+          <AppText variant="body" style={{ color: Colors.primary, textAlign: "center" }}>
             Mở cài đặt VssID
-          </Text>
+          </AppText>
         </TouchableOpacity>
-        <Spacer size={20} />
+        <Spacer size={26.46} />
         <TouchableOpacity activeOpacity={0.7}>
-          <Text style={{ color: Colors.primary, textAlign: "right" }}>
+          <AppText variant="body" style={{ color: Colors.primary, textAlign: "right" }}>
             Chính sách quyền riêng tư
-          </Text>
+          </AppText>
         </TouchableOpacity>
-        <Spacer size={20} />
+        <Spacer size={26.46} />
         <View
           style={{
             flexDirection: "row",
@@ -192,12 +197,18 @@ const LoginScreen = () => {
               flexDirection: "row",
               justifyContent: "center",
               alignItems: "center",
-              gap: 10,
+              gap: 23.44,
             }}
           >
             <TouchableOpacity>
               <Image
                 source={require("../../assets/images/icon/list.png")}
+                style={{ width: 24, height: 24 }}
+              />
+            </TouchableOpacity>
+             <TouchableOpacity>
+              <Image
+                source={require("../../assets/images/icon/support.png")}
                 style={{ width: 24, height: 24 }}
               />
             </TouchableOpacity>
@@ -207,12 +218,7 @@ const LoginScreen = () => {
                 style={{ width: 24, height: 24 }}
               />
             </TouchableOpacity>
-            <TouchableOpacity>
-              <Image
-                source={require("../../assets/images/icon/support.png")}
-                style={{ width: 24, height: 24 }}
-              />
-            </TouchableOpacity>
+           
             <TouchableOpacity>
               <Image
                 source={require("../../assets/images/icon/video.png")}
@@ -245,15 +251,18 @@ const styles = StyleSheet.create({
   content: {
     paddingHorizontal: 20,
     alignItems: "center",
+    width: 369.05,
+    alignSelf: "center",
   },
   button: {
     borderWidth: 2,
     borderColor: Colors.primary,
-    borderRadius: 5,
+    borderRadius: 4.41,
     alignItems: "center",
     justifyContent: "center",
-    height: 39,
+    height: 46,
     flex: 1,
+    width: 315.13
   },
   headerBg: {
     height: HEADER_HEIGHT,

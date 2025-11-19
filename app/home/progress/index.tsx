@@ -9,10 +9,10 @@ import {
   Image,
   ScrollView,
   StyleSheet,
-  Text,
   TouchableOpacity,
   View,
 } from "react-native";
+import AppText from "@/components/AppText";
 const BOTTOM_BAR_HEIGHT = 150;
 
 const Progress = () => {
@@ -86,7 +86,8 @@ const Progress = () => {
     <View style={{ flex: 1, backgroundColor: "white" }}>
       <HeaderBack
         title="QUÁ TRÌNH THAM GIA"
-        textStyle={{ fontWeight: "400", fontSize: 20, marginBottom: 10 }}
+        titleVariant="headingMdRegular"
+        textStyle={{ marginBottom: 10 }}
         containerStyle={{ height: 60 }}
       />
 
@@ -112,13 +113,14 @@ const Progress = () => {
                   >
                     <Image
                       source={isSelected ? tab.tabActiveIcon : tab.tabIcon}
-                      style={{ width: 40, height: 40 }}
+                      style={{ width: 42, height: 42 }}
                       resizeMode="contain"
                     />
                   </TouchableOpacity>
 
                   {/* Constrain width + wrap up to 2 lines, then ellipsize */}
-                  <Text
+                  <AppText
+                    variant="label"
                     style={[
                       styles.tabLabel,
                       { color: isSelected ? Colors.primary : Colors.border },
@@ -127,7 +129,7 @@ const Progress = () => {
                     ellipsizeMode="tail"
                   >
                     {tab.tabTitle}
-                  </Text>
+                  </AppText>
                 </View>
               );
             })}
@@ -145,27 +147,23 @@ const Progress = () => {
             {selectedTab.id != 5 && (
               <>
                 <View style={styles.description}>
-                  <Text
+                  <AppText
+                    variant="headingMd"
                     style={{
-                      fontSize: 16,
-                      color: Colors.primary,
+                      color: '#306BA3',
                     }}
                   >
                     Quá trình tham gia {selectedTab.title}
-                  </Text>
-                  <Text
-                    style={{
-                      fontSize: 14,
-                    }}
-                  >
+                  </AppText>
+                  <AppText variant="small">
                     Tổng thời gian tham gia:{" "}
                     {calculateTotalTime(selectedTab.data?.progress) || "-"}
-                  </Text>
+                  </AppText>
                   {!(selectedTab.id == 4 || selectedTab.id == 3) && (
-                    <Text style={{ color: "red", fontSize: 14 }}>
+                    <AppText variant="small" style={{ color: "#CE0301" }}>
                       Tổng thời gian chậm đóng :{" "}
                       {selectedTab?.data?.totalDueTime}
-                    </Text>
+                    </AppText>
                   )}
                 </View>
                 <EmploymentHistoryTable
@@ -220,7 +218,6 @@ const styles = StyleSheet.create({
     marginTop: 6,
     textAlign: "center",
     color: Colors.border,
-    fontSize: 14, // slightly smaller to prevent ugly wraps
     lineHeight: 13, // tighter line height looks better in 2 lines
   },
   description: {

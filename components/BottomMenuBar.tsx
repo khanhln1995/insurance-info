@@ -1,6 +1,7 @@
 import { Colors } from "@/constants/Colors";
 import React from "react";
-import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { Image, StyleSheet, TouchableOpacity, View } from "react-native";
+import AppText from "@/components/AppText";
 
 const BottomMenuBar = () => {
   return (
@@ -21,44 +22,44 @@ const BottomMenuBar = () => {
       >
         <Image
           source={require("@/assets/images/icon/setting-user.png")}
-          style={{ width: 24, height: 24 }}
+          style={{ width: 21.6, height: 21.6 }}
         />
-        <Text style={{ color: Colors.primary, fontSize: 10, marginTop: 5 }}>
+        <AppText variant="captionBold" style={{ color: Colors.primary, marginTop: 5 }}>
           QL cá nhân
-        </Text>
+        </AppText>
       </TouchableOpacity>
       <TouchableOpacity
         style={{ alignItems: "center", justifyContent: "center" }}
       >
         <Image
           source={require("@/assets/images/icon/list-inactive.png")}
-          style={{ width: 24, height: 24 }}
+          style={{ width: 21.6, height: 21.6 }}
         />
-        <Text style={{ color: Colors.txtDark, fontSize: 10, marginTop: 5 }}>
+        <AppText variant="captionBold" style={{ color: Colors.txtDark, marginTop: 5 }}>
           Dịch vụ công
-        </Text>
+        </AppText>
       </TouchableOpacity>
       <TouchableOpacity
         style={{ alignItems: "center", justifyContent: "center" }}
       >
         <Image
           source={require("@/assets/images/icon/global-search-inactive.png")}
-          style={{ width: 24, height: 24 }}
+          style={{ width: 21.6, height: 21.6 }}
         />
-        <Text style={{ color: Colors.txtDark, fontSize: 10, marginTop: 5 }}>
+        <AppText variant="captionBold" style={{ color: Colors.txtDark, marginTop: 5 }}>
           Tra cứu
-        </Text>
+        </AppText>
       </TouchableOpacity>
       <TouchableOpacity
         style={{ alignItems: "center", justifyContent: "center" }}
       >
         <Image
           source={require("@/assets/images/icon/support-inactive.png")}
-          style={{ width: 24, height: 24 }}
+          style={{ width: 21.6, height: 21.6 }}
         />
-        <Text style={{ color: Colors.txtDark, fontSize: 10, marginTop: 5 }}>
+        <AppText variant="captionBold" style={{ color: Colors.txtDark, marginTop: 5 }}>
           Trợ giúp
-        </Text>
+        </AppText>
       </TouchableOpacity>
     </View>
   );

@@ -12,7 +12,6 @@ import {
   SafeAreaView,
   ScrollView,
   StyleSheet,
-  Text,
   TextInput,
   TouchableOpacity,
   View,
@@ -21,11 +20,13 @@ import {
   PinchGestureHandler,
   PinchGestureHandlerStateChangeEvent,
 } from "react-native-gesture-handler";
-import ImagePicker from "react-native-image-crop-picker";
+// import ImagePicker from "react-native-image-crop-picker";
 import ViewShot from "react-native-view-shot";
 
 import ActionPhoto from "@/components/ActionPhoto";
+import AppText from "@/components/AppText";
 import HeaderBack from "@/components/HeaderBack";
+import PhotoField from "@/components/PhotoField";
 import Spacer from "@/components/Spacer";
 import { Colors } from "@/constants/Colors";
 import { useUser } from "@/hooks/user";
@@ -52,9 +53,18 @@ const DataInput = () => {
   const [avatar, setAvatar] = useState<null | { uri: string; base64?: string }>(
     null
   );
+  const [medCardPhoto, setMedCardPhoto] = useState<
+    null | { uri: string; base64?: string }
+  >(null);
+  const [photoTarget, setPhotoTarget] = useState<"avatar" | "medCard">("avatar");
 
-  const { setUserInfo, setProgressList, setMedInsurance, setUserAvatar } =
-    useUser();
+  const {
+    setUserInfo,
+    setProgressList,
+    setMedInsurance,
+    setUserAvatar,
+    setMedCardImage: setUserMedCardImage,
+  } = useUser();
 
   // Editor state
   const [editorOpen, setEditorOpen] = useState(false);
@@ -75,10 +85,6 @@ const DataInput = () => {
   const dragAnchorRef = useRef<{ x: number; y: number } | null>(null);
 
   // image intrinsic/displayed size for resizeMode="contain"
-  const [imgIntrinsic, setImgIntrinsic] = useState<{
-    w: number;
-    h: number;
-  } | null>(null);
   const [imgDisplayed, setImgDisplayed] = useState<{
     left: number;
     top: number;
@@ -106,6 +112,7 @@ const DataInput = () => {
 
   const onSubmit = () => {
     setUserAvatar(avatar);
+    setUserMedCardImage(medCardPhoto);
     const u = parseJsonSafe("Thông tin cá nhân", userInfoInput);
     if (!u.ok) return Alert.alert("Lỗi", u.error);
     const p = parseJsonSafe("Quá trình tham gia", progressInput);
@@ -128,6 +135,7 @@ const DataInput = () => {
   };
 
   // Normalize picker result
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const normalizeImageResult = (res: any) => {
     if (!res) return null;
     if (Array.isArray(res)) {
@@ -139,25 +147,25 @@ const DataInput = () => {
 
   // pick handlers (open camera/gallery) - no cropping
   const openCamera = async () => {
-    ImagePicker.openCamera({
-      cropping: false,
-      useFrontCamera: false,
-      includeBase64: false,
-      mediaType: "photo",
-    })
-      .then((image: any) => handlePickedImage(normalizeImageResult(image)))
-      .catch((err) => console.log("openCamera err", err?.message || err));
+    // ImagePicker.openCamera({
+    //   cropping: false,
+    //   useFrontCamera: false,
+    //   includeBase64: false,
+    //   mediaType: "photo",
+    // })
+    //   .then((image: any) => handlePickedImage(normalizeImageResult(image)))
+    //   .catch((err) => console.log("openCamera err", err?.message || err));
   };
 
   const openGallery = async () => {
-    ImagePicker.openPicker({
-      cropping: false,
-      includeBase64: false,
-      multiple: false,
-      mediaType: "photo",
-    })
-      .then((image: any) => handlePickedImage(normalizeImageResult(image)))
-      .catch((err) => console.log("openGallery err", err?.message || err));
+    // ImagePicker.openPicker({
+    //   cropping: false,
+    //   includeBase64: false,
+    //   multiple: false,
+    //   mediaType: "photo",
+    // })
+    //   .then((image: any) => handlePickedImage(normalizeImageResult(image)))
+    //   .catch((err) => console.log("openGallery err", err?.message || err));
   };
 
   const handleDeleteAvatar = () => {
@@ -168,7 +176,16 @@ const DataInput = () => {
     ]);
   };
 
+  const handleDeleteMedCard = () => {
+    if (!medCardPhoto) return;
+    Alert.alert("Xóa ảnh", "Bạn có chắc chắn muốn xóa ảnh thẻ này?", [
+      { text: "Hủy", style: "cancel" },
+      { text: "Xóa", style: "destructive", onPress: () => setMedCardPhoto(null) },
+    ]);
+  };
+
   // When image picked -> compute intrinsic & displayed rect (contain) and open editor
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const handlePickedImage = (normalized: any) => {
     if (!normalized?.uri) return;
     const uri =
@@ -180,7 +197,6 @@ const DataInput = () => {
     Image.getSize(
       uri,
       (w, h) => {
-        setImgIntrinsic({ w, h });
         const scaleFactor = Math.min(SCREEN_W / w, SCREEN_H / h);
         const dispW = Math.round(w * scaleFactor);
         const dispH = Math.round(h * scaleFactor);
@@ -217,7 +233,6 @@ const DataInput = () => {
       },
       (err) => {
         console.warn("Image.getSize failed", err);
-        setImgIntrinsic(null);
         setImgDisplayed(null);
         selectorPosRef.current = { left: initialLeft, top: initialTop };
         setSelectorLeft(initialLeft);
@@ -249,7 +264,11 @@ const DataInput = () => {
     try {
       const base64 = await viewShotRef.current.capture();
       const dataUri = `data:image/png;base64,${base64}`;
-      setAvatar({ uri: dataUri, base64 });
+      if (photoTarget === "avatar") {
+        setAvatar({ uri: dataUri, base64 });
+      } else {
+        setMedCardPhoto({ uri: dataUri, base64 });
+      }
       setEditorOpen(false);
       setEditorSource(null);
     } catch (e) {
@@ -325,15 +344,12 @@ const DataInput = () => {
 
     return {
       width: dispW * scale,
-      height: dispD * scale,
+      height: dispH * scale,
       left,
       top,
       position: "absolute",
     } as ImageStyle;
   };
-
-  let dispD = 0;
-  if (imgDisplayed) dispD = imgDisplayed.h;
 
   return (
     <SafeAreaView style={{ flex: 1 }}>
@@ -343,13 +359,16 @@ const DataInput = () => {
       >
         <HeaderBack
           title="Data"
+          titleVariant="headingMdRegular"
           iconRight={
             <TouchableOpacity onPress={onSubmit}>
               <FontAwesome name="save" size={24} color="white" />
             </TouchableOpacity>
           }
         />
-        <Text style={styles.title}>Thông tin cá nhân</Text>
+        <AppText variant="headingMdBold" style={styles.title}>
+          Thông tin cá nhân
+        </AppText>
         <View style={styles.container}>
           <TextInput
             style={styles.textArea}
@@ -385,34 +404,30 @@ const DataInput = () => {
           />
           <Spacer size={50} />
 
-          <TouchableOpacity
-            style={styles.pickBtn}
-            onPress={() => setOpenActionPhoto(true)}
-          >
-            <Text style={styles.pickBtnText}>Ảnh Đại Diện</Text>
-          </TouchableOpacity>
+          <PhotoField
+            label="Ảnh Đại Diện"
+            image={avatar}
+            emptyText="Chưa có ảnh"
+            onPick={() => {
+              setPhotoTarget("avatar");
+              setOpenActionPhoto(true);
+            }}
+            onDelete={handleDeleteAvatar}
+          />
 
-          {avatar ? (
-            <View style={styles.previewWrap}>
-              <Image
-                source={{ uri: avatar.uri }}
-                style={styles.previewImage}
-                resizeMode="cover"
-              />
-              <TouchableOpacity
-                onPress={handleDeleteAvatar}
-                style={styles.deleteBtn}
-                accessibilityLabel="Xóa ảnh"
-              >
-                <FontAwesome name="trash" size={20} color="white" />
-              </TouchableOpacity>
-              <Spacer size={10} />
-            </View>
-          ) : (
-            <View style={{ alignItems: "flex-start", marginTop: 10 }}>
-              <Text style={{ color: Colors.border }}>Chưa có ảnh</Text>
-            </View>
-          )}
+          <Spacer size={30} />
+
+          <PhotoField
+            label="Ảnh Thẻ Bảo Hiểm Y Tế"
+            image={medCardPhoto}
+            emptyText="Chưa có ảnh thẻ bảo hiểm y tế"
+            previewVariant="full"
+            onPick={() => {
+              setPhotoTarget("medCard");
+              setOpenActionPhoto(true);
+            }}
+            onDelete={handleDeleteMedCard}
+          />
         </View>
 
         <ActionPhoto
@@ -446,9 +461,9 @@ const DataInput = () => {
 
           {/* scale debug */}
           <View style={editorStyles.scaleDebug}>
-            <Text style={editorStyles.scaleDebugText}>
+            <AppText variant="caption" style={editorStyles.scaleDebugText}>
               scale: {scale.toFixed(2)}
-            </Text>
+            </AppText>
           </View>
 
           {/* selector wrapper (absolute) */}
@@ -516,14 +531,18 @@ const DataInput = () => {
                 setEditorSource(null);
               }}
             >
-              <Text style={{ color: "#333" }}>Cancel</Text>
+              <AppText variant="body" style={{ color: "#333" }}>
+                Cancel
+              </AppText>
             </TouchableOpacity>
 
             <TouchableOpacity
               style={editorStyles.saveBtn}
               onPress={handleSaveFromEditor}
             >
-              <Text style={{ color: "white", fontWeight: "bold" }}>Save</Text>
+              <AppText variant="bodyBold" style={{ color: "white" }}>
+                Save
+              </AppText>
             </TouchableOpacity>
           </View>
         </View>
@@ -538,8 +557,6 @@ export default DataInput;
 const styles = StyleSheet.create({
   container: { flex: 1, padding: 20 },
   title: {
-    fontSize: 20,
-    fontWeight: "bold",
     textAlign: "center",
     marginTop: 20,
   },
@@ -550,46 +567,6 @@ const styles = StyleSheet.create({
     padding: 10,
     textAlignVertical: "top",
     fontFamily: Platform.select({ ios: "Menlo", android: "monospace" }),
-  },
-  pickBtn: {
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "center",
-    backgroundColor: Colors.primary,
-    padding: 10,
-    alignSelf: "flex-start",
-    borderRadius: 5,
-  },
-  pickBtnText: {
-    color: "white",
-    textAlign: "center",
-    fontSize: 16,
-    fontWeight: "bold",
-  },
-
-  previewWrap: {
-    width: 120,
-    height: 120,
-    position: "relative",
-    borderRadius: 160,
-    marginTop: 20,
-    // overflow: "hidden",
-  },
-  previewImage: {
-    width: "100%",
-    height: "100%",
-    borderRadius: 160,
-    alignItems: "center",
-  },
-  deleteBtn: {
-    position: "absolute",
-    top: -6,
-    right: -6,
-    backgroundColor: "rgba(0,0,0,0.6)",
-    padding: 6,
-    borderRadius: 16,
-    borderWidth: 1,
-    borderColor: "white",
   },
 });
 

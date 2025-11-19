@@ -35,6 +35,7 @@ interface userState {
   medInsurance: medInsurance;
   progressList: progress[];
   avatar: any;
+  medCardImage: any;
 }
 
 const initialUserState: userState = {
@@ -68,6 +69,7 @@ const initialUserState: userState = {
     },
   ],
   avatar: null,
+  medCardImage: null,
 };
 
 const userSlice = createSlice({
@@ -98,6 +100,12 @@ const userSlice = createSlice({
         avatar: action.payload,
       };
     },
+    updateMedCardImage: (state, action) => {
+      return {
+        ...state,
+        medCardImage: action.payload,
+      };
+    },
   },
 });
 
@@ -106,5 +114,6 @@ export const {
   updateProgressList,
   updateUserInfo,
   updateAvatar,
+  updateMedCardImage,
 } = userSlice.actions;
 export default userSlice.reducer;

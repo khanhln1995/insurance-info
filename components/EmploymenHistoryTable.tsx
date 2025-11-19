@@ -4,12 +4,12 @@ import {
   FlatList,
   Image,
   StyleSheet,
-  Text,
   TextStyle,
   TouchableOpacity,
   View,
   ViewStyle,
 } from "react-native";
+import AppText from "@/components/AppText";
 
 // Types
 export type EmploymentRow = {
@@ -104,13 +104,14 @@ const EmploymentHistoryTable: React.FC<Props> = ({
             idx !== 0 && isBHYT && styles.borderLeftWhite,
           ]}
         >
-          <Text
+          <AppText
+            variant="micro"
             numberOfLines={2}
             style={[styles.headerText, headerTextStyle]}
             ellipsizeMode="tail"
           >
             {col.label}
-          </Text>
+          </AppText>
         </View>
       ))}
       {/* Action column */}
@@ -144,9 +145,12 @@ const EmploymentHistoryTable: React.FC<Props> = ({
               idx !== 0 && styles.borderLeftGrey,
             ]}
           >
-            <Text style={[styles.cellText, alignStyle, cellTextStyle]}>
+            <AppText
+              variant="micro"
+              style={[styles.cellText, alignStyle, cellTextStyle]}
+            >
               {value}
-            </Text>
+            </AppText>
           </View>
         );
       })}
@@ -209,13 +213,10 @@ const styles = StyleSheet.create({
   },
   headerText: {
     color: "white",
-    fontWeight: "600",
-    fontSize: 10,
     textAlign: "center",
   },
   cellText: {
     color: "#2E2F33",
-    fontSize: 12,
   },
   separator: {
     height: 1,

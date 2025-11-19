@@ -1,7 +1,8 @@
+import AppText from "@/components/AppText";
 import { Colors } from "@/constants/Colors";
 import { useUser } from "@/hooks/user";
 import React from "react";
-import { Image, StyleSheet, Text, View } from "react-native";
+import { Image, StyleSheet, View } from "react-native";
 import Spacer from "./Spacer";
 
 interface Props {
@@ -10,7 +11,6 @@ interface Props {
 
 const InfoCard = ({ type }: Props) => {
   const { userInfo, medInsurance, avatar } = useUser();
-  console.log("avatar", avatar);
 
   let subInfo: any;
   let contentCard: any;
@@ -35,16 +35,19 @@ const InfoCard = ({ type }: Props) => {
           paddingVertical: 8,
         }}
       >
-        <Text style={{ color: Colors.txtDark, flex: 1 }}>{title}</Text>
-        <Text
+        <AppText variant="label" style={{ color: '#4E4E4E', flex: 1 }}>
+          {title}
+        </AppText>
+        <AppText
+          variant="label"
           style={{
-            color: Colors.txtDark,
+            color: '#4E4E4E',
             flex: isFlex ? 1 : 2, // let value take remaining space
             textAlign: "right", // align to right if you want
           }}
         >
           {value}
-        </Text>
+        </AppText>
       </View>
     );
   };
@@ -53,7 +56,9 @@ const InfoCard = ({ type }: Props) => {
     case "user":
       subInfo = (
         <View>
-          <Text style={styles.txtSubInfo}>Mã BHXH : {userInfo?.masoBHXH}</Text>
+          <AppText variant="body" style={styles.txtSubInfo}>
+            Mã BHXH : {userInfo?.masoBHXH}
+          </AppText>
         </View>
       );
       contentCard = (
@@ -69,8 +74,12 @@ const InfoCard = ({ type }: Props) => {
     case "insurance":
       subInfo = (
         <View>
-          <Text style={styles.txtSubInfo}>Thời hạn có giá trị</Text>
-          <Text style={styles.txtSubInfo}>{medInsurance?.thoigian}</Text>
+          <AppText variant="body" style={styles.txtSubInfo}>
+            Thời hạn có giá trị
+          </AppText>
+          <AppText variant="body" style={styles.txtSubInfo}>
+            {medInsurance?.thoigian}
+          </AppText>
         </View>
       );
       contentCard = (
@@ -92,13 +101,13 @@ const InfoCard = ({ type }: Props) => {
     <View
       style={{ backgroundColor: Colors.bgInfo, padding: 15, borderRadius: 5 }}
     >
-      <View style={{ flexDirection: "row", gap: 10 }}>
+      <View style={{ flexDirection: "row", gap: 12, alignItems: "center", }}>
         <View
           style={{
             backgroundColor: "white",
-            width: 50,
-            height: 50,
-            borderRadius: 1000,
+            width: 60,
+            height: 60,
+            borderRadius: 50,
             justifyContent: "center",
             alignItems: "center",
           }}
@@ -106,7 +115,7 @@ const InfoCard = ({ type }: Props) => {
           {avatar?.uri ? (
             <Image
               source={{ uri: avatar.uri }}
-              style={{ width: 50, height: 50, borderRadius: 50 }}
+              style={{ width: 60, height: 60, borderRadius: 50 }}
             />
           ) : (
             <Image
@@ -116,11 +125,15 @@ const InfoCard = ({ type }: Props) => {
           )}
         </View>
         <View>
-          <Text style={{ fontWeight: "bold", marginVertical: 5 }}>{name}</Text>
-          {subInfo}
+          <AppText variant="bodyBold" style={{ marginBottom: 4 }}>
+            {name}
+          </AppText>
+           <AppText variant="body">
+            {subInfo}
+          </AppText>
         </View>
       </View>
-      <Spacer size={20} />
+      <Spacer size={12} />
       {contentCard}
     </View>
   );

@@ -1,12 +1,16 @@
+import AppText from "@/components/AppText";
 import BottomMenuBar from "@/components/BottomMenuBar";
 import HeaderBack from "@/components/HeaderBack";
 import InfoCard from "@/components/InfoCard";
 import Spacer from "@/components/Spacer";
 import { Colors } from "@/constants/Colors";
+import { useRouter } from "expo-router";
 import React from "react";
-import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { Image, TouchableOpacity, View } from "react-native";
 
 const MedInSurance = () => {
+  const router = useRouter();
+
   return (
     <View
       style={{
@@ -16,7 +20,7 @@ const MedInSurance = () => {
     >
       <HeaderBack
         title="THẺ BẢO HIỂM Y TẾ"
-        textStyle={{ fontWeight: "500", fontSize: 20 }}
+        titleVariant="headingMdRegular"
       />
       <View
         style={{
@@ -36,11 +40,11 @@ const MedInSurance = () => {
               borderRadius: 5,
             }}
           >
-            <Text style={{ color: Colors.primary, fontWeight: "bold" }}>
+            <AppText variant="headingMdBold" style={{ color: '#306BA3' }}>
               Thông tin quyền lợi
-            </Text>
+            </AppText>
             <Spacer size={10} />
-            <Text style={{ marginLeft: 10, lineHeight: 18 }}>
+            <AppText variant="small" style={{ marginLeft: 10, lineHeight: 17.4 }}>
               Được hưởng 80% chi phí khám bệnh, chữa bệnh trong phạm vi được
               hường BHYT (áp dụng tỷ lệ thanh toán một sô thuôc, hóa chât, vật
               tư y tê và dịch vụ kỹ thuật theo quy định của Bộ trưởng Bộ Y tế).
@@ -52,9 +56,8 @@ const MedInSurance = () => {
               80% Chi phí trong phạm vi hưởng BHYT (áp dụng tỷ lệ thanh toán một
               số thuốc, hóa chất, vật tư y tế và dịch vụ kỹ thuật theo quy định
               của Bộ trưởng Bộ Y tế).
-            </Text>
+            </AppText>
           </View>
-          <Spacer size={20} />
         </View>
         <View
           style={{
@@ -68,18 +71,23 @@ const MedInSurance = () => {
           >
             <Image
               source={require("@/assets/images/icon/qr.png")}
-              style={{ width: 24, height: 24 }}
+              style={{ width: 26.46, height: 26.46 }}
             />
-            <Text style={{ color: Colors.primary }}>Sử dụng thẻ</Text>
+            <AppText variant="label" style={{ color: '#306BA3' }}>
+              Sử dụng thẻ
+            </AppText>
           </TouchableOpacity>
           <TouchableOpacity
             style={{ flexDirection: "row", alignItems: "center", gap: 10 }}
+            onPress={() => router.push("/home/medinsurance/card")}
           >
             <Image
               source={require("@/assets/images/icon/info-card.png")}
-              style={{ width: 24, height: 24 }}
+              style={{ width: 26.46, height: 26.46 }}
             />
-            <Text style={{ color: Colors.primary }}>Hình ảnh thẻ</Text>
+             <AppText variant="label" style={{ color: '#306BA3' }}>
+              Hình ảnh thẻ
+            </AppText>
           </TouchableOpacity>
         </View>
       </View>
@@ -90,4 +98,3 @@ const MedInSurance = () => {
 
 export default MedInSurance;
 
-const styles = StyleSheet.create({});

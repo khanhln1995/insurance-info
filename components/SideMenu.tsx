@@ -8,7 +8,6 @@ import {
   Pressable,
   SafeAreaView,
   StyleSheet,
-  Text,
   TouchableOpacity,
   View,
 } from "react-native";
@@ -16,6 +15,8 @@ import {
 import { Colors } from "@/constants/Colors";
 import { useUser } from "@/hooks/user";
 import AntDesign from "@expo/vector-icons/AntDesign";
+import AppText from "@/components/AppText";
+import Spacer from "./Spacer";
 
 const { width } = Dimensions.get("window");
 const DRAWER_W = Math.min(360, Math.floor(width * 0.68));
@@ -63,15 +64,18 @@ const SideMenu: React.FC<Props> = ({ visible, onClose, onLogout }) => {
             flex: 1,
             borderBottomColor: "#28B9F0",
             borderBottomWidth: 1,
-            paddingBottom: 8,
+            paddingBottom: 16.41,
+            height: 38.45
           }}
         >
-          <Text style={styles.itemText}>{text}</Text>
+          <AppText variant="labelBold" style={styles.itemText}>
+            {text}
+          </AppText>
 
           <AntDesign
             name="arrow-right"
-            size={24}
-            color="#04B0FE"
+            size={17.41}
+            color="#46B9FA"
             style={{ opacity: 0.9 }}
           />
         </View>
@@ -124,8 +128,13 @@ const SideMenu: React.FC<Props> = ({ visible, onClose, onLogout }) => {
                   )}
                 </View>
               </View>
-              <Text style={styles.name}>{userInfo?.ten}</Text>
-              <Text style={styles.phone}>{userInfo?.masoBHXH}</Text>
+              <AppText variant="bodyBold" style={styles.name}>
+                {userInfo?.ten}
+              </AppText>
+              <Spacer size={8.82} />
+              <AppText variant="bodyBold" style={styles.phone}>
+                {userInfo?.masoBHXH}
+              </AppText>
             </View>
 
             {/* Divider */}
@@ -265,10 +274,12 @@ const SideMenu: React.FC<Props> = ({ visible, onClose, onLogout }) => {
             {/* Only one menu item: Đăng xuất */}
 
             <View style={styles.footerWrap}>
-              <Text style={styles.footer}>Phiên bản 2.6</Text>
-              <Text style={styles.footer}>
+              <AppText variant="label" style={styles.footer}>
+                Phiên bản 2.6
+              </AppText>
+              <AppText variant="label" style={styles.footer}>
                 © Bản quyền thuộc về Bảo hiểm xã hội Việt Nam.
-              </Text>
+              </AppText>
             </View>
           </SafeAreaView>
         </LinearGradient>
@@ -316,15 +327,12 @@ const styles = StyleSheet.create({
   },
   name: {
     color: "white",
-    fontWeight: "700",
-    fontSize: 16,
     marginTop: 10,
   },
   phone: {
     color: "white",
     opacity: 0.9,
     marginTop: 2,
-    fontSize: 13,
   },
   hr: {
     height: 1,
@@ -339,13 +347,10 @@ const styles = StyleSheet.create({
   },
   itemText: {
     color: "white",
-    fontSize: 15,
-    fontWeight: "600",
     flexShrink: 1,
   },
   footer: {
     color: "#FFFFFF",
-    fontSize: 14,
     bottom: 10,
     marginBottom: 10,
   },

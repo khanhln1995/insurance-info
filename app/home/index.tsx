@@ -9,7 +9,8 @@ import Entypo from "@expo/vector-icons/Entypo";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import { useRouter } from "expo-router";
 import React from "react";
-import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { Image, StyleSheet, TouchableOpacity, View } from "react-native";
+import AppText from "@/components/AppText";
 const Home = () => {
   const [visible, setVisible] = React.useState(false);
   const router: any = useRouter();
@@ -30,8 +31,8 @@ const Home = () => {
       <View style={{ flexDirection: "row", alignItems: "center", gap: 10 }}>
         <View
           style={{
-            width: 45,
-            height: 45,
+            width: 39.69,
+            height: 39.69,
             padding: 10,
             borderWidth: 2,
             borderColor: Colors.primary,
@@ -46,7 +47,7 @@ const Home = () => {
         <TouchableOpacity
           activeOpacity={0.7}
           style={{
-            flex: 1, // ⬅️ take remaining space instead of width: "100%"
+            flex: 1,
             flexDirection: "row",
             alignItems: "center",
           }}
@@ -58,25 +59,27 @@ const Home = () => {
         >
           <View
             style={{
-              flex: 1, // ⬅️ lets the border span the remaining row
+              flex: 1, 
               borderTopWidth: isTop ? 1 : 0,
               borderBottomWidth: isBottom ? 1 : 0,
-              borderBottomColor: Colors.txtDark,
+              borderBottomColor: '#7E7E7E',
+              borderTopColor: '#7E7E7E',
               paddingVertical: 20,
-              marginRight: 8, // space before chevron
+              marginRight: 8, 
             }}
           >
-            <Text
+            <AppText
+              variant="headingMdRegular"
               numberOfLines={1}
-              style={{ color: Colors.txtDark, fontSize: 16 }}
+              style={{ color: Colors.txtSecondary }}
             >
               {text}
-            </Text>
+            </AppText>
           </View>
 
           <Entypo
             name="chevron-right"
-            size={24}
+            size={20}
             color={Colors.txtDark}
             style={{ flexShrink: 0 }}
           />
@@ -88,18 +91,18 @@ const Home = () => {
     <SafeArea>
       <HeaderBack
         title="QUẢN LÝ CÁ NHÂN"
-        textStyle={{ fontWeight: 400, fontSize: 20 }}
-        iconLeft={<Ionicons name="menu" size={24} color="white" />}
+        titleVariant="headingMdRegular"
+        iconLeft={<Ionicons name="menu" size={33.33} color="white" />}
         textColor="white"
         onGoBack={() => {
           setVisible(true);
         }}
         styleContainer={{ padding: 2 }}
       />
-      <View style={{ justifyContent: "space-between", flex: 1 }}>
-        <View style={{ padding: 20 }}>
+      <View style={{ justifyContent: "space-between", alignSelf: "center", flex: 1, width: 395 }}>
+        <View style={{ padding: 17.41 }}>
           <InfoCard type="user" />
-          <Spacer size={10} />
+          <Spacer size={26.46} />
           <RenderSelect
             text="THẺ BHYT"
             source={require("@/assets/images/icon/card.png")}
@@ -128,6 +131,7 @@ const Home = () => {
         </View>
         <BottomMenuBar />
       </View>
+
       <SideMenu
         visible={visible}
         onClose={() => setVisible(false)}

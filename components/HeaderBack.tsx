@@ -1,17 +1,12 @@
 import React from "react";
-import {
-  SafeAreaView,
-  StyleSheet,
-  Text,
-  TouchableOpacity,
-  View,
-  ViewStyle,
-} from "react-native";
+import { SafeAreaView, StyleSheet, TouchableOpacity, View, ViewStyle } from "react-native";
 // import Text from '~components/Text';
 
 import Entypo from "@expo/vector-icons/Entypo";
 import { LinearGradient } from "expo-linear-gradient";
 import { useRouter } from "expo-router";
+
+import AppText, { TextVariant } from "@/components/AppText";
 
 export interface HeaderBackProps {
   title?: string;
@@ -24,6 +19,7 @@ export interface HeaderBackProps {
   containerStyle?: any;
   iconLeft?: any;
   textStyle?: any;
+  titleVariant?: TextVariant;
 }
 
 const HeaderBack = (props: HeaderBackProps) => {
@@ -39,6 +35,7 @@ const HeaderBack = (props: HeaderBackProps) => {
     containerStyle,
     iconLeft,
     textStyle,
+    titleVariant = "subtitle",
   } = props;
   return (
     <LinearGradient colors={["#00ABF0", "#26BDF3"]} start={{ x: 0, y: 0 }}>
@@ -64,11 +61,10 @@ const HeaderBack = (props: HeaderBackProps) => {
             )}
           </TouchableOpacity>
         )}
-        <Text
+        <AppText
+          variant={titleVariant}
           style={[
             {
-              fontSize: 16,
-              fontWeight: "bold",
               color: "white",
               textAlign: "center",
               flex: 1,
@@ -78,7 +74,7 @@ const HeaderBack = (props: HeaderBackProps) => {
           ]}
         >
           {title ?? ""}
-        </Text>
+        </AppText>
         {iconRight && (
           <View
             style={{

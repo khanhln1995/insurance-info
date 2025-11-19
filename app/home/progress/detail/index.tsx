@@ -4,17 +4,22 @@ import { Colors } from "@/constants/Colors";
 import Entypo from "@expo/vector-icons/Entypo";
 import { useLocalSearchParams } from "expo-router";
 import React from "react";
-import { SafeAreaView, ScrollView, StyleSheet, Text, View } from "react-native";
+import { SafeAreaView, ScrollView, StyleSheet, View } from "react-native";
+import AppText from "@/components/AppText";
 
 const DetailProgress = () => {
   const { detail, title } = useLocalSearchParams();
   const data = JSON.parse(detail as string);
 
   const renderInfoLine = (label: string, value?: string) => (
-    <Text style={styles.infoLine}>
-      <Text style={styles.infoLabel}>{label}: </Text>
-      <Text style={styles.infoValue}>{value || "-"}</Text>
-    </Text>
+    <AppText variant="small" style={styles.infoLine}>
+      <AppText variant="small" style={styles.infoLabel}>
+        {label}:{" "}
+      </AppText>
+      <AppText variant="smallBold" style={styles.infoValue}>
+        {value || "-"}
+      </AppText>
+    </AppText>
   );
 
   return (
@@ -23,7 +28,7 @@ const DetailProgress = () => {
       <HeaderBack
         title="Chi tiết"
         textColor={Colors.primary}
-        textStyle={{ fontSize: 18 }}
+        titleVariant="subheading"
         styleContainer={{ backgroundColor: "#fff" }}
         iconLeft={
           <Entypo name="chevron-thin-left" size={24} color={Colors.primary} />
@@ -34,8 +39,12 @@ const DetailProgress = () => {
         <Spacer size={20} />
         {/* From/To months */}
         <View style={styles.rangeRow}>
-          <Text style={styles.rangeText}>Từ tháng: {data?.tuthang}</Text>
-          <Text style={styles.rangeText}>Đến tháng: {data?.denthang}</Text>
+          <AppText variant="labelBold">
+            Từ tháng: {data?.tuthang}
+          </AppText>
+          <AppText variant="labelBold">
+            Đến tháng: {data?.denthang}
+          </AppText>
         </View>
 
         {/* Blue info card */}
@@ -54,17 +63,19 @@ const DetailProgress = () => {
               style={[styles.row, idx === 0 && styles.rowTopBorder]}
             >
               <View style={styles.cellLeftWrapper}>
-                <Text style={styles.cellLeft}>
+                <AppText variant="small" style={styles.cellLeft}>
                   {idx === 1
                     ? "Mức lương"
                     : `Tiền lương đóng ${
                         title == "BHTNLĐ-BNN" ? "quỹ TNLĐ, BNN" : title
                       }`}
-                </Text>
+                </AppText>
               </View>
               <View style={styles.divider} />
               <View style={styles.cellRightWrapper}>
-                <Text style={styles.cellRight}>{val}</Text>
+                <AppText variant="small" style={styles.cellRight}>
+                  {val}
+                </AppText>
               </View>
             </View>
           ))}
@@ -84,10 +95,6 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
     paddingVertical: 10,
   },
-  rangeText: {
-    color: "#111827",
-    fontSize: 16,
-  },
 
   infoCard: {
     backgroundColor: Colors.primary, // matches the blue block in your screenshot
@@ -98,14 +105,12 @@ const styles = StyleSheet.create({
   infoLine: {
     color: "#E6F0FF",
     lineHeight: 22,
-    fontSize: 14,
   },
   infoLabel: {
     color: "#E6F0FF",
   },
   infoValue: {
     color: "#ffffff",
-    fontWeight: "700",
   },
 
   table: {
@@ -129,15 +134,12 @@ const styles = StyleSheet.create({
   },
   cellLeft: {
     flex: 1.2,
-    fontSize: 14,
     color: "#111827",
     textAlign: "center",
   },
   cellRight: {
     flex: 0.8,
-    fontSize: 14,
     color: "#111827",
-    fontWeight: "400",
     textAlign: "right",
     paddingLeft: 12, // add spacing after the line
   },
