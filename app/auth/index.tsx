@@ -27,7 +27,7 @@ const LoginScreen = () => {
       }}
     >
       <ImageBackground
-        source={require("../../assets/images/header-auth.png")} // <-- put your image here
+        source={require("../../assets/images/bg.jpg")} 
         resizeMode="cover"
         style={styles.headerBg}
         imageStyle={styles.headerBgImg}
