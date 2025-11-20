@@ -16,7 +16,6 @@ import {
 const { width, height } = Dimensions.get("window");
 const HEADER_HEIGHT = height / 1.4;
 const LoginScreen = () => {
-  
   const router = useRouter();
   return (
     <View
@@ -45,7 +44,7 @@ const LoginScreen = () => {
           >
             <Image
               source={require("../../assets/images/vn-flag.png")}
-              style={{ width: 30, height: 30 }}
+              style={{ width: 35, height: 35 }}
             />
           </TouchableOpacity>
         </View>
@@ -98,12 +97,18 @@ const LoginScreen = () => {
             }}
           >
             <TouchableOpacity>
-              <AppText variant="microBold" style={{ color: Colors.textPrimary }}>
+              <AppText
+                variant="microBold"
+                style={{ color: Colors.textPrimary }}
+              >
                 Quên mật khẩu ?
               </AppText>
             </TouchableOpacity>
             <TouchableOpacity>
-              <AppText variant="microBold" style={{ color: Colors.textPrimary }}>
+              <AppText
+                variant="microBold"
+                style={{ color: Colors.textPrimary }}
+              >
                 Đăng ký tài khoản
               </AppText>
             </TouchableOpacity>
@@ -174,13 +179,19 @@ const LoginScreen = () => {
       </ImageBackground>
       <View style={{ padding: 20 }}>
         <TouchableOpacity activeOpacity={0.7}>
-          <AppText variant="body" style={{ color: Colors.primary, textAlign: "center" }}>
+          <AppText
+            variant="body"
+            style={{ color: Colors.primary, textAlign: "center" }}
+          >
             Mở cài đặt VssID
           </AppText>
         </TouchableOpacity>
         <Spacer size={26.46} />
         <TouchableOpacity activeOpacity={0.7}>
-          <AppText variant="body" style={{ color: Colors.primary, textAlign: "right" }}>
+          <AppText
+            variant="body"
+            style={{ color: Colors.primary, textAlign: "right" }}
+          >
             Chính sách quyền riêng tư
           </AppText>
         </TouchableOpacity>
@@ -206,7 +217,7 @@ const LoginScreen = () => {
                 style={{ width: 24, height: 24 }}
               />
             </TouchableOpacity>
-             <TouchableOpacity>
+            <TouchableOpacity>
               <Image
                 source={require("../../assets/images/icon/support.png")}
                 style={{ width: 24, height: 24 }}
@@ -218,7 +229,7 @@ const LoginScreen = () => {
                 style={{ width: 24, height: 24 }}
               />
             </TouchableOpacity>
-           
+
             <TouchableOpacity>
               <Image
                 source={require("../../assets/images/icon/video.png")}
@@ -244,7 +255,7 @@ const styles = StyleSheet.create({
   header: {
     flexDirection: "row",
     justifyContent: "space-between",
-    paddingVertical: 40,
+    paddingVertical: 60,
     paddingHorizontal: 15,
     zIndex: 100,
   },
@@ -262,7 +273,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     height: 46,
     flex: 1,
-    width: 315.13
+    width: 315.13,
   },
   headerBg: {
     height: HEADER_HEIGHT,
