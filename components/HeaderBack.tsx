@@ -1,5 +1,11 @@
 import React from "react";
-import { SafeAreaView, StyleSheet, TouchableOpacity, View, ViewStyle } from "react-native";
+import {
+  SafeAreaView,
+  StyleSheet,
+  TouchableOpacity,
+  View,
+  ViewStyle,
+} from "react-native";
 // import Text from '~components/Text';
 
 import Entypo from "@expo/vector-icons/Entypo";
@@ -7,6 +13,7 @@ import { LinearGradient } from "expo-linear-gradient";
 import { useRouter } from "expo-router";
 
 import AppText, { TextVariant } from "@/components/AppText";
+import { usePathname } from "expo-router";
 
 export interface HeaderBackProps {
   title?: string;
@@ -23,6 +30,9 @@ export interface HeaderBackProps {
 }
 
 const HeaderBack = (props: HeaderBackProps) => {
+  const pathName = usePathname();
+  console.log("pathName", pathName);
+
   const router = useRouter();
   const {
     title,
@@ -38,8 +48,12 @@ const HeaderBack = (props: HeaderBackProps) => {
     titleVariant = "subtitle",
   } = props;
   return (
-    <LinearGradient colors={["#00ABF0", "#26BDF3"]} start={{ x: 0, y: 0 }}>
-      <SafeAreaView />
+    <LinearGradient
+      colors={["#00ABF0", "#0074C7"]}
+      start={{ x: 0, y: 0 }}
+      style={{ marginTop: pathName != "/home/medinsurance/card" ? 0 : 55 }}
+    >
+      {pathName != "/home/medinsurance/card" && <SafeAreaView />}
       <View style={[styles.container, styleContainer]}>
         {isGoBack && (
           <TouchableOpacity

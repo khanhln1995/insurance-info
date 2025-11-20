@@ -53,10 +53,13 @@ const DataInput = () => {
   const [avatar, setAvatar] = useState<null | { uri: string; base64?: string }>(
     null
   );
-  const [medCardPhoto, setMedCardPhoto] = useState<
-    null | { uri: string; base64?: string }
-  >(null);
-  const [photoTarget, setPhotoTarget] = useState<"avatar" | "medCard">("avatar");
+  const [medCardPhoto, setMedCardPhoto] = useState<null | {
+    uri: string;
+    base64?: string;
+  }>(null);
+  const [photoTarget, setPhotoTarget] = useState<"avatar" | "medCard">(
+    "avatar"
+  );
 
   const {
     setUserInfo,
@@ -135,7 +138,7 @@ const DataInput = () => {
   };
 
   // Normalize picker result
-   
+
   const normalizeImageResult = (res: any) => {
     if (!res) return null;
     if (Array.isArray(res)) {
@@ -180,7 +183,11 @@ const DataInput = () => {
     if (!medCardPhoto) return;
     Alert.alert("Xóa ảnh", "Bạn có chắc chắn muốn xóa ảnh thẻ này?", [
       { text: "Hủy", style: "cancel" },
-      { text: "Xóa", style: "destructive", onPress: () => setMedCardPhoto(null) },
+      {
+        text: "Xóa",
+        style: "destructive",
+        onPress: () => setMedCardPhoto(null),
+      },
     ]);
   };
 
@@ -193,6 +200,8 @@ const DataInput = () => {
         : normalized.uri;
 
     if (photoTarget === "medCard") {
+      console.log("uri", uri);
+
       setMedCardPhoto({ uri, base64: normalized.base64 });
       setEditorOpen(false);
       setEditorSource(null);

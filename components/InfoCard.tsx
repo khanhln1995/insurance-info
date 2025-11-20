@@ -35,13 +35,13 @@ const InfoCard = ({ type }: Props) => {
           paddingVertical: 8,
         }}
       >
-        <AppText variant="label" style={{ color: '#4E4E4E', flex: 1 }}>
+        <AppText variant="label" style={{ color: "#4E4E4E", flex: 1 }}>
           {title}
         </AppText>
         <AppText
           variant="label"
           style={{
-            color: '#4E4E4E',
+            color: "#4E4E4E",
             flex: isFlex ? 1 : 2, // let value take remaining space
             textAlign: "right", // align to right if you want
           }}
@@ -97,11 +97,12 @@ const InfoCard = ({ type }: Props) => {
       name = medInsurance?.ten;
       break;
   }
+
   return (
     <View
       style={{ backgroundColor: Colors.bgInfo, padding: 15, borderRadius: 5 }}
     >
-      <View style={{ flexDirection: "row", gap: 12, alignItems: "center", }}>
+      <View style={{ flexDirection: "row", gap: 12, alignItems: "center" }}>
         <View
           style={{
             backgroundColor: "white",
@@ -128,9 +129,7 @@ const InfoCard = ({ type }: Props) => {
           <AppText variant="bodyBold" style={{ marginBottom: 4 }}>
             {name}
           </AppText>
-           <AppText variant="body">
-            {subInfo}
-          </AppText>
+          <AppText variant="body">{subInfo}</AppText>
         </View>
       </View>
       <Spacer size={12} />

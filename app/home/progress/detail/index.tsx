@@ -1,3 +1,4 @@
+import AppText from "@/components/AppText";
 import HeaderBack from "@/components/HeaderBack";
 import Spacer from "@/components/Spacer";
 import { Colors } from "@/constants/Colors";
@@ -5,7 +6,6 @@ import Entypo from "@expo/vector-icons/Entypo";
 import { useLocalSearchParams } from "expo-router";
 import React from "react";
 import { SafeAreaView, ScrollView, StyleSheet, View } from "react-native";
-import AppText from "@/components/AppText";
 
 const DetailProgress = () => {
   const { detail, title } = useLocalSearchParams();
@@ -31,7 +31,7 @@ const DetailProgress = () => {
         titleVariant="subheading"
         styleContainer={{ backgroundColor: "#fff" }}
         iconLeft={
-          <Entypo name="chevron-thin-left" size={24} color={Colors.primary} />
+          <Entypo name="chevron-left" size={33} color={Colors.primary} />
         }
       />
 
@@ -39,10 +39,10 @@ const DetailProgress = () => {
         <Spacer size={20} />
         {/* From/To months */}
         <View style={styles.rangeRow}>
-          <AppText variant="labelBold">
+          <AppText variant="labelBold" style={{ fontWeight: "500" }}>
             Từ tháng: {data?.tuthang}
           </AppText>
-          <AppText variant="labelBold">
+          <AppText variant="labelBold" style={{ fontWeight: "500" }}>
             Đến tháng: {data?.denthang}
           </AppText>
         </View>

@@ -4,12 +4,7 @@ import { Colors } from "@/constants/Colors";
 import { useUser } from "@/hooks/user";
 import { Entypo } from "@expo/vector-icons";
 import React, { useState } from "react";
-import {
-  Image,
-  StyleSheet,
-  TouchableOpacity,
-  View,
-} from "react-native";
+import { Image, StyleSheet, TouchableOpacity, View } from "react-native";
 
 const MedCardImageScreen = () => {
   const { medCardImage } = useUser();
@@ -19,12 +14,14 @@ const MedCardImageScreen = () => {
     setRotation((prev) => (prev + 90) % 360);
   };
 
+  console.log("medcard", medCardImage);
+
   return (
     <View style={styles.container}>
       {/* <HeaderBack title="Thẻ bảo hiểm y tế" titleVariant="headingMdRegular" /> */}
       <HeaderBack
         title="Thẻ bảo hiểm y tế"
-        textColor='#34689E'
+        textColor="#34689E"
         titleVariant="subheading"
         styleContainer={{ backgroundColor: "#fff" }}
         iconLeft={
@@ -33,22 +30,21 @@ const MedCardImageScreen = () => {
       />
 
       <View style={styles.content}>
-        { medCardImage?.uri &&
+        {medCardImage?.uri && (
           <TouchableOpacity style={styles.rotateBtn} onPress={toggleRotation}>
             <Image
-              source={require('../../../assets/images/clip.png')}
-              style={{  width: 33.49, height: 33.49 }}
+              source={require("../../../assets/images/clip.png")}
+              style={{ width: 33.49, height: 33.49 }}
             />
-            
           </TouchableOpacity>
-        }
+        )}
         {medCardImage?.uri ? (
           <>
             <View style={styles.cardFrame}>
               <Image
                 source={{ uri: medCardImage.uri }}
                 style={[
-                  { width: '100%' },
+                  { width: "100%", height: "100%" },
                   { transform: [{ rotate: `${rotation}deg` }] },
                 ]}
                 resizeMode="contain"
@@ -57,7 +53,8 @@ const MedCardImageScreen = () => {
           </>
         ) : (
           <AppText variant="label" style={styles.emptyText}>
-            Chưa có ảnh thẻ bảo hiểm y tế. Vui lòng thêm ảnh trong phần nhập dữ liệu.
+            Chưa có ảnh thẻ bảo hiểm y tế. Vui lòng thêm ảnh trong phần nhập dữ
+            liệu.
           </AppText>
         )}
       </View>
@@ -79,11 +76,11 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
   cardFrame: {
-    width: '100%',
+    width: "100%",
     alignItems: "center",
     justifyContent: "center",
   },
-  
+
   rotateBtn: {
     position: "absolute",
     top: 24,
@@ -102,4 +99,3 @@ const styles = StyleSheet.create({
     color: Colors.border,
   },
 });
-
