@@ -45,7 +45,7 @@ const HeaderBack = (props: HeaderBackProps) => {
     containerStyle,
     iconLeft,
     textStyle,
-    titleVariant = "subtitle",
+    titleVariant = "headingMdRegular",
   } = props;
   return (
     <LinearGradient

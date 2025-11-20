@@ -1,3 +1,4 @@
+import AppText from "@/components/AppText";
 import BottomMenuBar from "@/components/BottomMenuBar";
 import EmploymentHistoryTable from "@/components/EmploymenHistoryTable";
 import HeaderBack from "@/components/HeaderBack";
@@ -12,7 +13,6 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
-import AppText from "@/components/AppText";
 const BOTTOM_BAR_HEIGHT = 150;
 
 const Progress = () => {
@@ -103,9 +103,7 @@ const Progress = () => {
                     style={[
                       styles.tab,
                       {
-                        borderColor: isSelected
-                          ? Colors.primary
-                          : Colors.border,
+                        borderColor: isSelected ? "#0574CE" : Colors.border,
                       },
                     ]}
                     onPress={() => setSelectedTab(tab)}
@@ -150,7 +148,7 @@ const Progress = () => {
                   <AppText
                     variant="headingMd"
                     style={{
-                      color: '#306BA3',
+                      color: "#306BA3",
                     }}
                   >
                     Quá trình tham gia {selectedTab.title}
