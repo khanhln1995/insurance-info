@@ -20,7 +20,7 @@ import {
   PinchGestureHandler,
   PinchGestureHandlerStateChangeEvent,
 } from "react-native-gesture-handler";
-// import ImagePicker from "react-native-image-crop-picker";
+import ImagePicker from "react-native-image-crop-picker";
 import ViewShot from "react-native-view-shot";
 
 import ActionPhoto from "@/components/ActionPhoto";
@@ -135,7 +135,7 @@ const DataInput = () => {
   };
 
   // Normalize picker result
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+   
   const normalizeImageResult = (res: any) => {
     if (!res) return null;
     if (Array.isArray(res)) {
@@ -147,25 +147,25 @@ const DataInput = () => {
 
   // pick handlers (open camera/gallery) - no cropping
   const openCamera = async () => {
-    // ImagePicker.openCamera({
-    //   cropping: false,
-    //   useFrontCamera: false,
-    //   includeBase64: false,
-    //   mediaType: "photo",
-    // })
-    //   .then((image: any) => handlePickedImage(normalizeImageResult(image)))
-    //   .catch((err) => console.log("openCamera err", err?.message || err));
+    ImagePicker.openCamera({
+      cropping: false,
+      useFrontCamera: false,
+      includeBase64: false,
+      mediaType: "photo",
+    })
+      .then((image: any) => handlePickedImage(normalizeImageResult(image)))
+      .catch((err) => console.log("openCamera err", err?.message || err));
   };
 
   const openGallery = async () => {
-    // ImagePicker.openPicker({
-    //   cropping: false,
-    //   includeBase64: false,
-    //   multiple: false,
-    //   mediaType: "photo",
-    // })
-    //   .then((image: any) => handlePickedImage(normalizeImageResult(image)))
-    //   .catch((err) => console.log("openGallery err", err?.message || err));
+    ImagePicker.openPicker({
+      cropping: false,
+      includeBase64: false,
+      multiple: false,
+      mediaType: "photo",
+    })
+      .then((image: any) => handlePickedImage(normalizeImageResult(image)))
+      .catch((err) => console.log("openGallery err", err?.message || err));
   };
 
   const handleDeleteAvatar = () => {
@@ -185,13 +185,21 @@ const DataInput = () => {
   };
 
   // When image picked -> compute intrinsic & displayed rect (contain) and open editor
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const handlePickedImage = (normalized: any) => {
     if (!normalized?.uri) return;
     const uri =
       Platform.OS === "android" && !normalized.uri.startsWith("file://")
         ? "file://" + normalized.uri
         : normalized.uri;
+
+    if (photoTarget === "medCard") {
+      setMedCardPhoto({ uri, base64: normalized.base64 });
+      setEditorOpen(false);
+      setEditorSource(null);
+      setOpenActionPhoto(false);
+      return;
+    }
+
     setEditorSource({ uri });
 
     Image.getSize(
