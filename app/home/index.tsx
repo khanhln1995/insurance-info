@@ -11,37 +11,38 @@ import { useRouter } from "expo-router";
 import React from "react";
 import { Image, StyleSheet, TouchableOpacity, View } from "react-native";
 import AppText from "@/components/AppText";
+import Card from "@/assets/images/icon/card.svg";
+import Time from "@/assets/images/icon/time.svg";
+import UserInfo from "@/assets/images/icon/user-info.svg";
+import MedPlus from "@/assets/images/icon/med-plus.svg";
+import ChevronRight from "@/assets/images/icon/chevron-right.svg";
+
 const Home = () => {
   const [visible, setVisible] = React.useState(false);
   const router: any = useRouter();
   const RenderSelect = ({
     text,
-    source,
+    source: SvgIcon,
     route,
     isTop = true,
     isBottom = true,
   }: {
     text?: string;
-    source?: any;
+   source: any
     route?: string;
     isTop?: boolean;
     isBottom?: boolean;
   }) => {
     return (
-      <View style={{ flexDirection: "row", alignItems: "center", gap: 10 }}>
+      <View style={{ flexDirection: "row", alignItems: "center", gap: 20.43, marginBottom: 11.39 }}>
         <View
           style={{
             width: 39.69,
             height: 39.69,
-            padding: 10,
-            borderWidth: 2,
-            borderColor: Colors.primary,
-            borderRadius: 50,
-            justifyContent: "center",
-            alignItems: "center",
+            marginBottom: 13
           }}
         >
-          <Image source={source} style={{ width: 30, height: 30 }} />
+          <SvgIcon width={'100%'} height={"100%"} />
         </View>
 
         <TouchableOpacity
@@ -64,8 +65,7 @@ const Home = () => {
               borderBottomWidth: isBottom ? 1 : 0,
               borderBottomColor: '#7E7E7E',
               borderTopColor: '#7E7E7E',
-              paddingVertical: 20,
-              marginRight: 8, 
+              paddingBottom: 18.75,
             }}
           >
             <AppText
@@ -77,12 +77,13 @@ const Home = () => {
             </AppText>
           </View>
 
-          <Entypo
+          {/* <Entypo
             name="chevron-right"
             size={20}
             color={Colors.txtDark}
             style={{ flexShrink: 0 }}
-          />
+          /> */}
+          <ChevronRight width={24.32} height={40.52} style={{marginBottom:11.5}} />
         </TouchableOpacity>
       </View>
     );
@@ -93,40 +94,57 @@ const Home = () => {
         title="QUẢN LÝ CÁ NHÂN"
         titleVariant="headingMdRegular"
         iconLeft={<Ionicons name="menu" size={33.33} color="white" />}
+        iconRight={
+          <Image
+            source={require("../../assets/images/bell.png")}
+            style={{ width: 35.16, height: 23.11 }}
+            resizeMode="contain"
+          />
+        }
         textColor="white"
         onGoBack={() => {
           setVisible(true);
         }}
-        styleContainer={{ padding: 2 }}
       />
-      <View style={{ justifyContent: "space-between", alignSelf: "center", flex: 1, width: 395 }}>
-        <View style={{ padding: 17.41 }}>
+      <View style={{ 
+          justifyContent: "space-between", 
+          alignSelf: "center", 
+          flex: 1, 
+          width: '100%', 
+        }}
+      >
+        <View style={{ 
+          paddingTop: 20,
+          marginHorizontal: 17.41 
+        }}
+        >
           <InfoCard type="user" />
-          <Spacer size={26.46} />
+          <Spacer size={22.46} />
           <RenderSelect
             text="THẺ BHYT"
-            source={require("@/assets/images/icon/card.png")}
+            source={Card}
             route="/home/medinsurance"
             isTop={false}
-            isBottom={false}
+            // isBottom={false}
           />
 
           <RenderSelect
             text="QUÁ TRÌNH THAM GIA"
-            source={require("@/assets/images/icon/time.png")}
+            source={Time}
             route="/home/progress"
-            isBottom={false}
+            isTop={false}
           />
 
           <RenderSelect
             text="THÔNG TIN HƯỞNG"
-            source={require("@/assets/images/icon/user-info.png")}
-            isBottom={false}
+            source={UserInfo}
+            isTop={false}
           />
 
           <RenderSelect
             text="SỔ KHÁM CHỮA BỆNH"
-            source={require("@/assets/images/icon/med-plus.png")}
+            source={MedPlus}
+            isTop={false}
           />
         </View>
         <BottomMenuBar />

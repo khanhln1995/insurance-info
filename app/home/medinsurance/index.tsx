@@ -32,10 +32,11 @@ const MedInSurance = () => {
       >
         <View>
           <InfoCard type="insurance" />
-          <Spacer size={20} />
+          <Spacer size={39.52} />
           <View
             style={{
-              padding: 10,
+              paddingHorizontal: 13.4,
+              paddingVertical: 9.38,
               backgroundColor: Colors.bgInfo,
               borderRadius: 5,
             }}

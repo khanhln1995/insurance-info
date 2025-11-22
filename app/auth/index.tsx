@@ -13,6 +13,15 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
+import FaceId from "@/assets/images/icon/face-id.svg";
+import Sheet from "@/assets/images/icon/sheet.svg";
+import Help from "@/assets/images/icon/help.svg";
+import GlobalSearch from "@/assets/images/icon/global-search.svg";
+import Tivi from "@/assets/images/icon/tivi.svg";
+import Location from "@/assets/images/icon/location.svg";
+
+
+  
 const { width, height } = Dimensions.get("window");
 const HEADER_HEIGHT = height / 1.4;
 const LoginScreen = () => {
@@ -36,6 +45,7 @@ const LoginScreen = () => {
           <Image
             source={require("../../assets/images/bell.png")}
             style={{ width: 30, height: 30 }}
+            resizeMode="contain"
           />
           <TouchableOpacity
             onLongPress={() => {
@@ -49,7 +59,7 @@ const LoginScreen = () => {
             />
           </TouchableOpacity>
         </View>
-
+        <Spacer size={36} />
         <RoundAvatar
           size={width / 3}
           color="white"
@@ -60,7 +70,7 @@ const LoginScreen = () => {
           ]}
           uri={require("../../assets/images/logo.png")}
         />
-        <Spacer size={20} />
+        <Spacer size={26} />
 
         <View style={styles.content}>
           <View>
@@ -134,10 +144,7 @@ const LoginScreen = () => {
               </AppText>
             </TouchableOpacity>
             <TouchableOpacity activeOpacity={0.7}>
-              <Image
-                source={require("../../assets/images/icon/face-id.png")}
-                style={{ width: 40.69, height: 41.02 }}
-              />
+              <FaceId width={40.69} height={41.02} />
             </TouchableOpacity>
           </View>
           <Spacer size={17.64} />
@@ -201,36 +208,21 @@ const LoginScreen = () => {
             }}
           >
             <TouchableOpacity>
-              <Image
-                source={require("../../assets/images/icon/list.png")}
-                style={{ width: 24, height: 24 }}
-              />
+              <Sheet width={34.92} height={23.33} />
             </TouchableOpacity>
              <TouchableOpacity>
-              <Image
-                source={require("../../assets/images/icon/support.png")}
-                style={{ width: 24, height: 24 }}
-              />
+              <Help width={23.44} height={22.57} />
             </TouchableOpacity>
             <TouchableOpacity>
-              <Image
-                source={require("../../assets/images/icon/global-search.png")}
-                style={{ width: 24, height: 24 }}
-              />
+              <GlobalSearch width={23.16} height={24.11} />
             </TouchableOpacity>
            
             <TouchableOpacity>
-              <Image
-                source={require("../../assets/images/icon/video.png")}
-                style={{ width: 24, height: 24 }}
-              />
+              <Tivi width={27.8} height={22.67} />
             </TouchableOpacity>
           </View>
           <TouchableOpacity>
-            <Image
-              source={require("../../assets/images/icon/location.png")}
-              style={{ width: 24, height: 24 }}
-            />
+            <Location width={26.79} height={26.79} />
           </TouchableOpacity>
         </View>
       </View>
@@ -244,18 +236,18 @@ const styles = StyleSheet.create({
   header: {
     flexDirection: "row",
     justifyContent: "space-between",
-    paddingVertical: 40,
-    paddingHorizontal: 15,
+    paddingTop: 50,
+    // paddingBottom: 37,
+    paddingHorizontal: 17.75,
     zIndex: 100,
   },
   content: {
-    paddingHorizontal: 20,
     alignItems: "center",
     width: 369.05,
     alignSelf: "center",
   },
   button: {
-    borderWidth: 2,
+    borderWidth: 1.76,
     borderColor: Colors.primary,
     borderRadius: 4.41,
     alignItems: "center",

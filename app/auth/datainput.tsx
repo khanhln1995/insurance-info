@@ -20,7 +20,7 @@ import {
   PinchGestureHandler,
   PinchGestureHandlerStateChangeEvent,
 } from "react-native-gesture-handler";
-import ImagePicker from "react-native-image-crop-picker";
+// import ImagePicker from "react-native-image-crop-picker";
 import ViewShot from "react-native-view-shot";
 
 import ActionPhoto from "@/components/ActionPhoto";
@@ -150,25 +150,25 @@ const DataInput = () => {
 
   // pick handlers (open camera/gallery) - no cropping
   const openCamera = async () => {
-    ImagePicker.openCamera({
-      cropping: false,
-      useFrontCamera: false,
-      includeBase64: false,
-      mediaType: "photo",
-    })
-      .then((image: any) => handlePickedImage(normalizeImageResult(image)))
-      .catch((err) => console.log("openCamera err", err?.message || err));
+    // ImagePicker.openCamera({
+    //   cropping: false,
+    //   useFrontCamera: false,
+    //   includeBase64: false,
+    //   mediaType: "photo",
+    // })
+    //   .then((image: any) => handlePickedImage(normalizeImageResult(image)))
+    //   .catch((err) => console.log("openCamera err", err?.message || err));
   };
 
   const openGallery = async () => {
-    ImagePicker.openPicker({
-      cropping: false,
-      includeBase64: false,
-      multiple: false,
-      mediaType: "photo",
-    })
-      .then((image: any) => handlePickedImage(normalizeImageResult(image)))
-      .catch((err) => console.log("openGallery err", err?.message || err));
+    // ImagePicker.openPicker({
+    //   cropping: false,
+    //   includeBase64: false,
+    //   multiple: false,
+    //   mediaType: "photo",
+    // })
+    //   .then((image: any) => handlePickedImage(normalizeImageResult(image)))
+    //   .catch((err) => console.log("openGallery err", err?.message || err));
   };
 
   const handleDeleteAvatar = () => {
