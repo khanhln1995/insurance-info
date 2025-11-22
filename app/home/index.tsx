@@ -1,3 +1,8 @@
+import Card from "@/assets/images/icon/card.svg";
+import ChevronRight from "@/assets/images/icon/chevron-right.svg";
+import MedPlus from "@/assets/images/icon/med-plus.svg";
+import UserInfo from "@/assets/images/icon/user-info.svg";
+import AppText from "@/components/AppText";
 import BottomMenuBar from "@/components/BottomMenuBar";
 import HeaderBack from "@/components/HeaderBack";
 import InfoCard from "@/components/InfoCard";
@@ -5,17 +10,10 @@ import SafeArea from "@/components/SafeArea";
 import SideMenu from "@/components/SideMenu";
 import Spacer from "@/components/Spacer";
 import { Colors } from "@/constants/Colors";
-import Entypo from "@expo/vector-icons/Entypo";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import { useRouter } from "expo-router";
 import React from "react";
 import { Image, StyleSheet, TouchableOpacity, View } from "react-native";
-import AppText from "@/components/AppText";
-import Card from "@/assets/images/icon/card.svg";
-import Time from "@/assets/images/icon/time.svg";
-import UserInfo from "@/assets/images/icon/user-info.svg";
-import MedPlus from "@/assets/images/icon/med-plus.svg";
-import ChevronRight from "@/assets/images/icon/chevron-right.svg";
 
 const Home = () => {
   const [visible, setVisible] = React.useState(false);
@@ -28,21 +26,35 @@ const Home = () => {
     isBottom = true,
   }: {
     text?: string;
-   source: any
+    source?: any;
     route?: string;
     isTop?: boolean;
     isBottom?: boolean;
   }) => {
     return (
-      <View style={{ flexDirection: "row", alignItems: "center", gap: 20.43, marginBottom: 11.39 }}>
+      <View
+        style={{
+          flexDirection: "row",
+          alignItems: "center",
+          gap: 20.43,
+          marginBottom: 11.39,
+        }}
+      >
         <View
           style={{
             width: 39.69,
             height: 39.69,
-            marginBottom: 13
+            marginBottom: 13,
           }}
         >
-          <SvgIcon width={'100%'} height={"100%"} />
+          {SvgIcon ? (
+            <SvgIcon width={"100%"} height={"100%"} />
+          ) : (
+            <Image
+              source={require("@/assets/images/icon/time.png")}
+              style={{ width: "100%", height: "100%" }}
+            />
+          )}
         </View>
 
         <TouchableOpacity
@@ -60,11 +72,11 @@ const Home = () => {
         >
           <View
             style={{
-              flex: 1, 
+              flex: 1,
               borderTopWidth: isTop ? 1 : 0,
               borderBottomWidth: isBottom ? 1 : 0,
-              borderBottomColor: '#7E7E7E',
-              borderTopColor: '#7E7E7E',
+              borderBottomColor: "#7E7E7E",
+              borderTopColor: "#7E7E7E",
               paddingBottom: 18.75,
             }}
           >
@@ -83,7 +95,11 @@ const Home = () => {
             color={Colors.txtDark}
             style={{ flexShrink: 0 }}
           /> */}
-          <ChevronRight width={24.32} height={40.52} style={{marginBottom:11.5}} />
+          <ChevronRight
+            width={24.32}
+            height={40.52}
+            style={{ marginBottom: 11.5 }}
+          />
         </TouchableOpacity>
       </View>
     );
@@ -106,17 +122,19 @@ const Home = () => {
           setVisible(true);
         }}
       />
-      <View style={{ 
-          justifyContent: "space-between", 
-          alignSelf: "center", 
-          flex: 1, 
-          width: '100%', 
+      <View
+        style={{
+          justifyContent: "space-between",
+          alignSelf: "center",
+          flex: 1,
+          width: "100%",
         }}
       >
-        <View style={{ 
-          paddingTop: 20,
-          marginHorizontal: 17.41 
-        }}
+        <View
+          style={{
+            paddingTop: 20,
+            marginHorizontal: 17.41,
+          }}
         >
           <InfoCard type="user" />
           <Spacer size={22.46} />
@@ -130,7 +148,7 @@ const Home = () => {
 
           <RenderSelect
             text="QUÁ TRÌNH THAM GIA"
-            source={Time}
+            // source={Time}
             route="/home/progress"
             isTop={false}
           />

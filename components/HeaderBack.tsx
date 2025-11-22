@@ -31,6 +31,7 @@ export interface HeaderBackProps {
 
 const HeaderBack = (props: HeaderBackProps) => {
   const pathName = usePathname();
+  console.log("pathName", pathName);
 
   const router = useRouter();
   const {
@@ -51,8 +52,13 @@ const HeaderBack = (props: HeaderBackProps) => {
       colors={["#26B8F1", "#0D71C7"]}
       start={{ x: 0, y: 0 }}
       style={{
-        // marginTop: pathName != "/home/medinsurance/card" ? 0 : 55,
-        height: 63.63,
+        paddingTop: [
+          "/home/medinsurance/card",
+          "/home/progress/detail",
+        ].includes(pathName)
+          ? 0
+          : 50,
+        // height: 63.63,
         justifyContent: "flex-end",
       }}
     >
