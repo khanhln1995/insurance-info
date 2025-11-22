@@ -17,6 +17,15 @@ import { useUser } from "@/hooks/user";
 import AntDesign from "@expo/vector-icons/AntDesign";
 import AppText from "@/components/AppText";
 import Spacer from "./Spacer";
+import IconSpeaker from "@/assets/images/icon/icon-speaker.svg";
+import IconNew from "@/assets/images/icon/icon-new.svg";
+import IconSetting from "@/assets/images/icon/icon-setting.svg";
+import IconList from "@/assets/images/icon/icon-list.svg";
+import IconGlobal from "@/assets/images/icon/icon-global.svg";
+import IconSupport from "@/assets/images/icon/icon-support.svg";
+import IconSt from "@/assets/images/icon/icon-st.svg";
+import IconLock from "@/assets/images/icon/icon-lock.svg";
+import IconLogout from "@/assets/images/icon/icon-logout.svg";
 
 const { width } = Dimensions.get("window");
 const DRAWER_W = Math.min(360, Math.floor(width * 0.68));
@@ -55,17 +64,20 @@ const SideMenu: React.FC<Props> = ({ visible, onClose, onLogout }) => {
         activeOpacity={0.7}
         onPress={onPress}
       >
-        {icon}
+        <View style={{
+          width: 36.17,
+          alignItems: "center",
+        }}>{icon}</View>
+        
         <View
           style={{
             flexDirection: "row",
-            alignItems: "center",
             justifyContent: "space-between",
             flex: 1,
             borderBottomColor: "#28B9F0",
             borderBottomWidth: 1,
-            paddingBottom: 16.41,
-            height: 38.45
+            paddingBottom: 13,
+            // height: 38.45
           }}
         >
           <AppText variant="labelBold" style={styles.itemText}>
@@ -76,7 +88,7 @@ const SideMenu: React.FC<Props> = ({ visible, onClose, onLogout }) => {
             name="arrow-right"
             size={17.41}
             color="#46B9FA"
-            style={{ opacity: 0.9 }}
+            style={{ opacity: 0.9,  paddingRight: 21.77,}}
           />
         </View>
       </TouchableOpacity>
@@ -143,127 +155,139 @@ const SideMenu: React.FC<Props> = ({ visible, onClose, onLogout }) => {
               {renderItemMenu({
                 text: "Thông báo",
                 icon: (
-                  <Image
-                    source={require("@/assets/images/icon/icon-speaker.png")}
-                    style={{
-                      width: 24,
-                      height: 24,
-                      marginRight: 10,
-                    }}
-                  />
+                  // <Image
+                  //   source={require("@/assets/images/icon/icon-speaker.png")}
+                  //   style={{
+                  //     width: 24,
+                  //     height: 24,
+                  //     marginRight: 10,
+                  //   }}
+                  // />
+                  <IconSpeaker width={18.42} height={18.13} />
                 ),
                 onPress: () => {},
               })}
               {renderItemMenu({
                 text: "Tin tức",
                 icon: (
-                  <Image
-                    source={require("@/assets/images/icon/icon-new.png")}
-                    style={{
-                      width: 24,
-                      height: 24,
-                      marginRight: 10,
-                    }}
-                  />
+                  // <Image
+                  //   source={require("@/assets/images/icon/icon-new.png")}
+                  //   style={{
+                  //     width: 24,
+                  //     height: 24,
+                  //     marginRight: 10,
+                  //   }}
+                  // />
+                  <IconNew width={19.76} height={16.64} />
                 ),
                 onPress: () => {},
               })}
               {renderItemMenu({
                 text: "Quản lý cá nhân",
                 icon: (
-                  <Image
-                    source={require("@/assets/images/icon/icon-setting.png")}
-                    style={{
-                      width: 24,
-                      height: 24,
-                      marginRight: 10,
-                    }}
-                  />
+                  // <Image
+                  //   source={require("@/assets/images/icon/icon-setting.png")}
+                  //   style={{
+                  //     width: 24,
+                  //     height: 24,
+                  //     marginRight: 10,
+                  //   }}
+                  // />
+                  <IconSetting width={19.36} height={19.43} />
                 ),
                 onPress: () => {},
               })}
               {renderItemMenu({
                 text: "Dịch vụ công",
                 icon: (
-                  <Image
-                    source={require("@/assets/images/icon/icon-list.png")}
-                    style={{
-                      width: 24,
-                      height: 24,
-                      marginRight: 10,
-                    }}
-                  />
+                  // <Image
+                  //   source={require("@/assets/images/icon/icon-list.png")}
+                  //   style={{
+                  //     width: 24,
+                  //     height: 24,
+                  //     marginRight: 10,
+                  //   }}
+                  // />
+                  <IconList width={13.39} height={17.35} />
                 ),
                 onPress: () => {},
               })}
               {renderItemMenu({
                 text: "Tra cứu",
                 icon: (
-                  <Image
-                    source={require("@/assets/images/icon/icon-global.png")}
-                    style={{
-                      width: 24,
-                      height: 24,
-                      marginRight: 10,
-                    }}
-                  />
+                  // <Image
+                  //   source={require("@/assets/images/icon/icon-global.png")}
+                
+                  //   style={{
+                  //     width: 24,
+                  //     height: 24,
+                  //     marginRight: 10,
+                  //   }}
+                  // />
+                  <IconGlobal width={16.74} height={17.48} />
                 ),
                 onPress: () => {},
               })}
               {renderItemMenu({
                 text: "Trợ giúp",
                 icon: (
-                  <Image
-                    source={require("@/assets/images/icon/icon-support.png")}
-                    style={{
-                      width: 24,
-                      height: 24,
-                      marginRight: 10,
-                    }}
-                  />
+                  // <Image
+                  //   source={require("@/assets/images/icon/icon-support.png")}
+                  //   style={{    
+                  //     width: 24,
+                  //     height: 24,
+                  //     marginRight: 10,
+                  //   }}
+                  // />
+                  <IconSupport width={18.26} height={18.75} />
                 ),
                 onPress: () => {},
               })}
               {renderItemMenu({
                 text: "Cài đặt",
                 icon: (
-                  <Image
-                    source={require("@/assets/images/icon/icon-st.png")}
-                    style={{
-                      width: 24,
-                      height: 24,
-                      marginRight: 10,
-                    }}
-                  />
+                  // <Image
+                  //   source={require("@/assets/images/icon/icon-st.png")}
+                  //   style={{
+                  //     width: 24,
+                  //     height: 24,
+                  //     marginRight: 10,
+                  //   }}
+                  // />
+                  <IconSt width={19.62} height={19.76} />
                 ),
                 onPress: () => {},
               })}
-              <View style={{ justifyContent: "space-between", marginTop: 20 }}>
+              <View style={{ justifyContent: "space-between", marginTop: 60 }}>
                 {renderItemMenu({
                   text: "Đổi mật khẩu",
                   icon: (
-                    <Image
-                      source={require("@/assets/images/icon/icon-lock.png")}
-                      style={{
-                        width: 24,
-                        height: 24,
-                        marginRight: 10,
-                      }}
-                    />
+                    // <Image
+                    //   source={require("@/assets/images/icon/icon-lock.png")}
+                    //   style={{
+
+                    //     width: 24,
+                    //     height: 24,
+                    //     marginRight: 10,
+                    //   }}
+                    // />
+                    <IconLock width={15.4} height={19.17} />
                   ),
                   onPress: () => {},
                 })}
                 {renderItemMenu({
                   text: "Đăng xuất",
                   icon: (
-                    <Image
-                      source={require("@/assets/images/icon/icon-logout.png")}
-                      style={{
-                        width: 24,
-                        height: 24,
-                        marginRight: 10,
-                      }}
-                    />
+                    // <Image
+                    //   source={require("@/assets/images/icon/icon-logout.png")}
+
+                    //   style={{
+                    //     width: 24,
+                    //     height: 24,
+                    //     marginRight: 10,
+                    //   }}
+                    // />
+                    <IconLogout width={17.02} height={17.02} />
                   ),
                   onPress: onLogout,
                 })}
@@ -304,11 +328,10 @@ const styles = StyleSheet.create({
   },
   drawer: {
     flex: 1,
-    paddingHorizontal: 16,
+    // paddingHorizontal: 16,
   },
   header: {
     alignItems: "center",
-    paddingBottom: 18,
   },
   avatarRing: {
     width: 60,
@@ -335,19 +358,21 @@ const styles = StyleSheet.create({
     marginTop: 2,
   },
   hr: {
-    height: 1,
-    backgroundColor: "rgba(255,255,255,0.35)",
-    marginVertical: 8,
+    height: 4.5,
+    marginTop: 13.26,
+    marginBottom: 10.26,
+    backgroundColor: "#00000010",
   },
   itemRow: {
     flexDirection: "row",
     alignItems: "flex-start",
-    paddingVertical: 10,
     width: "100%",
+    height: 38.45,
+    paddingLeft: 6,
+    marginTop: 9.5
   },
   itemText: {
     color: "white",
-    flexShrink: 1,
   },
   footer: {
     color: "#FFFFFF",
@@ -355,7 +380,7 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
   footerWrap: {
-    paddingVertical: 12,
-    alignItems: "flex-start",
+    // paddingVertical: 12,
+    paddingHorizontal: 10.04,
   },
 });

@@ -31,7 +31,6 @@ export interface HeaderBackProps {
 
 const HeaderBack = (props: HeaderBackProps) => {
   const pathName = usePathname();
-  console.log("pathName", pathName);
 
   const router = useRouter();
   const {
@@ -49,16 +48,19 @@ const HeaderBack = (props: HeaderBackProps) => {
   } = props;
   return (
     <LinearGradient
-      colors={["#00ABF0", "#0074C7"]}
+      colors={["#26B8F1", "#0D71C7"]}
       start={{ x: 0, y: 0 }}
-      style={{ marginTop: pathName != "/home/medinsurance/card" ? 0 : 55 }}
+      style={{
+        // marginTop: pathName != "/home/medinsurance/card" ? 0 : 55,
+        height: 63.63,
+        justifyContent: "flex-end",
+      }}
     >
       {pathName != "/home/medinsurance/card" && <SafeAreaView />}
       <View style={[styles.container, styleContainer]}>
         {isGoBack && (
           <TouchableOpacity
             onPress={() => {
-              console.log("onGoBack");
               onGoBack ? onGoBack?.() : router.back();
             }}
             style={{
@@ -95,7 +97,7 @@ const HeaderBack = (props: HeaderBackProps) => {
               zIndex: 9999,
               position: "absolute",
               right: "6%",
-              top: 14,
+              // top: 14,
             }}
           >
             {iconRight}

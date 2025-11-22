@@ -2,6 +2,10 @@ import { Colors } from "@/constants/Colors";
 import React from "react";
 import { Image, StyleSheet, TouchableOpacity, View } from "react-native";
 import AppText from "@/components/AppText";
+import SupportInactive from "../assets/images/icon/support-inactive.svg";
+import GlobalSearchInactive from "../assets/images/icon/global-search-inactive.svg";
+import ListInactive from "../assets/images/icon/list-inactive.svg";
+import SettingUser from "../assets/images/icon/setting-user.svg";
 
 const BottomMenuBar = () => {
   return (
@@ -20,10 +24,7 @@ const BottomMenuBar = () => {
       <TouchableOpacity
         style={{ alignItems: "center", justifyContent: "center" }}
       >
-        <Image
-          source={require("@/assets/images/icon/setting-user.png")}
-          style={{ width: 21.6, height: 21.6 }}
-        />
+        <SettingUser width={21.53} height={21.6}/>
         <AppText variant="captionBold" style={{ color: Colors.primary, marginTop: 5 }}>
           QL cá nhân
         </AppText>
@@ -31,10 +32,7 @@ const BottomMenuBar = () => {
       <TouchableOpacity
         style={{ alignItems: "center", justifyContent: "center" }}
       >
-        <Image
-          source={require("@/assets/images/icon/list-inactive.png")}
-          style={{ width: 21.6, height: 21.6 }}
-        />
+        <ListInactive width={14.41} height={20.93} />
         <AppText variant="captionBold" style={{ color: Colors.txtDark, marginTop: 5 }}>
           Dịch vụ công
         </AppText>
@@ -42,10 +40,7 @@ const BottomMenuBar = () => {
       <TouchableOpacity
         style={{ alignItems: "center", justifyContent: "center" }}
       >
-        <Image
-          source={require("@/assets/images/icon/global-search-inactive.png")}
-          style={{ width: 21.6, height: 21.6 }}
-        />
+        <GlobalSearchInactive width={19.79} height={20.63} />
         <AppText variant="captionBold" style={{ color: Colors.txtDark, marginTop: 5 }}>
           Tra cứu
         </AppText>
@@ -53,10 +48,7 @@ const BottomMenuBar = () => {
       <TouchableOpacity
         style={{ alignItems: "center", justifyContent: "center" }}
       >
-        <Image
-          source={require("@/assets/images/icon/support-inactive.png")}
-          style={{ width: 21.6, height: 21.6 }}
-        />
+        <SupportInactive width={16.74} height={16.26} />
         <AppText variant="captionBold" style={{ color: Colors.txtDark, marginTop: 5 }}>
           Trợ giúp
         </AppText>
@@ -67,4 +59,3 @@ const BottomMenuBar = () => {
 
 export default BottomMenuBar;
 
-const styles = StyleSheet.create({});

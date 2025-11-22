@@ -30,9 +30,10 @@ const InfoCard = ({ type }: Props) => {
           flexDirection: "row",
           justifyContent: "space-between",
           alignItems: "center",
-          borderTopColor: Colors.border,
-          borderTopWidth: 1,
-          paddingVertical: 8,
+          borderBottomColor: '#C5CED3',
+          borderBottomWidth: 0.67,
+          paddingBottom: 7.37,
+          paddingTop: 11.39
         }}
       >
         <AppText variant="label" style={{ color: "#4E4E4E", flex: 1 }}>
@@ -100,9 +101,17 @@ const InfoCard = ({ type }: Props) => {
 
   return (
     <View
-      style={{ backgroundColor: Colors.bgInfo, padding: 15, borderRadius: 5 }}
+      style={{ backgroundColor: Colors.bgInfo, padding: 17.41, borderRadius: 5 }}
     >
-      <View style={{ flexDirection: "row", gap: 12, alignItems: "center" }}>
+      <View style={{
+          flexDirection: "row", 
+          gap: 12, 
+          alignItems: "center",
+          borderBottomColor: '#949899',
+          borderBottomWidth: 0.67, 
+          paddingBottom: 10.02,
+        }}
+      >
         <View
           style={{
             backgroundColor: "white",
@@ -117,11 +126,13 @@ const InfoCard = ({ type }: Props) => {
             <Image
               source={{ uri: avatar.uri }}
               style={{ width: 60, height: 60, borderRadius: 50 }}
+              resizeMode="cover"
             />
           ) : (
             <Image
               source={require("@/assets/images/icon/avatar-male.png")}
               style={{ width: 60, height: 60 }}
+              resizeMode="contain"
             />
           )}
         </View>
@@ -132,7 +143,6 @@ const InfoCard = ({ type }: Props) => {
           <AppText variant="body">{subInfo}</AppText>
         </View>
       </View>
-      <Spacer size={12} />
       {contentCard}
     </View>
   );
