@@ -11,6 +11,8 @@ const DetailProgress = () => {
   const { detail, title } = useLocalSearchParams();
   const data = JSON.parse(detail as string);
 
+  
+
   const renderInfoLine = (label: string, value?: string) => (
     <AppText variant="small" style={styles.infoLine}>
       <AppText variant="small" style={styles.infoLabel}>
@@ -49,7 +51,7 @@ const DetailProgress = () => {
 
         {/* Blue info card */}
         <View style={styles.infoCard}>
-          {renderInfoLine("Chức vụ", data?.chucvu)}
+          {title !== 'BHYT' && renderInfoLine("Chức vụ", data?.chucvu)}
           {renderInfoLine("Đơn vị công tác", data?.donvi)}
           {renderInfoLine("Nơi làm việc", data?.chitiet?.noilamviec)}
           {renderInfoLine("Loại tiền", data?.chitiet?.loaitien)}
@@ -93,14 +95,14 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-around",
     paddingHorizontal: 20,
-    paddingVertical: 10,
+    paddingVertical: 15.2,
   },
 
   infoCard: {
-    backgroundColor: Colors.primary, // matches the blue block in your screenshot
-    marginHorizontal: 12,
-    paddingHorizontal: 5,
-    paddingVertical: 5,
+    backgroundColor: '#3566A0', // matches the blue block in your screenshot
+    marginHorizontal: 20.43,
+    paddingHorizontal: 10.72,
+    paddingVertical: 8,
   },
   infoLine: {
     color: "#E6F0FF",
@@ -115,11 +117,11 @@ const styles = StyleSheet.create({
 
   table: {
     backgroundColor: "#ffffff",
-    marginHorizontal: 12,
+    marginHorizontal: 20.43,
     // borderRadius: 6,
     overflow: "hidden",
-    borderWidth: 1,
-    borderColor: "#E5E7EB",
+    borderWidth: 1.1,
+    borderColor: "#DCE7FA",
   },
   rowTopBorder: {
     borderTopWidth: 0,
@@ -127,39 +129,33 @@ const styles = StyleSheet.create({
   row: {
     flexDirection: "row",
     alignItems: "center",
-    paddingHorizontal: 16,
-    borderTopWidth: 1,
-    borderColor: "#E5E7EB",
+    paddingHorizontal: 13.23,
+    borderTopWidth: 1.1,
+    borderColor: "#DCE7FA",
     justifyContent: "space-between",
   },
   cellLeft: {
     flex: 1.2,
-    color: "#111827",
     textAlign: "center",
   },
   cellRight: {
-    flex: 0.8,
-    color: "#111827",
     textAlign: "right",
-    paddingLeft: 12, // add spacing after the line
   },
   cellLeftWrapper: {
     flex: 1,
     justifyContent: "center",
-    paddingVertical: 8,
-    paddingRight: 8,
+    paddingVertical: 4.73,
   },
 
   cellRightWrapper: {
     flex: 1,
     justifyContent: "center",
-    paddingVertical: 8,
-    paddingLeft: 8,
+    paddingVertical: 4.73,
   },
 
   divider: {
-    width: 1,
-    backgroundColor: "#E5E7EB",
+    width: 1.1,
+    backgroundColor: "#DCE7FA",
     alignSelf: "stretch", // ensures it fills full row height
   },
 });

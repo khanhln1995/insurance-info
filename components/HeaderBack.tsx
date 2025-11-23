@@ -31,7 +31,6 @@ export interface HeaderBackProps {
 
 const HeaderBack = (props: HeaderBackProps) => {
   const pathName = usePathname();
-  console.log("pathName", pathName);
 
   const router = useRouter();
   const {
@@ -57,8 +56,11 @@ const HeaderBack = (props: HeaderBackProps) => {
           "/home/progress/detail",
         ].includes(pathName)
           ? 0
-          : 50,
-        // height: 63.63,
+          : 27,
+        marginTop : [
+          "/home/medinsurance/card",
+          "/home/progress/detail",
+        ].includes(pathName) ? 66 : 0,
         justifyContent: "flex-end",
       }}
     >

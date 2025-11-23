@@ -41,7 +41,7 @@ const LoginScreen = () => {
         <View style={styles.header}>
           <Image
             source={require("../../assets/images/bell.png")}
-            style={{ width: 30, height: 30 }}
+            style={{ width: 20.09, height: 23.11 }}
             resizeMode="contain"
           />
           <TouchableOpacity
@@ -52,22 +52,24 @@ const LoginScreen = () => {
           >
             <Image
               source={require("../../assets/images/vn-flag.png")}
-              style={{ width: 35, height: 35 }}
+              style={{ width: 24, height: 17 }}
             />
           </TouchableOpacity>
         </View>
-        <Spacer size={36} />
+        <Spacer size={60} />
         <RoundAvatar
-          size={width / 3}
+          size={99.5}
           color="white"
           containerStyle={[
             {
               alignSelf: "center",
+              // boxShadow
+              boxShadow: '#00000029'
             },
           ]}
-          uri={require("../../assets/images/logo.png")}
+          uri={require("../../assets/images/icon/logo.png")}
         />
-        <Spacer size={26} />
+        <Spacer size={27} />
 
         <View style={styles.content}>
           <View>
@@ -245,14 +247,15 @@ const styles = StyleSheet.create({
   header: {
     flexDirection: "row",
     justifyContent: "space-between",
-    paddingTop: 50,
+    paddingTop: 48,
     // paddingBottom: 37,
-    paddingHorizontal: 17.75,
+    paddingLeft: 17.75,
+    paddingRight: 11.33,
     zIndex: 100,
   },
   content: {
     alignItems: "center",
-    width: 369.05,
+    paddingHorizontal: 29,
     alignSelf: "center",
   },
   button: {

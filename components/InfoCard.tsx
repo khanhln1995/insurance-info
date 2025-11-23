@@ -19,10 +19,12 @@ const InfoCard = ({ type }: Props) => {
     title,
     value,
     isFlex = true,
+    isBorderBottom = true,
   }: {
     title: string;
     value: string;
     isFlex?: boolean;
+    isBorderBottom?: boolean;
   }) => {
     return (
       <View
@@ -30,8 +32,8 @@ const InfoCard = ({ type }: Props) => {
           flexDirection: "row",
           justifyContent: "space-between",
           alignItems: "center",
-          borderBottomColor: '#C5CED3',
-          borderBottomWidth: 0.67,
+          borderBottomColor: isBorderBottom ? '#C5CED3' : '',
+          borderBottomWidth: isBorderBottom ? 0.67 : 0,
           paddingBottom: 7.37,
           paddingTop: 11.39
         }}
@@ -67,7 +69,7 @@ const InfoCard = ({ type }: Props) => {
           <RenderInfoLine title="Ngày sinh" value={userInfo?.ngaysinh} />
           <RenderInfoLine title="ĐDCN/CCCD/Hộ chiếu" value={userInfo?.cmnd} />
           <RenderInfoLine title="Số điện thoại" value={userInfo?.sdt} />
-          <RenderInfoLine title="Địa chỉ" value={userInfo?.diachi} />
+          <RenderInfoLine title="Địa chỉ" value={userInfo?.diachi} isBorderBottom={false}/>
         </View>
       );
       name = userInfo?.ten;

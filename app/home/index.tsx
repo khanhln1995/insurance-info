@@ -37,14 +37,14 @@ const Home = () => {
           flexDirection: "row",
           alignItems: "center",
           gap: 20.43,
-          marginBottom: 11.39,
+          marginBottom: 2,
         }}
       >
         <View
           style={{
             width: 39.69,
             height: 39.69,
-            marginBottom: 13,
+            marginBottom: 17,
           }}
         >
           {SvgIcon ? (
@@ -98,7 +98,7 @@ const Home = () => {
           <ChevronRight
             width={24.32}
             height={40.52}
-            style={{ marginBottom: 11.5 }}
+            style={{ marginBottom: 19 }}
           />
         </TouchableOpacity>
       </View>
