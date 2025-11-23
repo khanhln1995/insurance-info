@@ -103,15 +103,17 @@ const Progress = () => {
                     style={[
                       styles.tab,
                       {
-                        borderColor: isSelected ? "#0574CE" : Colors.border,
+                        borderColor: isSelected ? 
+                          (tab.id === 5 ? "#0574CE" : '') : 
+                          (tab.id === 5 ? Colors.border : ''),
+                        borderWidth: tab.id === 5 ? 2 : 0,
                       },
                     ]}
                     onPress={() => setSelectedTab(tab)}
-                    activeOpacity={0.8}
                   >
                     <Image
                       source={isSelected ? tab.tabActiveIcon : tab.tabIcon}
-                      style={{ width: 42, height: 42 }}
+                      style={{ width: 47.89, height: 47.89 }}
                       resizeMode="contain"
                     />
                   </TouchableOpacity>
@@ -121,7 +123,7 @@ const Progress = () => {
                     variant="label"
                     style={[
                       styles.tabLabel,
-                      { color: isSelected ? Colors.primary : Colors.border },
+                      { color: isSelected ? "#0574CE" : Colors.border },
                     ]}
                     numberOfLines={2}
                     ellipsizeMode="tail"
@@ -132,12 +134,11 @@ const Progress = () => {
               );
             })}
           </View>
-          {/* <Spacer size={20} /> */}
           <ScrollView
             style={{ flex: 1 }}
             contentContainerStyle={{
-              paddingHorizontal: 15,
-              paddingTop: 10,
+              paddingHorizontal: 7,
+              paddingTop: 18,
               paddingBottom: BOTTOM_BAR_HEIGHT + 24, // room for bottom bar + a little spacing
             }}
             showsVerticalScrollIndicator={false}
@@ -195,9 +196,8 @@ const styles = StyleSheet.create({
   tabsRow: {
     flexDirection: "row",
     justifyContent: "space-between",
-    paddingHorizontal: 20,
-    paddingVertical: 16,
-    gap: 14, // if gap unsupported in your RN version, replace with margins on tabItem
+    paddingTop: 10.05,
+    paddingHorizontal: 19,
   },
   tabItem: {
     width: TAB_ITEM_WIDTH,
@@ -209,21 +209,18 @@ const styles = StyleSheet.create({
     height: 50,
     justifyContent: "center",
     alignItems: "center",
-    borderWidth: 2,
     backgroundColor: "white",
   },
   tabLabel: {
-    marginTop: 6,
+    marginTop: 5,
     textAlign: "center",
     color: Colors.border,
     lineHeight: 13, // tighter line height looks better in 2 lines
   },
   description: {
-    backgroundColor: Colors.bgInfo,
-    padding: 10,
-    borderTopLeftRadius: 5,
-    borderTopRightRadius: 5,
-    borderWidth: 1,
-    borderColor: Colors.border,
+    backgroundColor: "#F3F3F3",
+    padding: 8.82,
+    borderWidth: 0.67,
+    borderColor: '#D3D3D3',
   },
 });

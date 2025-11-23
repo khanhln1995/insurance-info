@@ -81,7 +81,7 @@ const EmploymentHistoryTable: React.FC<Props> = ({
   data,
   onPressView,
   actionIcon,
-  headerColor = "#2F6EA6", // blue like screenshot
+  headerColor = "#345E94", // blue like screenshot
   containerStyle,
   headerTextStyle,
   cellTextStyle,
@@ -172,7 +172,7 @@ const EmploymentHistoryTable: React.FC<Props> = ({
                 resizeMode="contain"
               />
             ) : (
-              <FontAwesome name="eye" size={18} color={headerColor} />
+              <FontAwesome name="eye" size={21.1} color={headerColor} />
             )}
           </TouchableOpacity>
         ) : null}
@@ -198,8 +198,8 @@ export default EmploymentHistoryTable;
 
 const styles = StyleSheet.create({
   container: {
-    borderWidth: 1,
-    borderColor: "#2F6EA6",
+    borderWidth: 0.67,
+    borderColor: "#74A6BA",
     overflow: "hidden",
   },
   row: {
@@ -208,7 +208,7 @@ const styles = StyleSheet.create({
   },
   cell: {
     paddingHorizontal: 8,
-    paddingVertical: 10,
+    paddingVertical: 8.48,
     justifyContent: "center",
   },
   headerText: {
@@ -219,16 +219,16 @@ const styles = StyleSheet.create({
     color: "#2E2F33",
   },
   separator: {
-    height: 1,
-    backgroundColor: "#2F6EA6",
+    height: 0.67,
+    backgroundColor: "#74A6BA",
   },
   borderLeftWhite: {
     borderLeftWidth: 1,
     borderLeftColor: "rgba(255,255,255,0.8)",
   },
   borderLeftGrey: {
-    borderLeftWidth: 1,
-    borderLeftColor: "#2F6EA6",
+    borderLeftWidth: 0.67,
+    borderLeftColor: "#74A6BA",
   },
   eyeButton: { alignItems: "center", justifyContent: "center" },
 });

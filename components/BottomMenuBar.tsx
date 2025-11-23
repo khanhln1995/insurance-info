@@ -11,21 +11,20 @@ const BottomMenuBar = () => {
   return (
     <View
       style={{
-        borderTopWidth: 1,
-        borderTopColor: Colors.border,
-        padding: 12,
+        borderTopWidth: 0.5,
+        borderTopColor: "#C6C6C6",
         flexDirection: "row",
-        alignItems: "center",
+        // alignItems: "center",
         justifyContent: "space-around",
-        gap: 10,
         backgroundColor: "white",
+        height: 49.23,
       }}
     >
       <TouchableOpacity
         style={{ alignItems: "center", justifyContent: "center" }}
       >
         <SettingUser width={21.53} height={21.6}/>
-        <AppText variant="captionBold" style={{ color: Colors.primary, marginTop: 5 }}>
+        <AppText variant="captionBold" style={{ color: Colors.primary, marginTop: 6 }}>
           QL cá nhân
         </AppText>
       </TouchableOpacity>
@@ -33,7 +32,7 @@ const BottomMenuBar = () => {
         style={{ alignItems: "center", justifyContent: "center" }}
       >
         <ListInactive width={14.41} height={20.93} />
-        <AppText variant="captionBold" style={{ color: Colors.txtDark, marginTop: 5 }}>
+        <AppText variant="captionBold" style={{ color: Colors.txtDark, marginTop: 6 }}>
           Dịch vụ công
         </AppText>
       </TouchableOpacity>
@@ -41,7 +40,7 @@ const BottomMenuBar = () => {
         style={{ alignItems: "center", justifyContent: "center" }}
       >
         <GlobalSearchInactive width={19.79} height={20.63} />
-        <AppText variant="captionBold" style={{ color: Colors.txtDark, marginTop: 5 }}>
+        <AppText variant="captionBold" style={{ color: Colors.txtDark, marginTop: 6 }}>
           Tra cứu
         </AppText>
       </TouchableOpacity>
@@ -49,7 +48,7 @@ const BottomMenuBar = () => {
         style={{ alignItems: "center", justifyContent: "center" }}
       >
         <SupportInactive width={16.74} height={16.26} />
-        <AppText variant="captionBold" style={{ color: Colors.txtDark, marginTop: 5 }}>
+        <AppText variant="captionBold" style={{ color: Colors.txtDark, marginTop: 6 }}>
           Trợ giúp
         </AppText>
       </TouchableOpacity>
