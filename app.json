@@ -2,7 +2,7 @@
   "expo": {
     "name": "VssiID",
     "slug": "VssiID",
-    "version": "1.0.16",
+    "version": "1.0.17",
     "orientation": "portrait",
     "icon": "./assets/images/icon/app-logo.jpeg",
     "scheme": "insuranceinfo",
