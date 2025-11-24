@@ -9,10 +9,10 @@ import React from "react";
 import {
   Image,
   PanResponder,
+  ScrollView,
   StyleSheet,
   TouchableOpacity,
   View,
-  ScrollView,
 } from "react-native";
 
 const BOTTOM_BAR_HEIGHT = 150;
@@ -65,21 +65,31 @@ const Progress = () => {
 
   const [selectedTab, setSelectedTab] = React.useState(progressData[0]);
 
+  // keep a ref to the latest selectedTab so PanResponder callbacks see updated value
+  const selectedTabRef = React.useRef(selectedTab);
+  React.useEffect(() => {
+    selectedTabRef.current = selectedTab;
+  }, [selectedTab]);
+
   // ------------------------------------
-  //  SWIPE LEFT / RIGHT TO CHANGE TAB
+  //  FIXED PANRESPONDER — ALWAYS SWIPE
   // ------------------------------------
   const panResponder = React.useRef(
     PanResponder.create({
-      onMoveShouldSetPanResponder: (_, gestureState) => {
-        return Math.abs(gestureState.dx) > 20; 
-      },
-      onPanResponderRelease: (_, gestureState) => {
-        console.log('gestureState.dx', gestureState);
-        
-        const currentIndex = progressData.findIndex(
-          (t) => t.id === selectedTab.id
+      onMoveShouldSetPanResponderCapture: (_, gestureState) => {
+        // Vuốt ngang > vuốt dọc
+        return (
+          Math.abs(gestureState.dx) > Math.abs(gestureState.dy) &&
+          Math.abs(gestureState.dx) > 20
         );
+      },
 
+      onPanResponderRelease: (_, gestureState) => {
+        const currentIndex = progressData.findIndex(
+          (t) => t.id === selectedTabRef.current.id
+        );
+        console.log(gestureState);
+        
         if (gestureState.dx < -50) {
           const nextIndex = currentIndex + 1;
           if (nextIndex < progressData.length) {
@@ -124,10 +134,8 @@ const Progress = () => {
         containerStyle={{ height: 60 }}
       />
 
-      <View 
-        style={{ flex: 1, justifyContent: "space-between" }}
-        {...panResponder.panHandlers}
-      >
+      {/* GẮN gesture vào đây — BAO TRÙM CẢ MÀN */}
+      <View style={{ flex: 1 }} {...panResponder.panHandlers}>
         <View style={{ flex: 1 }}>
           {/* TAB ROW */}
           <View style={styles.tabsRow}>
@@ -174,7 +182,7 @@ const Progress = () => {
             })}
           </View>
 
-          {/* SCROLL + SWIPE */}
+          {/* SCROLL CONTENT */}
           <ScrollView
             style={{ flex: 1 }}
             contentContainerStyle={{
