@@ -52,7 +52,7 @@ const LoginScreen = () => {
           >
             <Image
               source={require("../../assets/images/vn-flag.png")}
-              style={{ width: 24, height: 17 }}
+              style={{ width: 32.15, height: 19.42 }}
             />
           </TouchableOpacity>
         </View>
