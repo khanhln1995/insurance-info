@@ -21,7 +21,7 @@ const MedCardImageScreen = () => {
 
   useEffect(() => {
     const loadLocal = () => {
-      const src = require("../../../assets/images/1111111.png");
+      const src = medCardImage.uri;
       const resolved = Image.resolveAssetSource(src);
       setImgSize({ width: resolved.width, height: resolved.height });
     };
@@ -32,9 +32,10 @@ const MedCardImageScreen = () => {
         (w, h) => setImgSize({ width: w, height: h }),
         () => loadLocal()
       );
-    } else {
+    } 
+    // else {
       // loadLocal();
-    }
+    // }
   }, [medCardImage]);
 
   const getScaledSize = () => {
