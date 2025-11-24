@@ -8,16 +8,19 @@ import { useRouter } from "expo-router";
 import React from "react";
 import {
   Image,
-  ScrollView,
+  PanResponder,
   StyleSheet,
   TouchableOpacity,
   View,
+  ScrollView,
 } from "react-native";
+
 const BOTTOM_BAR_HEIGHT = 150;
 
 const Progress = () => {
   const router: any = useRouter();
   const { progressList } = useUser();
+
   const progressData = [
     {
       id: 1,
@@ -59,7 +62,39 @@ const Progress = () => {
       title: "Bảo hiểm xã hội",
     },
   ];
+
   const [selectedTab, setSelectedTab] = React.useState(progressData[0]);
+
+  // ------------------------------------
+  //  SWIPE LEFT / RIGHT TO CHANGE TAB
+  // ------------------------------------
+  const panResponder = React.useRef(
+    PanResponder.create({
+      onMoveShouldSetPanResponder: (_, gestureState) => {
+        return Math.abs(gestureState.dx) > 20; 
+      },
+      onPanResponderRelease: (_, gestureState) => {
+        console.log('gestureState.dx', gestureState);
+        
+        const currentIndex = progressData.findIndex(
+          (t) => t.id === selectedTab.id
+        );
+
+        if (gestureState.dx < -50) {
+          const nextIndex = currentIndex + 1;
+          if (nextIndex < progressData.length) {
+            setSelectedTab(progressData[nextIndex]);
+          }
+        } else if (gestureState.dx > 50) {
+          const prevIndex = currentIndex - 1;
+          if (prevIndex >= 0) {
+            setSelectedTab(progressData[prevIndex]);
+          }
+        }
+      },
+    })
+  ).current;
+
   const calculateTotalTime = (progress: any) => {
     let totalMonths = 0;
 
@@ -67,11 +102,9 @@ const Progress = () => {
       const [startMonth, startYear] = item.tuthang.split("/").map(Number);
       const [endMonth, endYear] = item.denthang.split("/").map(Number);
 
-      // Chuyển tất cả về tháng để tính toán
       const startTotalMonths = startYear * 12 + (startMonth - 1);
       const endTotalMonths = endYear * 12 + (endMonth - 1);
 
-      // Cộng thêm 1 để tính cả tháng bắt đầu và kết thúc (tùy yêu cầu)
       const diff = endTotalMonths - startTotalMonths + 1;
       totalMonths += diff;
     });
@@ -91,9 +124,12 @@ const Progress = () => {
         containerStyle={{ height: 60 }}
       />
 
-      {/* Use horizontal ScrollView to avoid squeezing when labels wrap */}
-      <View style={{ flex: 1, justifyContent: "space-between" }}>
+      <View 
+        style={{ flex: 1, justifyContent: "space-between" }}
+        {...panResponder.panHandlers}
+      >
         <View style={{ flex: 1 }}>
+          {/* TAB ROW */}
           <View style={styles.tabsRow}>
             {progressData.map((tab) => {
               const isSelected = selectedTab.id === tab.id;
@@ -103,9 +139,13 @@ const Progress = () => {
                     style={[
                       styles.tab,
                       {
-                        borderColor: isSelected ? 
-                          (tab.id === 5 ? "#0574CE" : '') : 
-                          (tab.id === 5 ? Colors.border : ''),
+                        borderColor: isSelected
+                          ? tab.id === 5
+                            ? "#0574CE"
+                            : ""
+                          : tab.id === 5
+                          ? Colors.border
+                          : "",
                         borderWidth: tab.id === 5 ? 2 : 0,
                       },
                     ]}
@@ -118,7 +158,6 @@ const Progress = () => {
                     />
                   </TouchableOpacity>
 
-                  {/* Constrain width + wrap up to 2 lines, then ellipsize */}
                   <AppText
                     variant="label"
                     style={[
@@ -134,12 +173,14 @@ const Progress = () => {
               );
             })}
           </View>
+
+          {/* SCROLL + SWIPE */}
           <ScrollView
             style={{ flex: 1 }}
             contentContainerStyle={{
               paddingHorizontal: 7,
               paddingTop: 18,
-              paddingBottom: BOTTOM_BAR_HEIGHT + 24, // room for bottom bar + a little spacing
+              paddingBottom: BOTTOM_BAR_HEIGHT + 24,
             }}
             showsVerticalScrollIndicator={false}
           >
@@ -148,16 +189,16 @@ const Progress = () => {
                 <View style={styles.description}>
                   <AppText
                     variant="headingMd"
-                    style={{
-                      color: "#306BA3",
-                    }}
+                    style={{ color: "#306BA3" }}
                   >
                     Quá trình tham gia {selectedTab.title}
                   </AppText>
+
                   <AppText variant="small">
                     Tổng thời gian tham gia:{" "}
                     {calculateTotalTime(selectedTab.data?.progress) || "-"}
                   </AppText>
+
                   {!(selectedTab.id == 4 || selectedTab.id == 3) && (
                     <AppText variant="small" style={{ color: "#CE0301" }}>
                       Tổng thời gian chậm đóng :{" "}
@@ -165,6 +206,7 @@ const Progress = () => {
                     </AppText>
                   )}
                 </View>
+
                 <EmploymentHistoryTable
                   data={selectedTab.data?.progress}
                   onPressView={(detail) => {
@@ -182,6 +224,7 @@ const Progress = () => {
             )}
           </ScrollView>
         </View>
+
         <BottomMenuBar />
       </View>
     </View>
@@ -190,7 +233,7 @@ const Progress = () => {
 
 export default Progress;
 
-const TAB_ITEM_WIDTH = 60; // wide enough for 2-line titles like "BHTNLD-BNN"
+const TAB_ITEM_WIDTH = 60;
 
 const styles = StyleSheet.create({
   tabsRow: {
@@ -215,12 +258,12 @@ const styles = StyleSheet.create({
     marginTop: 5,
     textAlign: "center",
     color: Colors.border,
-    lineHeight: 13, // tighter line height looks better in 2 lines
+    lineHeight: 13,
   },
   description: {
     backgroundColor: "#F3F3F3",
     padding: 8.82,
     borderWidth: 0.67,
-    borderColor: '#D3D3D3',
+    borderColor: "#D3D3D3",
   },
 });
