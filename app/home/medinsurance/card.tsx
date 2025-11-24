@@ -6,8 +6,9 @@ import { Entypo } from "@expo/vector-icons";
 import React, { useEffect, useState } from "react";
 import { Image, StyleSheet, TouchableOpacity, View } from "react-native";
 
-const MAX_WIDTH = 268.25;
-const MAX_HEIGHT = 469.25;
+const MAX_WIDTH = 272;
+const MAX_HEIGHT = 476;
+const MIN_HEIGHT = 155.43;
 
 const MedCardImageScreen = () => {
   const { medCardImage } = useUser();
@@ -20,7 +21,7 @@ const MedCardImageScreen = () => {
 
   useEffect(() => {
     const loadLocal = () => {
-      const src = medCardImage.uri;
+      const src = require("../../../assets/images/1111111.png");
       const resolved = Image.resolveAssetSource(src);
       setImgSize({ width: resolved.width, height: resolved.height });
     };
@@ -32,31 +33,23 @@ const MedCardImageScreen = () => {
         () => loadLocal()
       );
     } else {
-      loadLocal();
+      // loadLocal();
     }
   }, [medCardImage]);
 
-  // Hàm tính kích thước ảnh theo rotation và max
   const getScaledSize = () => {
-    if (!imgSize) return { width: MAX_WIDTH, height: MAX_HEIGHT };
+    if (!imgSize) return { width: MAX_WIDTH, height: MAX_HEIGHT, resizeMode: "stretch" };
+
     const { width: iw, height: ih } = imgSize;
     const rotated = rotation % 180 !== 0;
-    let natW = rotated ? ih : iw;
-    let natH = rotated ? iw : ih;
+    const isNatPortrait = ih >= iw;
+    const isDisplayPortrait = rotated ? !isNatPortrait : isNatPortrait;
 
-    if (natW > MAX_WIDTH) {
-      const scale = MAX_WIDTH / natW;
-      natW = MAX_WIDTH;
-      natH = Math.round(natH * scale);
-    }
-
-    if (natH > MAX_HEIGHT) {
-      const scale = MAX_HEIGHT / natH;
-      natH = MAX_HEIGHT;
-      natW = Math.round(natW * scale);
-    }
-    
-    return { width: rotated ? natH : natW, height:rotated ? natW : natH };
+    return {
+      width: MAX_WIDTH,
+      height: isDisplayPortrait ? MAX_HEIGHT : MIN_HEIGHT,
+      resizeMode: "cover",
+    };
   };
 
   const scaledSize = getScaledSize();
@@ -72,35 +65,30 @@ const MedCardImageScreen = () => {
       />
 
       <View style={styles.content}>
-        {medCardImage?.uri && (
-          <TouchableOpacity style={styles.rotateBtn} onPress={toggleRotation}>
-            <Image
-              source={require("../../../assets/images/clip.png")}
-              style={{ width: 33.49, height: 33.49 }}
-            />
-          </TouchableOpacity>
-        )}
         {medCardImage?.uri ? (
-          <View
-            style={[
-              styles.cardFrame,
-              {
-                width: 268.25,
-                height: 469.25,
-              },
-            ]}
-          >
-            <Image
-              source={{ uri: medCardImage.uri }}
-              // source={require("../../../assets/images/1111111.png")}
-              style={{
-                width: scaledSize.width,
-                height: scaledSize.height,
-                transform: [{ rotate: `${rotation}deg` }],
-              }}
-              resizeMode="contain"
-            />
-          </View>
+          <>
+            <TouchableOpacity style={styles.rotateBtn} onPress={toggleRotation}>
+              <Image
+                source={require("../../../assets/images/clip.png")}
+                style={{ width: 33.49, height: 33.49 }}
+              />
+            </TouchableOpacity>
+            <View style={[styles.cardFrame, {
+              width: scaledSize?.width,
+              height: scaledSize?.height
+            }]}>
+              <Image
+                source={{ uri: medCardImage.uri }}
+                // source={require("../../../assets/images/1111111.png")}
+                style={{
+                  width: rotation % 180 === 0 ? scaledSize.width : scaledSize.height,
+                  height: rotation % 180 === 0 ? scaledSize.height : scaledSize.width,
+                  transform: [{ rotate: `${rotation}deg` }],
+                }}
+                resizeMode={scaledSize.resizeMode as any}
+              />
+            </View>
+          </>
         ) : (
           <AppText variant="label" style={styles.emptyText}>
             Chưa có ảnh thẻ bảo hiểm y tế. Vui lòng thêm ảnh trong phần nhập dữ liệu.
@@ -127,6 +115,7 @@ const styles = StyleSheet.create({
     marginTop: 88,
     alignItems: "center",
     justifyContent: "center",
+    overflow: "hidden",
   },
   rotateBtn: {
     position: "absolute",
