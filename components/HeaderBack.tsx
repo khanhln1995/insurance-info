@@ -46,6 +46,8 @@ const HeaderBack = (props: HeaderBackProps) => {
     textStyle,
     titleVariant = "headingMdRegular",
   } = props;
+  console.log(pathName);
+
   return (
     <LinearGradient
       colors={["#26B8F1", "#0D71C7"]}
@@ -57,11 +59,18 @@ const HeaderBack = (props: HeaderBackProps) => {
         ].includes(pathName)
           ? 0
           : 27,
-        marginTop : [
+        marginTop: [
           "/home/medinsurance/card",
-          "/home/progress/detail",
-        ].includes(pathName) ? 66 : 0,
+          // "/home/progress/detail",
+        ].includes(pathName)
+          ? 66
+          : 0,
         justifyContent: "flex-end",
+        height: !["/home/medinsurance/card", "/home/progress/detail"].includes(
+          pathName
+        )
+          ? 63.63
+          : "auto",
       }}
     >
       {pathName != "/home/medinsurance/card" && <SafeAreaView />}
