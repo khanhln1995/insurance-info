@@ -6,9 +6,9 @@ import { Entypo } from "@expo/vector-icons";
 import React, { useEffect, useState } from "react";
 import { Image, StyleSheet, TouchableOpacity, View } from "react-native";
 
-const MAX_WIDTH = 306.1
-const MAX_HEIGHT = 485.3;
-const MIN_HEIGHT = 194.7;
+const MAX_WIDTH = 314
+const MAX_HEIGHT = 498;
+const MIN_HEIGHT = 198;
 
 const MedCardImageScreen = () => {
   const { medCardImage } = useUser();
@@ -49,7 +49,7 @@ const MedCardImageScreen = () => {
     return {
       width: MAX_WIDTH,
       height: isDisplayPortrait ? MAX_HEIGHT : MIN_HEIGHT,
-      resizeMode: "contain",
+      resizeMode: "stretch",
     };
   };
 
