@@ -6,9 +6,9 @@ import { Entypo } from "@expo/vector-icons";
 import React, { useEffect, useState } from "react";
 import { Image, StyleSheet, TouchableOpacity, View } from "react-native";
 
-const MAX_WIDTH = 272;
-const MAX_HEIGHT = 476;
-const MIN_HEIGHT = 155.43;
+const MAX_WIDTH = 304;
+const MAX_HEIGHT = 482;
+const MIN_HEIGHT = 192;
 
 const MedCardImageScreen = () => {
   const { medCardImage } = useUser();
@@ -32,7 +32,7 @@ const MedCardImageScreen = () => {
         (w, h) => setImgSize({ width: w, height: h }),
         () => loadLocal()
       );
-    } 
+    }
     // else {
       // loadLocal();
     // }
@@ -49,7 +49,7 @@ const MedCardImageScreen = () => {
     return {
       width: MAX_WIDTH,
       height: isDisplayPortrait ? MAX_HEIGHT : MIN_HEIGHT,
-      resizeMode: "cover",
+      resizeMode: "contain",
     };
   };
 
@@ -113,7 +113,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
   cardFrame: {
-    marginTop: 88,
+    marginTop: 82,
     alignItems: "center",
     justifyContent: "center",
     overflow: "hidden",

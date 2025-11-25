@@ -7,6 +7,8 @@ import { useUser } from "@/hooks/user";
 import { useRouter } from "expo-router";
 import React from "react";
 import {
+  Animated,
+  Dimensions,
   Image,
   PanResponder,
   ScrollView,
@@ -16,6 +18,7 @@ import {
 } from "react-native";
 
 const BOTTOM_BAR_HEIGHT = 150;
+const SCREEN_WIDTH = Dimensions.get("window").width;
 
 const Progress = () => {
   const router: any = useRouter();
@@ -71,36 +74,64 @@ const Progress = () => {
     selectedTabRef.current = selectedTab;
   }, [selectedTab]);
 
+  // Animated horizontal swipe state
+  const animatedX = React.useRef(new Animated.Value(0)).current;
+  const panStartOffset = React.useRef(0);
+
+  // sync animation when selectedTab changes (e.g. tap)
+  React.useEffect(() => {
+    const index = progressData.findIndex((t) => t.id === selectedTab.id);
+    Animated.spring(animatedX, {
+      toValue: -index * SCREEN_WIDTH,
+      useNativeDriver: false,
+      bounciness: 0,
+    }).start();
+  }, [selectedTab]);
+
   // ------------------------------------
-  //  FIXED PANRESPONDER — ALWAYS SWIPE
+  //  INTERACTIVE PANRESPONDER — SMOOTH DRAG
   // ------------------------------------
   const panResponder = React.useRef(
     PanResponder.create({
       onMoveShouldSetPanResponderCapture: (_, gestureState) => {
-        // Vuốt ngang > vuốt dọc
         return (
           Math.abs(gestureState.dx) > Math.abs(gestureState.dy) &&
-          Math.abs(gestureState.dx) > 20
+          Math.abs(gestureState.dx) > 6
         );
+      },
+
+      onPanResponderGrant: () => {
+        // record start offset (current animated value)
+        panStartOffset.current = animatedX.__getValue();
+        animatedX.stopAnimation();
+      },
+
+      onPanResponderMove: (_, gestureState) => {
+        // follow finger
+        animatedX.setValue(panStartOffset.current + gestureState.dx);
       },
 
       onPanResponderRelease: (_, gestureState) => {
         const currentIndex = progressData.findIndex(
           (t) => t.id === selectedTabRef.current.id
         );
-        console.log(gestureState);
-        
-        if (gestureState.dx < -50) {
-          const nextIndex = currentIndex + 1;
-          if (nextIndex < progressData.length) {
-            setSelectedTab(progressData[nextIndex]);
-          }
-        } else if (gestureState.dx > 50) {
-          const prevIndex = currentIndex - 1;
-          if (prevIndex >= 0) {
-            setSelectedTab(progressData[prevIndex]);
-          }
-        }
+
+        // compute final offset and decide nearest index
+        const finalOffset = panStartOffset.current + gestureState.dx;
+        let targetIndex = Math.round(-finalOffset / SCREEN_WIDTH);
+
+        // clamp
+        targetIndex = Math.max(0, Math.min(progressData.length - 1, targetIndex));
+
+        // animate to target
+        Animated.spring(animatedX, {
+          toValue: -targetIndex * SCREEN_WIDTH,
+          useNativeDriver: false,
+          bounciness: 0,
+        }).start();
+
+        // update selected tab
+        setSelectedTab(progressData[targetIndex]);
       },
     })
   ).current;
@@ -182,55 +213,66 @@ const Progress = () => {
             })}
           </View>
 
-          {/* SCROLL CONTENT */}
-          <ScrollView
-            style={{ flex: 1 }}
-            contentContainerStyle={{
-              paddingHorizontal: 7,
-              paddingTop: 18,
-              paddingBottom: BOTTOM_BAR_HEIGHT + 24,
+          {/* HORIZONTAL SWIPEABLE CONTENT (each panel = SCREEN_WIDTH) */}
+          <Animated.View
+            style={{
+              flex: 1,
+              flexDirection: "row",
+              width: SCREEN_WIDTH * progressData.length,
+              transform: [{ translateX: animatedX }],
             }}
-            showsVerticalScrollIndicator={false}
           >
-            {selectedTab.id != 5 && (
-              <>
-                <View style={styles.description}>
+            {progressData.map((tab) => (
+              <View key={tab.id} style={{ width: SCREEN_WIDTH }}>
+                {/* SCROLL CONTENT for each tab */}
+                {tab.id !== 5 && (
+                  <ScrollView
+                    style={{ flex: 1 }}
+                    contentContainerStyle={{
+                      paddingHorizontal: 7,
+                      paddingTop: 18,
+                      paddingBottom: BOTTOM_BAR_HEIGHT + 24,
+                    }}
+                    showsVerticalScrollIndicator={false}
+                  >
+                    <View style={styles.description}>
                   <AppText
                     variant="headingMd"
                     style={{ color: "#306BA3" }}
                   >
                     Quá trình tham gia {selectedTab.title}
-                  </AppText>
+                      </AppText>
 
-                  <AppText variant="small">
-                    Tổng thời gian tham gia:{" "}
-                    {calculateTotalTime(selectedTab.data?.progress) || "-"}
-                  </AppText>
+                      <AppText variant="small">
+                        Tổng thời gian tham gia:{" "}
+                        {calculateTotalTime(tab.data?.progress) || "-"}
+                      </AppText>
 
-                  {!(selectedTab.id == 4 || selectedTab.id == 3) && (
-                    <AppText variant="small" style={{ color: "#CE0301" }}>
-                      Tổng thời gian chậm đóng :{" "}
-                      {selectedTab?.data?.totalDueTime}
-                    </AppText>
-                  )}
-                </View>
+                      {!(tab.id == 4 || tab.id == 3) && (
+                        <AppText variant="small" style={{ color: "#CE0301" }}>
+                          Tổng thời gian chậm đóng : {tab?.data?.totalDueTime}
+                        </AppText>
+                      )}
+                    </View>
 
-                <EmploymentHistoryTable
-                  data={selectedTab.data?.progress}
-                  onPressView={(detail) => {
-                    router.push({
-                      pathname: "/home/progress/detail",
-                      params: {
-                        detail: JSON.stringify(detail),
-                        title: selectedTab.tabTitle,
-                      },
-                    });
-                  }}
-                  isBHYT={selectedTab.id === 4}
-                />
-              </>
-            )}
-          </ScrollView>
+                    <EmploymentHistoryTable
+                      data={tab.data?.progress}
+                      onPressView={(detail) => {
+                        router.push({
+                          pathname: "/home/progress/detail",
+                          params: {
+                            detail: JSON.stringify(detail),
+                            title: tab.tabTitle,
+                          },
+                        });
+                      }}
+                      isBHYT={tab.id === 4}
+                    />
+                  </ScrollView>
+                )}
+              </View>
+            ))}
+          </Animated.View>
         </View>
 
         <BottomMenuBar />
