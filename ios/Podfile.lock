@@ -3,7 +3,7 @@ PODS:
   - DoubleConversion (1.1.6)
   - EXConstants (17.1.7):
     - ExpoModulesCore
-  - Expo (53.0.22):
+  - Expo (53.0.24):
     - DoubleConversion
     - ExpoModulesCore
     - glog
@@ -40,9 +40,9 @@ PODS:
     - ExpoModulesCore
   - ExpoHaptics (14.1.4):
     - ExpoModulesCore
-  - ExpoHead (5.1.5):
+  - ExpoHead (5.1.7):
     - ExpoModulesCore
-  - ExpoImage (2.4.0):
+  - ExpoImage (2.4.1):
     - ExpoModulesCore
     - libavif/libdav1d
     - SDWebImage (~> 5.21.0)
@@ -51,7 +51,7 @@ PODS:
     - SDWebImageWebPCoder (~> 0.14.6)
   - ExpoKeepAwake (14.1.4):
     - ExpoModulesCore
-  - ExpoLinearGradient (15.0.6):
+  - ExpoLinearGradient (15.0.7):
     - ExpoModulesCore
   - ExpoLinking (7.1.7):
     - ExpoModulesCore
@@ -1929,7 +1929,7 @@ PODS:
     - ReactCommon/turbomodule/bridging
     - ReactCommon/turbomodule/core
     - Yoga
-  - RNImageCropPicker (0.51.0):
+  - RNImageCropPicker (0.51.1):
     - DoubleConversion
     - glog
     - hermes-engine
@@ -1953,10 +1953,10 @@ PODS:
     - ReactCodegen
     - ReactCommon/turbomodule/bridging
     - ReactCommon/turbomodule/core
-    - RNImageCropPicker/QBImagePickerController (= 0.51.0)
-    - TOCropViewController (~> 2.7.4)
+    - RNImageCropPicker/QBImagePickerController (= 0.51.1)
+    - TOCropViewController (~> 2.8.0)
     - Yoga
-  - RNImageCropPicker/QBImagePickerController (0.51.0):
+  - RNImageCropPicker/QBImagePickerController (0.51.1):
     - DoubleConversion
     - glog
     - hermes-engine
@@ -1980,7 +1980,7 @@ PODS:
     - ReactCodegen
     - ReactCommon/turbomodule/bridging
     - ReactCommon/turbomodule/core
-    - TOCropViewController (~> 2.7.4)
+    - TOCropViewController (~> 2.8.0)
     - Yoga
   - RNReanimated (3.17.5):
     - DoubleConversion
@@ -2157,7 +2157,7 @@ PODS:
     - ReactCommon/turbomodule/bridging
     - ReactCommon/turbomodule/core
     - Yoga
-  - RNSVG (15.15.0):
+  - RNSVG (15.11.2):
     - DoubleConversion
     - glog
     - hermes-engine
@@ -2180,9 +2180,9 @@ PODS:
     - ReactCodegen
     - ReactCommon/turbomodule/bridging
     - ReactCommon/turbomodule/core
-    - RNSVG/common (= 15.15.0)
+    - RNSVG/common (= 15.11.2)
     - Yoga
-  - RNSVG/common (15.15.0):
+  - RNSVG/common (15.11.2):
     - DoubleConversion
     - glog
     - hermes-engine
@@ -2218,7 +2218,7 @@ PODS:
     - libwebp (~> 1.0)
     - SDWebImage/Core (~> 5.17)
   - SocketRocket (0.7.1)
-  - TOCropViewController (2.7.4)
+  - TOCropViewController (2.8.0)
   - Yoga (0.0.0)
 
 DEPENDENCIES:
@@ -2532,16 +2532,16 @@ SPEC CHECKSUMS:
   boost: 7e761d76ca2ce687f7cc98e698152abd03a18f90
   DoubleConversion: cb417026b2400c8f53ae97020b2be961b59470cb
   EXConstants: 9d62a46a36eae6d28cb978efcbc68aef354d1704
-  Expo: f715b0c058ac26efde6fb3b4f18ffdd8bd933605
+  Expo: 04d7345c6abf641f7bd2358674b8027edad0d8b2
   ExpoAsset: 7bdbbacf4e6752ae6e3cf70555cee076f6229e6e
   ExpoBlur: 846780b2c90f59e964b9a50385d4deb67174ebfb
   ExpoFileSystem: 9681caebda23fa1b38a12a9c68b2bade7072ce20
   ExpoFont: 091a47eeaa1b30b0b760aa1d0a2e7814e8bf6fe6
   ExpoHaptics: 68c215e070f660e0a29c45dcda4f60eeff08aefb
-  ExpoHead: 76d17284733254926d2e7127c1aef938f18188d1
-  ExpoImage: 04ffc79f9a0391573b77efbc549d59c655caa5a8
+  ExpoHead: 9f713d18aff5ff3579dbd6e1bd2459435826ffc4
+  ExpoImage: b5d08ac8a79f798c8306b53165415c15986f9764
   ExpoKeepAwake: e8dedc115d9f6f24b153ccd2d1d8efcdfd68a527
-  ExpoLinearGradient: aa4ae248706a0da6bd59a5aae6e2bf24de04dfa8
+  ExpoLinearGradient: f9e7182e5253d53b2de4134b69d70bbfc2d50588
   ExpoLinking: 343a89ea864a851831fd4495e8aea01cf0f6a36f
   ExpoModulesCore: 16f74d8df26d7e4b6bf7eb3d0effaf0f15df7b80
   ExpoSplashScreen: 6f9213be0c60f2756a2f8220c36f4b90c55e3dbd
@@ -2623,16 +2623,16 @@ SPEC CHECKSUMS:
   ReactCommon: d7a6354467ffb346f88312e828764b87d4c81c75
   RNCAsyncStorage: 2cf7d05f5b1bc38680b6c83971e535a6ae9c5bc7
   RNGestureHandler: ccf4105b125002bd88e39d2a1f2b7e6001bcdf34
-  RNImageCropPicker: 8a9a8776f42d5ff9b5c0939435c415c92f109b28
+  RNImageCropPicker: 4c61f186ea3f1b5d03eeff3300f505067abcec0e
   RNReanimated: 8b24b49fc13fce9a6e1729ccff645a63d2b7a6d1
   RNScreens: c2e3cc506212228c607b4785b315205e28acbf0f
-  RNSVG: 0acc7ca0f7333616497df18fa799d0c736662e92
+  RNSVG: ee32efbed652c5151fd3f98bed13c68af285bc38
   SDWebImage: 9f177d83116802728e122410fb25ad88f5c7608a
   SDWebImageAVIFCoder: afe194a084e851f70228e4be35ef651df0fc5c57
   SDWebImageSVGCoder: 15a300a97ec1c8ac958f009c02220ac0402e936c
   SDWebImageWebPCoder: e38c0a70396191361d60c092933e22c20d5b1380
   SocketRocket: d4aabe649be1e368d1318fdf28a022d714d65748
-  TOCropViewController: 80b8985ad794298fb69d3341de183f33d1853654
+  TOCropViewController: 797deaf39c90e6e9ddd848d88817f6b9a8a09888
   Yoga: dc7c21200195acacb62fa920c588e7c2106de45e
 
 PODFILE CHECKSUM: 42d2e1554caf2227a7a671064241e0c519a327da
