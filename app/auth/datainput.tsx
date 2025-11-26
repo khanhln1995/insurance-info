@@ -47,6 +47,7 @@ const DataInput = () => {
   const [editorOpen, setEditorOpen] = useState(false);
   const [editorSource, setEditorSource] = useState<null | { uri: string }>(null);
   const [imgDisplayed, setImgDisplayed] = useState<{ w: number; h: number } | null>(null);
+  const [editorMinScale, setEditorMinScale] = useState(1);
   const viewShotRef = useRef<any>(null);
 
   const { setUserInfo, setProgressList, setMedInsurance, setUserAvatar, setMedCardImage } = useUser();
@@ -92,11 +93,17 @@ const DataInput = () => {
       setEditorSource({ uri });
       setEditorOpen(true);
       setOpenActionPhoto(false);
+
+      // --- tính minScale để ảnh luôn phủ crop circle ---
+      const cropSize = CIRCLE_SIZE;
+      const minScale = Math.max(cropSize / (w * scale), cropSize / (h * scale));
+      setEditorMinScale(minScale);
     }, () => {
       setImgDisplayed({ w: SCREEN_W, h: SCREEN_H });
       setEditorSource({ uri });
       setEditorOpen(true);
       setOpenActionPhoto(false);
+      setEditorMinScale(1);
     });
   };
 
@@ -149,7 +156,7 @@ const DataInput = () => {
             </TouchableOpacity>
           }
         />
-          <AppText variant="headingMdBold" style={styles.title}>
+        <AppText variant="headingMdBold" style={styles.title}>
           Thông tin cá nhân
         </AppText>
         <View style={{ padding: 20 }}>
@@ -235,8 +242,10 @@ const DataInput = () => {
                 cropHeight={SCREEN_H}
                 imageWidth={imgDisplayed.w}
                 imageHeight={imgDisplayed.h}
-                minScale={1}
+                minScale={editorMinScale} // ảnh luôn phủ crop circle
                 maxScale={10}
+                enableCenterFocus={false} // không snap về giữa
+                useNativeDriver
               >
                 <Image
                   source={{ uri: editorSource.uri }}
@@ -302,20 +311,15 @@ const editorStyles = StyleSheet.create({
     ...StyleSheet.absoluteFillObject,
     alignItems: "center",
     justifyContent: "center",
-
-    // backgroundColor: "rgba(0,0,0,0.6)"
-
   },
   overlayDim: {
     ...StyleSheet.absoluteFillObject,
   },
   cropCircle: {
     position: "absolute",
-     width: CIRCLE_SIZE,
-    height: CIRCLE_SIZE,
-    borderRadius: CIRCLE_SIZE / 2,
     borderWidth: 2,
     borderColor: "rgba(255,255,255,0.95)",
+    backgroundColor: "transparent",
   },
 
   controls: {
