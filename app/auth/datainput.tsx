@@ -47,7 +47,6 @@ const DataInput = () => {
   const [editorOpen, setEditorOpen] = useState(false);
   const [editorSource, setEditorSource] = useState<null | { uri: string }>(null);
   const [imgDisplayed, setImgDisplayed] = useState<{ w: number; h: number } | null>(null);
-  const [editorMinScale, setEditorMinScale] = useState(1);
   const viewShotRef = useRef<any>(null);
 
   const { setUserInfo, setProgressList, setMedInsurance, setUserAvatar, setMedCardImage } = useUser();
@@ -89,21 +88,15 @@ const DataInput = () => {
     // prepare editor
     Image.getSize(uri, (w, h) => {
       const scale = Math.min(SCREEN_W / w, SCREEN_H / h);
-      setImgDisplayed({ w: w * scale, h: h * scale });
+       setImgDisplayed({ w: w * scale, h: h * scale });
       setEditorSource({ uri });
       setEditorOpen(true);
       setOpenActionPhoto(false);
-
-      // --- tính minScale để ảnh luôn phủ crop circle ---
-      const cropSize = CIRCLE_SIZE;
-      const minScale = Math.max(cropSize / (w * scale), cropSize / (h * scale));
-      setEditorMinScale(minScale);
     }, () => {
       setImgDisplayed({ w: SCREEN_W, h: SCREEN_H });
       setEditorSource({ uri });
       setEditorOpen(true);
       setOpenActionPhoto(false);
-      setEditorMinScale(1);
     });
   };
 
@@ -126,13 +119,36 @@ const DataInput = () => {
     }
   };
 
+   const parseJsonSafe = (label: string, raw: string) => {
+    if (!raw?.trim()) return { ok: true, value: null };
+    try {
+      const normalized = raw
+        .replace(/\u201C|\u201D/g, '"')
+        .replace(/\u2018|\u2019/g, "'");
+      const value = JSON.parse(normalized);
+      return { ok: true, value };
+    } catch (e: any) {
+      return { ok: false, error: `${label} JSON is invalid.\n${e.message}` };
+    }
+  };
+  
   const onSubmit = () => {
-    const changed = Boolean(userInfoInput || progressInput || medInsuranceInput);
+    const u = parseJsonSafe("Thông tin cá nhân", userInfoInput);
+    if (!u.ok) return Alert.alert("Lỗi", u.error);
+    const p = parseJsonSafe("Quá trình tham gia", progressInput);
+    if (!p.ok) return Alert.alert("Lỗi", p.error);
+    const m = parseJsonSafe("Bảo hiểm y tế", medInsuranceInput);
+    if (!m.ok) return Alert.alert("Lỗi", m.error);
+
+    const changed = Boolean(
+      userInfoInput || progressInput || medInsuranceInput
+    );
     if (!changed) return Alert.alert("Chưa nhập dữ liệu");
 
-    if (userInfoInput) setUserInfo(userInfoInput);
-    if (progressInput) setProgressList(progressInput);
-    if (medInsuranceInput) setMedInsurance(medInsuranceInput);
+    if (u.value) setUserInfo(u.value);
+    if (p.value) setProgressList(p.value);
+    if (m.value && typeof setMedInsurance === "function")
+      setMedInsurance(m.value);
 
     if (avatar) setUserAvatar(avatar);
     if (medCardPhoto) setMedCardImage(medCardPhoto);
@@ -156,7 +172,7 @@ const DataInput = () => {
             </TouchableOpacity>
           }
         />
-        <AppText variant="headingMdBold" style={styles.title}>
+          <AppText variant="headingMdBold" style={styles.title}>
           Thông tin cá nhân
         </AppText>
         <View style={{ padding: 20 }}>
@@ -242,10 +258,8 @@ const DataInput = () => {
                 cropHeight={SCREEN_H}
                 imageWidth={imgDisplayed.w}
                 imageHeight={imgDisplayed.h}
-                minScale={editorMinScale} // ảnh luôn phủ crop circle
+                minScale={1}
                 maxScale={10}
-                enableCenterFocus={false} // không snap về giữa
-                useNativeDriver
               >
                 <Image
                   source={{ uri: editorSource.uri }}
