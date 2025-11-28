@@ -2,7 +2,7 @@
   "expo": {
     "name": "VssiID",
     "slug": "VssiID",
-    "version": "1.0.19",
+    "version": "1.0.20",
     "orientation": "portrait",
     "icon": "./assets/images/icon/app-logo.jpeg",
     "scheme": "insuranceinfo",
@@ -15,7 +15,8 @@
         "NSCameraUsageDescription": "We need camera access to take profile pictures.",
         "NSPhotoLibraryUsageDescription": "We need access to your photo library to select profile pictures.",
         "NSPhotoLibraryAddUsageDescription": "We need permission to save photos to your library."
-      }
+      },
+      "appleTeamId": "38RK2UTGR7"
     },
     "android": {
       "adaptiveIcon": {

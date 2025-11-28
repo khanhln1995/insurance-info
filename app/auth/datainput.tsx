@@ -1,6 +1,6 @@
 import FontAwesome from "@expo/vector-icons/FontAwesome";
 import { useRouter } from "expo-router";
-import React, { useRef, useState } from "react";
+import { useRef, useState } from "react";
 import {
   Alert,
   Dimensions,
@@ -15,8 +15,8 @@ import {
   View,
 } from "react-native";
 import ImagePicker from "react-native-image-crop-picker";
-import ViewShot from "react-native-view-shot";
 import ImageZoom from "react-native-image-pan-zoom";
+import ViewShot from "react-native-view-shot";
 
 import ActionPhoto from "@/components/ActionPhoto";
 import AppText from "@/components/AppText";
@@ -38,18 +38,37 @@ const DataInput = () => {
   const [medInsuranceInput, setMedInsuranceInput] = useState("");
 
   // --- photo states ---
-  const [avatar, setAvatar] = useState<null | { uri: string; base64?: string }>(null);
-  const [medCardPhoto, setMedCardPhoto] = useState<null | { uri: string; base64?: string }>(null);
-  const [photoTarget, setPhotoTarget] = useState<"avatar" | "medCard">("avatar");
+  const [avatar, setAvatar] = useState<null | { uri: string; base64?: string }>(
+    null
+  );
+  const [medCardPhoto, setMedCardPhoto] = useState<null | {
+    uri: string;
+    base64?: string;
+  }>(null);
+  const [photoTarget, setPhotoTarget] = useState<"avatar" | "medCard">(
+    "avatar"
+  );
   const [openActionPhoto, setOpenActionPhoto] = useState(false);
 
   // --- editor states ---
   const [editorOpen, setEditorOpen] = useState(false);
-  const [editorSource, setEditorSource] = useState<null | { uri: string }>(null);
-  const [imgDisplayed, setImgDisplayed] = useState<{ w: number; h: number } | null>(null);
+  const [editorSource, setEditorSource] = useState<null | { uri: string }>(
+    null
+  );
+  const [imgDisplayed, setImgDisplayed] = useState<{
+    w: number;
+    h: number;
+  } | null>(null);
+  const [editorMinScale, setEditorMinScale] = useState(1);
   const viewShotRef = useRef<any>(null);
 
-  const { setUserInfo, setProgressList, setMedInsurance, setUserAvatar, setMedCardImage } = useUser();
+  const {
+    setUserInfo,
+    setProgressList,
+    setMedInsurance,
+    setUserAvatar,
+    setMedCardImage,
+  } = useUser();
 
   // --- pick image from camera/gallery ---
   const normalizeImageResult = (res: any) => {
@@ -64,18 +83,21 @@ const DataInput = () => {
   const openCamera = async () => {
     ImagePicker.openCamera({ cropping: false, mediaType: "photo" })
       .then((img) => handlePickedImage(normalizeImageResult(img)))
-      .catch(() => { });
+      .catch(() => {});
   };
 
   const openGallery = async () => {
     ImagePicker.openPicker({ cropping: false, mediaType: "photo" })
       .then((img) => handlePickedImage(normalizeImageResult(img)))
-      .catch(() => { });
+      .catch(() => {});
   };
 
   const handlePickedImage = (res: any) => {
     if (!res?.uri) return;
-    const uri = Platform.OS === "android" && !res.uri.startsWith("file://") ? "file://" + res.uri : res.uri;
+    const uri =
+      Platform.OS === "android" && !res.uri.startsWith("file://")
+        ? "file://" + res.uri
+        : res.uri;
 
     if (photoTarget === "medCard") {
       setMedCardPhoto(res);
@@ -86,18 +108,31 @@ const DataInput = () => {
     }
 
     // prepare editor
-    Image.getSize(uri, (w, h) => {
-      const scale = Math.min(SCREEN_W / w, SCREEN_H / h);
-      setImgDisplayed({ w: w * scale, h: h * scale });
-      setEditorSource({ uri });
-      setEditorOpen(true);
-      setOpenActionPhoto(false);
-    }, () => {
-      setImgDisplayed({ w: SCREEN_W, h: SCREEN_H });
-      setEditorSource({ uri });
-      setEditorOpen(true);
-      setOpenActionPhoto(false);
-    });
+    Image.getSize(
+      uri,
+      (w, h) => {
+        const scale = Math.min(SCREEN_W / w, SCREEN_H / h);
+        setImgDisplayed({ w: w * scale, h: h * scale });
+        setEditorSource({ uri });
+        setEditorOpen(true);
+        setOpenActionPhoto(false);
+
+        // --- tính minScale để ảnh luôn phủ crop circle ---
+        const cropSize = CIRCLE_SIZE;
+        const minScale = Math.max(
+          cropSize / (w * scale),
+          cropSize / (h * scale)
+        );
+        setEditorMinScale(minScale);
+      },
+      () => {
+        setImgDisplayed({ w: SCREEN_W, h: SCREEN_H });
+        setEditorSource({ uri });
+        setEditorOpen(true);
+        setOpenActionPhoto(false);
+        setEditorMinScale(1);
+      }
+    );
   };
 
   // --- save from editor ---
@@ -120,7 +155,9 @@ const DataInput = () => {
   };
 
   const onSubmit = () => {
-    const changed = Boolean(userInfoInput || progressInput || medInsuranceInput);
+    const changed = Boolean(
+      userInfoInput || progressInput || medInsuranceInput
+    );
     if (!changed) return Alert.alert("Chưa nhập dữ liệu");
 
     if (userInfoInput) setUserInfo(userInfoInput);
@@ -149,7 +186,7 @@ const DataInput = () => {
             </TouchableOpacity>
           }
         />
-          <AppText variant="headingMdBold" style={styles.title}>
+        <AppText variant="headingMdBold" style={styles.title}>
           Thông tin cá nhân
         </AppText>
         <View style={{ padding: 20 }}>
@@ -235,8 +272,10 @@ const DataInput = () => {
                 cropHeight={SCREEN_H}
                 imageWidth={imgDisplayed.w}
                 imageHeight={imgDisplayed.h}
-                minScale={1}
+                minScale={editorMinScale} // ảnh luôn phủ crop circle
                 maxScale={10}
+                enableCenterFocus={false} // không snap về giữa
+                useNativeDriver
               >
                 <Image
                   source={{ uri: editorSource.uri }}
@@ -250,14 +289,24 @@ const DataInput = () => {
           {/* overlay crop circle */}
           <View style={editorStyles.overlayContainer} pointerEvents="none">
             <View style={editorStyles.overlayDim} />
-            <View style={[editorStyles.cropCircle, { width: CIRCLE_SIZE, height: CIRCLE_SIZE, borderRadius: CIRCLE_SIZE / 2 }]} />
+            <View
+              style={[
+                editorStyles.cropCircle,
+                {
+                  width: CIRCLE_SIZE,
+                  height: CIRCLE_SIZE,
+                  borderRadius: CIRCLE_SIZE / 2,
+                },
+              ]}
+            />
           </View>
 
           {/* controls */}
           <View style={editorStyles.controls}>
             <TouchableOpacity
-              style={editorStyles.cancelBtn} 
-              onPress={() => setEditorOpen(false)}>
+              style={editorStyles.cancelBtn}
+              onPress={() => setEditorOpen(false)}
+            >
               <AppText variant="body" style={{ color: "#333" }}>
                 Cancel
               </AppText>
@@ -297,23 +346,22 @@ const styles = StyleSheet.create({
 });
 
 const editorStyles = StyleSheet.create({
-  fullscreen: { flex: 1, backgroundColor: "black", justifyContent: "center", alignItems: "center" },
+  fullscreen: {
+    flex: 1,
+    backgroundColor: "black",
+    justifyContent: "center",
+    alignItems: "center",
+  },
   overlayContainer: {
     ...StyleSheet.absoluteFillObject,
     alignItems: "center",
     justifyContent: "center",
-
-    // backgroundColor: "rgba(0,0,0,0.6)"
-
   },
   overlayDim: {
     ...StyleSheet.absoluteFillObject,
   },
   cropCircle: {
     position: "absolute",
-     width: CIRCLE_SIZE,
-    height: CIRCLE_SIZE,
-    borderRadius: CIRCLE_SIZE / 2,
     borderWidth: 2,
     borderColor: "rgba(255,255,255,0.95)",
   },
