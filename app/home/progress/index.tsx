@@ -2,7 +2,9 @@ import AppText from "@/components/AppText";
 import BottomMenuBar from "@/components/BottomMenuBar";
 import EmploymentHistoryTable from "@/components/EmploymenHistoryTable";
 import HeaderBack from "@/components/HeaderBack";
+import SideMenu, { DRAWER_W } from "@/components/SideMenu";
 import { Colors } from "@/constants/Colors";
+import { useSwipeMenu } from "@/hooks/useSwipeMenu";
 import { useUser } from "@/hooks/user";
 import { useRouter } from "expo-router";
 import React from "react";
@@ -23,6 +25,35 @@ const SCREEN_WIDTH = Dimensions.get("window").width;
 const Progress = () => {
   const router: any = useRouter();
   const { progressList } = useUser();
+  const [visible, setVisible] = React.useState(false);
+  const menuTranslateX = React.useRef(new Animated.Value(-DRAWER_W)).current;
+
+  const closeMenu = () => {
+    Animated.spring(menuTranslateX, {
+      toValue: -DRAWER_W,
+      useNativeDriver: true,
+    }).start(() => {
+      setVisible(false);
+    });
+  };
+
+  // PanResponder cho gesture mép trái (mở menu / back nhanh)
+  const { panResponder: edgePanResponder } = useSwipeMenu({
+    onSwipeBack: () => {
+      if (router.canGoBack?.()) {
+        router.back();
+      }
+    },
+    menuTranslateX,
+    menuWidth: DRAWER_W,
+    onRequestMenuVisible: (v) => {
+      if (v) {
+        setVisible(true);
+      } else {
+        setVisible(false);
+      }
+    },
+  });
 
   const progressData = [
     {
@@ -165,8 +196,11 @@ const Progress = () => {
         containerStyle={{ height: 60 }}
       />
 
-      {/* GẮN gesture vào đây — BAO TRÙM CẢ MÀN */}
-      <View style={{ flex: 1 }} {...panResponder.panHandlers}>
+      {/* GẮN gesture SWIPE TAB vào nội dung chính + trượt cả màn theo tay */}
+      <Animated.View
+        style={{ flex: 1 }}
+        {...panResponder.panHandlers}
+      >
         <View style={{ flex: 1 }}>
           {/* TAB ROW */}
           <View style={styles.tabsRow}>
@@ -276,7 +310,26 @@ const Progress = () => {
         </View>
 
         <BottomMenuBar />
-      </View>
+      </Animated.View>
+
+      {/* Lớp mép trái riêng cho gesture mở menu / back nhanh */}
+      <View
+        style={{
+          position: "absolute",
+          top: 0,
+          bottom: 0,
+          left: 0,
+          width: 24, // khớp EDGE_WIDTH trong useSwipeMenu
+        }}
+        {...edgePanResponder.panHandlers}
+      />
+
+      <SideMenu
+        visible={visible}
+        translateX={menuTranslateX}
+        onClose={closeMenu}
+        onLogout={() => router.replace("/auth")}
+      />
     </View>
   );
 };
