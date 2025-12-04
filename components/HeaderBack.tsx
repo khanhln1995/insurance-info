@@ -10,10 +10,8 @@ import {
 
 import Entypo from "@expo/vector-icons/Entypo";
 import { LinearGradient } from "expo-linear-gradient";
-import { useRouter } from "expo-router";
-
+import { useRouter, usePathname } from "expo-router";
 import AppText, { TextVariant } from "@/components/AppText";
-import { usePathname } from "expo-router";
 
 export interface HeaderBackProps {
   title?: string;

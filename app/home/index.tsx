@@ -7,17 +7,53 @@ import BottomMenuBar from "@/components/BottomMenuBar";
 import HeaderBack from "@/components/HeaderBack";
 import InfoCard from "@/components/InfoCard";
 import SafeArea from "@/components/SafeArea";
-import SideMenu from "@/components/SideMenu";
+import SideMenu, { DRAWER_W } from "@/components/SideMenu";
 import Spacer from "@/components/Spacer";
 import { Colors } from "@/constants/Colors";
-import Ionicons from "@expo/vector-icons/Ionicons";
+import { useSwipeMenu } from "@/hooks/useSwipeMenu";
+import { Ionicons } from "@expo/vector-icons";
 import { useRouter } from "expo-router";
 import React from "react";
-import { Image, StyleSheet, TouchableOpacity, View } from "react-native";
+import { Animated, Image, StyleSheet, TouchableOpacity, View } from "react-native";
 
 const Home = () => {
   const [visible, setVisible] = React.useState(false);
+  const menuTranslateX = React.useRef(new Animated.Value(-DRAWER_W)).current;
+
+  const openMenu = () => {
+    setVisible(true);
+    Animated.spring(menuTranslateX, {
+      toValue: 0,
+      useNativeDriver: true,
+    }).start();
+  };
+
+  const closeMenu = () => {
+    Animated.spring(menuTranslateX, {
+      toValue: -DRAWER_W,
+      useNativeDriver: true,
+    }).start(() => {
+      setVisible(false);
+    });
+  };
   const router: any = useRouter();
+  const { panResponder, pan } = useSwipeMenu({
+    onSwipeBack: () => {
+      if (router.canGoBack?.()) {
+        router.back();
+      }
+    },
+    menuTranslateX,
+    menuWidth: DRAWER_W,
+    onRequestMenuVisible: (v) => {
+      if (v) {
+        setVisible(true);
+      } else {
+        setVisible(false);
+      }
+    },
+  });
+
   const RenderSelect = ({
     text,
     source: SvgIcon,
@@ -89,12 +125,6 @@ const Home = () => {
             </AppText>
           </View>
 
-          {/* <Entypo
-            name="chevron-right"
-            size={20}
-            color={Colors.txtDark}
-            style={{ flexShrink: 0 }}
-          /> */}
           <ChevronRight
             width={24.32}
             height={40.52}
@@ -104,6 +134,7 @@ const Home = () => {
       </View>
     );
   };
+
   return (
     <SafeArea>
       <HeaderBack
@@ -118,11 +149,10 @@ const Home = () => {
           />
         }
         textColor="white"
-        onGoBack={() => {
-          setVisible(true);
-        }}
+        onGoBack={openMenu}
       />
       <View
+        {...panResponder.panHandlers}
         style={{
           justifyContent: "space-between",
           alignSelf: "center",
@@ -143,12 +173,10 @@ const Home = () => {
             source={Card}
             route="/home/medinsurance"
             isTop={false}
-            // isBottom={false}
           />
 
           <RenderSelect
             text="QUÁ TRÌNH THAM GIA"
-            // source={Time}
             route="/home/progress"
             isTop={false}
           />
@@ -170,7 +198,8 @@ const Home = () => {
 
       <SideMenu
         visible={visible}
-        onClose={() => setVisible(false)}
+        translateX={menuTranslateX}
+        onClose={closeMenu}
         onLogout={() => {
           router.replace("/auth");
         }}

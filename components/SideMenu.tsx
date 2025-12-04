@@ -28,26 +28,42 @@ import IconLock from "@/assets/images/icon/icon-lock.svg";
 import IconLogout from "@/assets/images/icon/icon-logout.svg";
 
 const { width } = Dimensions.get("window");
-const DRAWER_W = Math.min(360, Math.floor(width * 0.68));
+export const DRAWER_W = Math.min(360, Math.floor(width * 0.68));
 
 type Props = {
   visible: boolean;
   onClose: () => void;
   onLogout: () => void;
+  /**
+   * Nếu truyền vào Animated.Value, SideMenu sẽ dùng trực tiếp value này
+   * để điều khiển translateX (hỗ trợ kéo real-time theo tay).
+   * Nếu không truyền, component sẽ tự animate theo prop `visible` như cũ.
+   */
+  translateX?: Animated.Value;
 };
 
-const SideMenu: React.FC<Props> = ({ visible, onClose, onLogout }) => {
+const SideMenu: React.FC<Props> = ({
+  visible,
+  onClose,
+  onLogout,
+  translateX,
+}) => {
   const slideX = useRef(new Animated.Value(-DRAWER_W)).current;
 
   const { userInfo, medInsurance, avatar } = useUser();
 
+  // Nếu không có translateX bên ngoài thì giữ behavior cũ: tự animate theo visible
   useEffect(() => {
+    if (translateX) return;
+
     Animated.timing(slideX, {
       toValue: visible ? 0 : -DRAWER_W,
       duration: 220,
       useNativeDriver: true,
     }).start();
-  }, [visible]);
+  }, [visible, translateX]);
+
+  const animatedX = translateX ?? slideX;
 
   const renderItemMenu = ({
     text,
@@ -84,12 +100,15 @@ const SideMenu: React.FC<Props> = ({ visible, onClose, onLogout }) => {
             {text}
           </AppText>
 
-          <AntDesign
-            name="arrow-right"
-            size={17.41}
-            color="#46B9FA"
-            style={{ opacity: 0.9,  paddingRight: 21.77,}}
-          />
+          {
+            !['Đổi mật khẩu', 'Đăng xuất'].includes(text) &&
+            <AntDesign
+              name="arrow-right"
+              size={17.41}
+              color="#46B9FA"
+              style={{ opacity: 0.9,  paddingRight: 21.77,}}
+            />
+          }
         </View>
       </TouchableOpacity>
     );
@@ -107,7 +126,7 @@ const SideMenu: React.FC<Props> = ({ visible, onClose, onLogout }) => {
 
       {/* Drawer */}
       <Animated.View
-        style={[styles.drawerWrap, { transform: [{ translateX: slideX }] }]}
+        style={[styles.drawerWrap, { transform: [{ translateX: animatedX }] }]}
       >
         <LinearGradient
           colors={["#0D71C7", "#01AAED"]}
