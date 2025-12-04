@@ -1,10 +1,13 @@
 import AppText from "@/components/AppText";
 import HeaderBack from "@/components/HeaderBack";
+import SideMenu, { DRAWER_W } from "@/components/SideMenu";
 import { Colors } from "@/constants/Colors";
 import { useUser } from "@/hooks/user";
+import { useSwipeMenu } from "@/hooks/useSwipeMenu";
 import { Entypo } from "@expo/vector-icons";
+import { useRouter } from "expo-router";
 import React, { useEffect, useState } from "react";
-import { Image, StyleSheet, TouchableOpacity, View } from "react-native";
+import { Animated, Image, StyleSheet, TouchableOpacity, View } from "react-native";
 
 const MAX_WIDTH = 314
 const MAX_HEIGHT = 498;
@@ -55,8 +58,40 @@ const MedCardImageScreen = () => {
 
   const scaledSize = getScaledSize();
 
+    const router: any = useRouter();
+  const [visible, setVisible] = React.useState(false);
+  const menuTranslateX = React.useRef(new Animated.Value(-DRAWER_W)).current;
+
+  const closeMenu = () => {
+    Animated.spring(menuTranslateX, {
+      toValue: -DRAWER_W,
+      useNativeDriver: true,
+    }).start(() => {
+      setVisible(false);
+    });
+  };
+
+  const { panResponder } = useSwipeMenu({
+    onSwipeBack: () => {
+      if (router.canGoBack?.()) {
+        router.back();
+      }
+    },
+    menuTranslateX,
+    menuWidth: DRAWER_W,
+    onRequestMenuVisible: (v) => {
+      if (v) {
+        setVisible(true);
+      } else {
+        setVisible(false);
+      }
+    },
+  });
   return (
-    <View style={styles.container}>
+    <Animated.View
+      style={styles.container}
+      {...panResponder.panHandlers}
+    >
       <HeaderBack
         title="Thẻ bảo hiểm y tế"
         textColor="#34689E"
@@ -96,7 +131,13 @@ const MedCardImageScreen = () => {
           </AppText>
         )}
       </View>
-    </View>
+      <SideMenu
+        visible={visible}
+        translateX={menuTranslateX}
+        onClose={closeMenu}
+        onLogout={() => router.replace("/auth")}
+      />
+    </Animated.View>
   );
 };
 

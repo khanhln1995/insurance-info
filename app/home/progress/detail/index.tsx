@@ -2,14 +2,45 @@ import AppText from "@/components/AppText";
 import HeaderBack from "@/components/HeaderBack";
 import Spacer from "@/components/Spacer";
 import { Colors } from "@/constants/Colors";
+import { useSwipeMenu } from "@/hooks/useSwipeMenu";
+import SideMenu, { DRAWER_W } from "@/components/SideMenu";
 import Entypo from "@expo/vector-icons/Entypo";
-import { useLocalSearchParams } from "expo-router";
+import { useLocalSearchParams, useRouter } from "expo-router";
 import React from "react";
-import { SafeAreaView, ScrollView, StyleSheet, View } from "react-native";
+import { Animated, SafeAreaView, ScrollView, StyleSheet, View } from "react-native";
 
 const DetailProgress = () => {
   const { detail, title } = useLocalSearchParams();
   const data = JSON.parse(detail as string);
+  const router: any = useRouter();
+  const [visible, setVisible] = React.useState(false);
+  const menuTranslateX = React.useRef(new Animated.Value(-DRAWER_W)).current;
+
+  const closeMenu = () => {
+    Animated.spring(menuTranslateX, {
+      toValue: -DRAWER_W,
+      useNativeDriver: true,
+    }).start(() => {
+      setVisible(false);
+    });
+  };
+
+  const { panResponder, pan } = useSwipeMenu({
+    onSwipeBack: () => {
+      if (router.canGoBack?.()) {
+        router.back();
+      }
+    },
+    menuTranslateX,
+    menuWidth: DRAWER_W,
+    onRequestMenuVisible: (v) => {
+      if (v) {
+        setVisible(true);
+      } else {
+        setVisible(false);
+      }
+    },
+  });
 
   
 
@@ -25,7 +56,11 @@ const DetailProgress = () => {
   );
 
   return (
-    <View style={{ backgroundColor: "#fff", flex: 1 }}>
+    <View style={{ flex: 1, backgroundColor: "white" }}>
+    <Animated.View
+      style={{ backgroundColor: "#fff", flex: 1 }}
+      {...panResponder.panHandlers}
+    >
       <SafeAreaView />
       <HeaderBack
         title="Chi tiết"
@@ -83,6 +118,14 @@ const DetailProgress = () => {
           ))}
         </View>
       </ScrollView>
+
+      <SideMenu
+        visible={visible}
+        translateX={menuTranslateX}
+        onClose={closeMenu}
+        onLogout={() => router.replace("/auth")}
+      />
+    </Animated.View>
     </View>
   );
 };

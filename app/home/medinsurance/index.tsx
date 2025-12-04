@@ -2,14 +2,45 @@ import AppText from "@/components/AppText";
 import BottomMenuBar from "@/components/BottomMenuBar";
 import HeaderBack from "@/components/HeaderBack";
 import InfoCard from "@/components/InfoCard";
+import SafeArea from "@/components/SafeArea";
+import SideMenu, { DRAWER_W } from "@/components/SideMenu";
 import Spacer from "@/components/Spacer";
 import { Colors } from "@/constants/Colors";
+import { useSwipeMenu } from "@/hooks/useSwipeMenu";
 import { useRouter } from "expo-router";
 import React from "react";
-import { Image, TouchableOpacity, View } from "react-native";
+import { Animated, Image, TouchableOpacity, View } from "react-native";
 
 const MedInSurance = () => {
-  const router = useRouter();
+  const router: any = useRouter();
+  const [visible, setVisible] = React.useState(false);
+  const menuTranslateX = React.useRef(new Animated.Value(-DRAWER_W)).current;
+
+  const closeMenu = () => {
+    Animated.spring(menuTranslateX, {
+      toValue: -DRAWER_W,
+      useNativeDriver: true,
+    }).start(() => {
+      setVisible(false);
+    });
+  };
+
+  const { panResponder } = useSwipeMenu({
+    onSwipeBack: () => {
+      if (router.canGoBack?.()) {
+        router.back();
+      }
+    },
+    menuTranslateX,
+    menuWidth: DRAWER_W,
+    onRequestMenuVisible: (v) => {
+      if (v) {
+        setVisible(true);
+      } else {
+        setVisible(false);
+      }
+    },
+  });
 
   return (
     <View
@@ -23,7 +54,9 @@ const MedInSurance = () => {
         title="THẺ BẢO HIỂM Y TẾ"
         titleVariant="headingMdRegular"
       />
-      <View
+
+      <Animated.View
+        {...panResponder.panHandlers}
         style={{
           padding: 20,
           flex: 1,
@@ -93,8 +126,15 @@ const MedInSurance = () => {
             </AppText>
           </TouchableOpacity>
         </View>
-      </View>
+      </Animated.View>
       <BottomMenuBar />
+
+      <SideMenu
+        visible={visible}
+        translateX={menuTranslateX}
+        onClose={closeMenu}
+        onLogout={() => router.replace("/auth")}
+      />
     </View>
   );
 };
