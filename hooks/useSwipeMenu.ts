@@ -52,7 +52,7 @@ export const useSwipeMenu = ({
   const resetPan = () => {
     Animated.spring(pan, {
       toValue: 0,
-      useNativeDriver: false,
+      useNativeDriver: true,
     }).start();
   };
 
@@ -60,6 +60,7 @@ export const useSwipeMenu = ({
     if (longPressTimeout.current) {
       clearTimeout(longPressTimeout.current);
       longPressTimeout.current = null;
+      onRequestMenuVisible && onRequestMenuVisible(false);
     }
   };
 
@@ -79,22 +80,29 @@ export const useSwipeMenu = ({
         const isRight = gestureState.dx > 0;
         return isFromEdge && isHorizontal && isRight;
       },
-      onPanResponderGrant: () => {
+      onPanResponderGrant: (_evt, gestureState) => {
         pressStartTime.current = Date.now();
         isLongPressActive.current = false;
 
         clearLongPress();
         longPressTimeout.current = setTimeout(() => {
           isLongPressActive.current = true;
+          const dx = Math.max(0, gestureState.dx);
+          pan.setValue(dx);
+          if (menuTranslateX && menuWidth) {
+            const clampedDx = Math.min(dx, menuWidth);
+            const nextX = -menuWidth + clampedDx;
+            menuTranslateX.setValue(nextX);
+            onRequestMenuVisible && onRequestMenuVisible(true);
+          }
         }, longPressDurationMs);
       },
       onPanResponderMove: (_evt, gestureState) => {
+        console.log("onPanResponderMove");
         // Chỉ cho nội dung đi theo tay khi đã long-press thành công
         if (isLongPressActive.current) {
           const dx = Math.max(0, gestureState.dx);
           pan.setValue(dx);
-
-          // Nếu có truyền Animated.Value cho SideMenu thì cho menu chạy theo tay luôn
           if (menuTranslateX && menuWidth) {
             const clampedDx = Math.min(dx, menuWidth);
             const nextX = -menuWidth + clampedDx;

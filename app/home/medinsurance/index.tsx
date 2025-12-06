@@ -2,7 +2,6 @@ import AppText from "@/components/AppText";
 import BottomMenuBar from "@/components/BottomMenuBar";
 import HeaderBack from "@/components/HeaderBack";
 import InfoCard from "@/components/InfoCard";
-import SafeArea from "@/components/SafeArea";
 import SideMenu, { DRAWER_W } from "@/components/SideMenu";
 import Spacer from "@/components/Spacer";
 import { Colors } from "@/constants/Colors";
@@ -49,11 +48,7 @@ const MedInSurance = () => {
         backgroundColor: "white",
       }}
     >
-      
-      <HeaderBack
-        title="THẺ BẢO HIỂM Y TẾ"
-        titleVariant="headingMdRegular"
-      />
+      <HeaderBack title="THẺ BẢO HIỂM Y TẾ" titleVariant="headingMdRegular" />
 
       <Animated.View
         {...panResponder.panHandlers}
@@ -91,14 +86,14 @@ const MedInSurance = () => {
               variant="small"
               style={{ marginLeft: 10, lineHeight: 17.4 }}
             >
-              Trong trường hợp điều trị nội trú trái tuyến tại CSKCB tuyến TW
-              sẽ được hưởng 32% (TH trên thẻ có mã nơi sinh sống là K1 hoặc K2
-              hoặc K3 sẽ được 80%), CSKCB tuyến tỉnh sẽ được hưởng 48% (TH trên
-              thẻ có mã nơi sinh sống là K1 hoặc K2 hoặc K3 sẽ được 80%), từ
-              ngày 01/01/2021 sẽ được hưởng 80%, CSKCB là bệnh viện tuyến huyện
-              sẽ hưởng 80% Chi phí trong phạm vi hưởng BHYT (áp dụng tỷ lệ
-              thanh toán một số thuốc, hoá chất, vật tư y tế và dịch vụ kỹ
-              thuật theo quy định của Bộ trưởng Bộ Y tế)..
+              Trong trường hợp điều trị nội trú trái tuyến tại CSKCB tuyến TW sẽ
+              được hưởng 32% (TH trên thẻ có mã nơi sinh sống là K1 hoặc K2 hoặc
+              K3 sẽ được 80%), CSKCB tuyến tỉnh sẽ được hưởng 48% (TH trên thẻ
+              có mã nơi sinh sống là K1 hoặc K2 hoặc K3 sẽ được 80%), từ ngày
+              01/01/2021 sẽ được hưởng 80%, CSKCB là bệnh viện tuyến huyện sẽ
+              hưởng 80% Chi phí trong phạm vi hưởng BHYT (áp dụng tỷ lệ thanh
+              toán một số thuốc, hoá chất, vật tư y tế và dịch vụ kỹ thuật theo
+              quy định của Bộ trưởng Bộ Y tế)..
             </AppText>
           </View>
         </View>
@@ -133,9 +128,8 @@ const MedInSurance = () => {
             </AppText>
           </TouchableOpacity>
         </View>
-
-        <BottomMenuBar />
       </Animated.View>
+      <BottomMenuBar />
 
       <SideMenu
         visible={visible}
@@ -148,4 +142,3 @@ const MedInSurance = () => {
 };
 
 export default MedInSurance;
-

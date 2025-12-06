@@ -7,7 +7,7 @@ import { Colors } from "@/constants/Colors";
 import { useSwipeMenu } from "@/hooks/useSwipeMenu";
 import { useUser } from "@/hooks/user";
 import { useRouter } from "expo-router";
-import React from "react";
+import React, { useRef } from "react";
 import {
   Animated,
   Dimensions,
@@ -118,6 +118,7 @@ const Progress = () => {
       bounciness: 0,
     }).start();
   }, [selectedTab]);
+  const pressStartTime = useRef(0);
 
   // ------------------------------------
   //  INTERACTIVE PANRESPONDER — SMOOTH DRAG
@@ -132,13 +133,20 @@ const Progress = () => {
       },
 
       onPanResponderGrant: () => {
-        // record start offset (current animated value)
+        pressStartTime.current = Date.now();
         panStartOffset.current = animatedX.__getValue();
         animatedX.stopAnimation();
       },
 
       onPanResponderMove: (_, gestureState) => {
-        // follow finger
+        const currentIndex = progressData.findIndex(
+          (t) => t.id === selectedTabRef.current.id
+        );
+        if (currentIndex === 0 && gestureState.dx > 0) {
+          return;
+        }
+
+        // follow finger for normal horizontal swipes
         animatedX.setValue(panStartOffset.current + gestureState.dx);
       },
 
@@ -146,6 +154,22 @@ const Progress = () => {
         const currentIndex = progressData.findIndex(
           (t) => t.id === selectedTabRef.current.id
         );
+         const duration = Date.now() - pressStartTime.current;
+
+        const isFastSwipeRight =
+          duration < 600 && gestureState.vx > 0.5 && gestureState.dx > 50;
+        if (currentIndex === 0 && gestureState.dx > 30 && isFastSwipeRight) {
+          if (router.canGoBack?.()) {
+            router.back();
+          }
+          // ensure content snaps back to first tab
+          Animated.spring(animatedX, {
+            toValue: 0,
+            useNativeDriver: false,
+            bounciness: 0,
+          }).start();
+          return;
+        }
 
         // compute final offset and decide nearest index
         const finalOffset = panStartOffset.current + gestureState.dx;

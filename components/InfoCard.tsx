@@ -3,7 +3,6 @@ import { Colors } from "@/constants/Colors";
 import { useUser } from "@/hooks/user";
 import React from "react";
 import { Image, StyleSheet, View } from "react-native";
-import Spacer from "./Spacer";
 
 interface Props {
   type: "user" | "insurance";
@@ -38,14 +37,16 @@ const InfoCard = ({ type }: Props) => {
           paddingTop: 11.39
         }}
       >
-        <AppText variant="label" style={{ color: "#4E4E4E", flex: 1 }}>
+        <AppText variant="label" style={{ color: "#4E4E4E", 
+          // flex: 1 
+          }}>
           {title}
         </AppText>
         <AppText
           variant="label"
           style={{
             color: "#4E4E4E",
-            flex: isFlex ? 1 : 2, // let value take remaining space
+            flex: isFlex ? 1 : 2, 
             textAlign: "right", // align to right if you want
           }}
         >
