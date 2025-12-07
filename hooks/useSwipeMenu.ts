@@ -32,17 +32,16 @@ type UseSwipeMenuParams = {
   onRequestMenuVisible?: (visible: boolean) => void;
 };
 
-const EDGE_WIDTH = 24; // chỉ bắt gesture trong vùng mép trái
+const EDGE_WIDTH = 20; // chỉ bắt gesture trong vùng mép trái
 
 export const useSwipeMenu = ({
   onOpenMenu,
   onSwipeBack,
-  longPressDurationMs = 2000,
+  longPressDurationMs = 0,
   menuTranslateX,
   menuWidth,
   onRequestMenuVisible,
 }: UseSwipeMenuParams) => {
-  // Chỉ cần 1 chiều X, dùng Animated.Value cho đơn giản (tránh lỗi transform)
   const pan = useRef(new Animated.Value(0)).current;
 
   const longPressTimeout = useRef<ReturnType<typeof setTimeout> | null>(null);
@@ -52,7 +51,7 @@ export const useSwipeMenu = ({
   const resetPan = () => {
     Animated.spring(pan, {
       toValue: 0,
-      useNativeDriver: false,
+      useNativeDriver: true,
     }).start();
   };
 
@@ -60,6 +59,7 @@ export const useSwipeMenu = ({
     if (longPressTimeout.current) {
       clearTimeout(longPressTimeout.current);
       longPressTimeout.current = null;
+      onRequestMenuVisible && onRequestMenuVisible(false);
     }
   };
 
@@ -79,22 +79,27 @@ export const useSwipeMenu = ({
         const isRight = gestureState.dx > 0;
         return isFromEdge && isHorizontal && isRight;
       },
-      onPanResponderGrant: () => {
+      onPanResponderGrant: (_evt, gestureState) => {
         pressStartTime.current = Date.now();
         isLongPressActive.current = false;
 
         clearLongPress();
         longPressTimeout.current = setTimeout(() => {
           isLongPressActive.current = true;
+          const dx = Math.max(0, gestureState.dx);
+          pan.setValue(dx);
+          if (menuTranslateX && menuWidth) {
+            const clampedDx = Math.min(dx, menuWidth);
+            const nextX = -menuWidth + clampedDx;
+            menuTranslateX.setValue(nextX);
+            onRequestMenuVisible && onRequestMenuVisible(true);
+          }
         }, longPressDurationMs);
       },
       onPanResponderMove: (_evt, gestureState) => {
-        // Chỉ cho nội dung đi theo tay khi đã long-press thành công
         if (isLongPressActive.current) {
           const dx = Math.max(0, gestureState.dx);
           pan.setValue(dx);
-
-          // Nếu có truyền Animated.Value cho SideMenu thì cho menu chạy theo tay luôn
           if (menuTranslateX && menuWidth) {
             const clampedDx = Math.min(dx, menuWidth);
             const nextX = -menuWidth + clampedDx;

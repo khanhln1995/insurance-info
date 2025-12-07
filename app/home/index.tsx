@@ -14,30 +14,24 @@ import { useSwipeMenu } from "@/hooks/useSwipeMenu";
 import { Ionicons } from "@expo/vector-icons";
 import { useRouter } from "expo-router";
 import React from "react";
-import { Animated, Image, StyleSheet, TouchableOpacity, View } from "react-native";
+import { Animated, Image, TouchableOpacity, View } from "react-native";
 
 const Home = () => {
   const [visible, setVisible] = React.useState(false);
   const menuTranslateX = React.useRef(new Animated.Value(-DRAWER_W)).current;
 
   const openMenu = () => {
+    menuTranslateX.setValue(0);
     setVisible(true);
-    Animated.spring(menuTranslateX, {
-      toValue: 0,
-      useNativeDriver: true,
-    }).start();
   };
 
   const closeMenu = () => {
-    Animated.spring(menuTranslateX, {
-      toValue: -DRAWER_W,
-      useNativeDriver: true,
-    }).start(() => {
-      setVisible(false);
-    });
+    menuTranslateX.setValue(-DRAWER_W);
+    setVisible(false);
   };
   const router: any = useRouter();
-  const { panResponder, pan } = useSwipeMenu({
+  const { panResponder } = useSwipeMenu({
+    onOpenMenu: openMenu,
     onSwipeBack: () => {
       if (router.canGoBack?.()) {
         router.back();
@@ -209,14 +203,3 @@ const Home = () => {
 };
 
 export default Home;
-
-const styles = StyleSheet.create({
-  button: {
-    borderWidth: 2,
-    borderColor: Colors.primary,
-    borderRadius: 5,
-    paddingVertical: 10,
-    paddingHorizontal: 25,
-    alignItems: "center",
-  },
-});
