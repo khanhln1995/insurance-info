@@ -37,9 +37,12 @@ const InfoCard = ({ type }: Props) => {
           paddingTop: 11.39
         }}
       >
-        <AppText variant="label" style={{ color: "#4E4E4E", 
-          // flex: 1 
-          }}>
+        <AppText variant="label" style={{ 
+            color: "#4E4E4E", 
+            marginRight: 24
+            // flex: 1 
+          }}
+        >
           {title}
         </AppText>
         <AppText
@@ -140,7 +143,7 @@ const InfoCard = ({ type }: Props) => {
           )}
         </View>
         <View>
-          <AppText variant="bodyBold" style={{ marginBottom: 4 }}>
+          <AppText variant="bodyBold" style={{ marginBottom: 4, fontWeight: '600' }}>
             {name}
           </AppText>
           <AppText variant="body">{subInfo}</AppText>
