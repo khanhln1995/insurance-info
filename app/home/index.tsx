@@ -21,17 +21,13 @@ const Home = () => {
   const menuTranslateX = React.useRef(new Animated.Value(-DRAWER_W)).current;
 
   const openMenu = () => {
+    menuTranslateX.setValue(0);
     setVisible(true);
-    Animated.spring(menuTranslateX, {
-      toValue: 0,
-      useNativeDriver: true,
-    }).start();
   };
 
   const closeMenu = () => {
-    // Đóng menu và tắt bóng mờ ngay lập tức
-    setVisible(false);
     menuTranslateX.setValue(-DRAWER_W);
+    setVisible(false);
   };
   const router: any = useRouter();
   const { panResponder } = useSwipeMenu({

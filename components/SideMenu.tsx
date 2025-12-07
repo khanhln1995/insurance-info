@@ -5,6 +5,7 @@ import {
   Dimensions,
   Image,
   Modal,
+  PanResponder,
   Pressable,
   SafeAreaView,
   StyleSheet,
@@ -12,20 +13,20 @@ import {
   View,
 } from "react-native";
 
+import IconGlobal from "@/assets/images/icon/icon-global.svg";
+import IconList from "@/assets/images/icon/icon-list.svg";
+import IconLock from "@/assets/images/icon/icon-lock.svg";
+import IconLogout from "@/assets/images/icon/icon-logout.svg";
+import IconNew from "@/assets/images/icon/icon-new.svg";
+import IconSetting from "@/assets/images/icon/icon-setting.svg";
+import IconSpeaker from "@/assets/images/icon/icon-speaker.svg";
+import IconSt from "@/assets/images/icon/icon-st.svg";
+import IconSupport from "@/assets/images/icon/icon-support.svg";
+import AppText from "@/components/AppText";
 import { Colors } from "@/constants/Colors";
 import { useUser } from "@/hooks/user";
 import AntDesign from "@expo/vector-icons/AntDesign";
-import AppText from "@/components/AppText";
 import Spacer from "./Spacer";
-import IconSpeaker from "@/assets/images/icon/icon-speaker.svg";
-import IconNew from "@/assets/images/icon/icon-new.svg";
-import IconSetting from "@/assets/images/icon/icon-setting.svg";
-import IconList from "@/assets/images/icon/icon-list.svg";
-import IconGlobal from "@/assets/images/icon/icon-global.svg";
-import IconSupport from "@/assets/images/icon/icon-support.svg";
-import IconSt from "@/assets/images/icon/icon-st.svg";
-import IconLock from "@/assets/images/icon/icon-lock.svg";
-import IconLogout from "@/assets/images/icon/icon-logout.svg";
 
 const { width } = Dimensions.get("window");
 export const DRAWER_W = Math.min(360, Math.floor(width * 0.68));
@@ -34,11 +35,6 @@ type Props = {
   visible: boolean;
   onClose: () => void;
   onLogout: () => void;
-  /**
-   * Nếu truyền vào Animated.Value, SideMenu sẽ dùng trực tiếp value này
-   * để điều khiển translateX (hỗ trợ kéo real-time theo tay).
-   * Nếu không truyền, component sẽ tự animate theo prop `visible` như cũ.
-   */
   translateX?: Animated.Value;
 };
 
@@ -49,13 +45,13 @@ const SideMenu: React.FC<Props> = ({
   translateX,
 }) => {
   const slideX = useRef(new Animated.Value(-DRAWER_W)).current;
-
-  const { userInfo, medInsurance, avatar } = useUser();
+  const startTranslateX = useRef(0);
+  const MENU_EDGE_WIDTH = 30; 
+  const { userInfo, avatar } = useUser();
 
   // Nếu không có translateX bên ngoài thì giữ behavior cũ: tự animate theo visible
   useEffect(() => {
-    if (translateX) return;
-
+    if (translateX !== undefined && translateX != null) return;
     Animated.timing(slideX, {
       toValue: visible ? 0 : -DRAWER_W,
       duration: 220,
@@ -64,6 +60,57 @@ const SideMenu: React.FC<Props> = ({
   }, [visible, translateX]);
 
   const animatedX = translateX ?? slideX;
+
+  // PanResponder để kéo menu từ mép phải khi menu mở
+  const menuPanResponder = useRef(
+    PanResponder.create({
+      onStartShouldSetPanResponder: (evt) => {
+        const x = evt.nativeEvent.pageX;
+        return x >= DRAWER_W - MENU_EDGE_WIDTH && x <= DRAWER_W;
+      },
+      onMoveShouldSetPanResponder: (_evt, gestureState) => {
+        
+        if (!visible || translateX == null || translateX === undefined) return false;
+        const x0 = gestureState.x0 ?? _evt.nativeEvent.pageX;
+        const isFromRightEdge = x0 >= DRAWER_W - MENU_EDGE_WIDTH && x0 <= DRAWER_W;
+        const isHorizontal =
+          Math.abs(gestureState.dx) > 10 &&
+          Math.abs(gestureState.dx) > Math.abs(gestureState.dy);
+        return isFromRightEdge && isHorizontal;
+      },
+      onPanResponderGrant: () => {
+        if (translateX !== undefined && translateX != null) {
+          startTranslateX.current = (translateX as any)._value || 0;
+        }
+      },
+      onPanResponderMove: (_evt, gestureState) => {
+        if (translateX !== undefined && translateX != null) {
+          // Tính toán vị trí mới: dx < 0 = kéo trái (đóng), dx > 0 = kéo phải (mở thêm)
+          const newX = Math.max(-DRAWER_W, Math.min(0, startTranslateX.current + gestureState.dx));
+          translateX.setValue(newX);
+        }
+      },
+      onPanResponderRelease: (_evt, gestureState) => {
+        if (translateX === undefined || translateX == null) return;
+        
+        const currentValue = (translateX as any)._value || 0;
+        
+        if (currentValue < -DRAWER_W / 2 || gestureState.vx < -0.5) {
+          Animated.spring(translateX, {
+            toValue: -DRAWER_W,
+            useNativeDriver: true,
+          }).start(() => {
+            onClose();
+          });
+        } else {
+          Animated.spring(translateX, {
+            toValue: 0,
+            useNativeDriver: true,
+          }).start();
+        }
+      },
+    })
+  ).current;
 
   const renderItemMenu = ({
     text,
@@ -126,6 +173,7 @@ const SideMenu: React.FC<Props> = ({
 
       {/* Drawer */}
       <Animated.View
+        {...(visible && translateX ? menuPanResponder.panHandlers : {})}
         style={[styles.drawerWrap, { transform: [{ translateX: animatedX }] }]}
       >
         <LinearGradient

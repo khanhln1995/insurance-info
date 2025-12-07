@@ -32,17 +32,16 @@ type UseSwipeMenuParams = {
   onRequestMenuVisible?: (visible: boolean) => void;
 };
 
-const EDGE_WIDTH = 24; // chỉ bắt gesture trong vùng mép trái
+const EDGE_WIDTH = 20; // chỉ bắt gesture trong vùng mép trái
 
 export const useSwipeMenu = ({
   onOpenMenu,
   onSwipeBack,
-  longPressDurationMs = 2000,
+  longPressDurationMs = 0,
   menuTranslateX,
   menuWidth,
   onRequestMenuVisible,
 }: UseSwipeMenuParams) => {
-  // Chỉ cần 1 chiều X, dùng Animated.Value cho đơn giản (tránh lỗi transform)
   const pan = useRef(new Animated.Value(0)).current;
 
   const longPressTimeout = useRef<ReturnType<typeof setTimeout> | null>(null);
@@ -98,8 +97,6 @@ export const useSwipeMenu = ({
         }, longPressDurationMs);
       },
       onPanResponderMove: (_evt, gestureState) => {
-        console.log("onPanResponderMove");
-        // Chỉ cho nội dung đi theo tay khi đã long-press thành công
         if (isLongPressActive.current) {
           const dx = Math.max(0, gestureState.dx);
           pan.setValue(dx);
