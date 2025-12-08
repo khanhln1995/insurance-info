@@ -337,18 +337,16 @@ const Progress = () => {
       </Animated.View>
 
       {/* Lớp mép trái riêng cho gesture mở menu / back nhanh */}
-      {!visible && (
-        <View
-          style={{
-            position: "absolute",
-            top: 0,
-            bottom: 0,
-            left: 0,
-            width: 24,
-          }}
-          {...edgePanResponder.panHandlers}
-        />
-      )}
+      <View
+        style={{
+          position: "absolute",
+          top: 0,
+          bottom: 0,
+          left: 0,
+          width: 24, // khớp EDGE_WIDTH trong useSwipeMenu
+        }}
+        {...edgePanResponder.panHandlers}
+      />
 
       <SideMenu
         visible={visible}
