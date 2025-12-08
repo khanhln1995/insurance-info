@@ -39,11 +39,11 @@ const Progress = () => {
 
   // PanResponder cho gesture mép trái (mở menu / back nhanh)
   const { panResponder: edgePanResponder } = useSwipeMenu({
-    // onSwipeBack: () => {
-    //   if (router.canGoBack?.()) {
-    //     router.back();
-    //   }
-    // },
+    onSwipeBack: () => {
+      if (router.canGoBack?.()) {
+        router.back();
+      }
+    },
     menuTranslateX,
     menuWidth: DRAWER_W,
     onRequestMenuVisible: (v) => {
@@ -337,16 +337,18 @@ const Progress = () => {
       </Animated.View>
 
       {/* Lớp mép trái riêng cho gesture mở menu / back nhanh */}
-      <View
-        style={{
-          position: "absolute",
-          top: 0,
-          bottom: 0,
-          left: 0,
-          width: 24, // khớp EDGE_WIDTH trong useSwipeMenu
-        }}
-        {...edgePanResponder.panHandlers}
-      />
+      {!visible && (
+        <View
+          style={{
+            position: "absolute",
+            top: 0,
+            bottom: 0,
+            left: 0,
+            width: 24,
+          }}
+          {...edgePanResponder.panHandlers}
+        />
+      )}
 
       <SideMenu
         visible={visible}
