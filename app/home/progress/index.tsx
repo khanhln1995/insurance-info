@@ -6,9 +6,9 @@ import SideMenu, { DRAWER_W } from "@/components/SideMenu";
 import { Colors } from "@/constants/Colors";
 import { useSwipeMenu } from "@/hooks/useSwipeMenu";
 import { useUser } from "@/hooks/user";
+import { useNavigation } from "@react-navigation/native";
 import { useRouter } from "expo-router";
 import React, { useRef } from "react";
-import { useNavigation } from "@react-navigation/native";
 import {
   Animated,
   Dimensions,
@@ -37,8 +37,13 @@ const Progress = () => {
       setVisible(false);
     });
   };
-
   const navigation = useNavigation();
+
+   React.useEffect(() => {
+    navigation?.setOptions?.({
+        gestureEnabled: !visible
+      });
+  }, [visible, navigation]);
 
   // PanResponder cho gesture mép trái (mở menu / back nhanh)
   const { panResponder: edgePanResponder } = useSwipeMenu({
@@ -55,7 +60,6 @@ const Progress = () => {
     menuTranslateX,
     menuWidth: DRAWER_W,
     onRequestMenuVisible: (v) => {
-      
       if (v) {
         navigation?.setOptions?.({ 
           gestureEnabled: false
