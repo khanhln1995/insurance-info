@@ -38,6 +38,8 @@ const Progress = () => {
     });
   };
 
+  const navigation = useNavigation();
+
   // PanResponder cho gesture mép trái (mở menu / back nhanh)
   const { panResponder: edgePanResponder } = useSwipeMenu({
     onSwipeBack: () => {
@@ -45,12 +47,24 @@ const Progress = () => {
         router.back();
       }
     },
+    onStart: () => {
+      navigation?.setOptions?.({
+        gestureEnabled: false
+      });
+    },
     menuTranslateX,
     menuWidth: DRAWER_W,
     onRequestMenuVisible: (v) => {
+      
       if (v) {
+        navigation?.setOptions?.({ 
+          gestureEnabled: false
+        });
         setVisible(true);
       } else {
+        navigation?.setOptions?.({ 
+          gestureEnabled: true
+        });
         setVisible(false);
       }
     },
@@ -211,14 +225,6 @@ const Progress = () => {
 
     return `${years} năm ${months} tháng`;
   };
-
-  const navigation = useNavigation();
-  React.useEffect(() => {
-    navigation?.setOptions?.({ 
-      // fullScreenGestureEnabled: !visible,
-      gestureEnabled: !visible
-    });
-  }, [navigation]);
 
   return (
     <View style={{ flex: 1, backgroundColor: "white" }}>

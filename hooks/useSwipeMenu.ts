@@ -26,6 +26,7 @@ type UseSwipeMenuParams = {
    * Chiều rộng drawer (dùng để clamp giá trị kéo).
    */
   menuWidth?: number;
+  onStart?: () => void;
   /**
    * Cho phép hook yêu cầu mở/đóng menu (điều khiển prop `visible` của SideMenu).
    */
@@ -36,6 +37,7 @@ const EDGE_WIDTH = 20; // chỉ bắt gesture trong vùng mép trái
 
 export const useSwipeMenu = ({
   onOpenMenu,
+  onStart,
   onSwipeBack,
   longPressDurationMs = 0,
   menuTranslateX,
@@ -67,6 +69,7 @@ export const useSwipeMenu = ({
     PanResponder.create({
       // Chỉ bắt đầu gesture nếu chạm ở mép trái
       onStartShouldSetPanResponder: (evt) => {
+        onStart?.();
         const x = evt.nativeEvent.pageX;
         return x <= EDGE_WIDTH;
       },
