@@ -343,7 +343,6 @@ const Progress = () => {
       </Animated.View>
 
       {/* Lớp mép trái riêng cho gesture mở menu / back nhanh */}
-      {!visible && (
         <View
           style={{
             position: "absolute",
@@ -354,7 +353,6 @@ const Progress = () => {
           }}
           {...edgePanResponder.panHandlers}
         />
-      )}
 
       <SideMenu
         visible={visible}
