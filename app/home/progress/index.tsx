@@ -39,11 +39,11 @@ const Progress = () => {
 
   // PanResponder cho gesture mép trái (mở menu / back nhanh)
   const { panResponder: edgePanResponder } = useSwipeMenu({
-    onSwipeBack: () => {
-      if (router.canGoBack?.()) {
-        router.back();
-      }
-    },
+    // onSwipeBack: () => {
+    //   if (router.canGoBack?.()) {
+    //     router.back();
+    //   }
+    // },
     menuTranslateX,
     menuWidth: DRAWER_W,
     onRequestMenuVisible: (v) => {
