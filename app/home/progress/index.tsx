@@ -8,6 +8,7 @@ import { useSwipeMenu } from "@/hooks/useSwipeMenu";
 import { useUser } from "@/hooks/user";
 import { useRouter } from "expo-router";
 import React, { useRef } from "react";
+import { useNavigation } from "@react-navigation/native";
 import {
   Animated,
   Dimensions,
@@ -211,6 +212,11 @@ const Progress = () => {
     return `${years} năm ${months} tháng`;
   };
 
+  const navigation = useNavigation();
+  React.useEffect(() => {
+    navigation?.setOptions?.({ gestureEnabled: !visible });
+  }, [navigation]);
+
   return (
     <View style={{ flex: 1, backgroundColor: "white" }}>
       <HeaderBack
@@ -337,16 +343,18 @@ const Progress = () => {
       </Animated.View>
 
       {/* Lớp mép trái riêng cho gesture mở menu / back nhanh */}
-      <View
-        style={{
-          position: "absolute",
-          top: 0,
-          bottom: 0,
-          left: 0,
-          width: 24, // khớp EDGE_WIDTH trong useSwipeMenu
-        }}
-        {...edgePanResponder.panHandlers}
-      />
+      {!visible && (
+        <View
+          style={{
+            position: "absolute",
+            top: 0,
+            bottom: 0,
+            left: 0,
+            width: 24, // khớp EDGE_WIDTH trong useSwipeMenu
+          }}
+          {...edgePanResponder.panHandlers}
+        />
+      )}
 
       <SideMenu
         visible={visible}
