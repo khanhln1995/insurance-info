@@ -66,6 +66,7 @@ export default function RootLayout() {
                 gestureEnabled: true,
                 fullScreenGestureEnabled: true,
                 gestureDirection: "horizontal",
+                animation: "fade",
               }}
             >
               <Stack.Screen name="home/progress/index" options={{headerShown: false, gestureEnabled: false, }} />
