@@ -169,7 +169,7 @@ const SideMenu: React.FC<Props> = ({
       statusBarTranslucent
     >
       {/* Backdrop: press outside to close */}
-      <Pressable style={styles.backdrop} onPress={onClose} />
+      <Pressable style={styles.backdrop} />
 
       {/* Drawer */}
       <Animated.View
