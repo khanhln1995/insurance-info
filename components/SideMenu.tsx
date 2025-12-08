@@ -222,14 +222,6 @@ const SideMenu: React.FC<Props> = ({
               {renderItemMenu({
                 text: "Thông báo",
                 icon: (
-                  // <Image
-                  //   source={require("@/assets/images/icon/icon-speaker.png")}
-                  //   style={{
-                  //     width: 24,
-                  //     height: 24,
-                  //     marginRight: 10,
-                  //   }}
-                  // />
                   <IconSpeaker width={18.42} height={18.13} />
                 ),
                 onPress: () => {},
@@ -237,14 +229,6 @@ const SideMenu: React.FC<Props> = ({
               {renderItemMenu({
                 text: "Tin tức",
                 icon: (
-                  // <Image
-                  //   source={require("@/assets/images/icon/icon-new.png")}
-                  //   style={{
-                  //     width: 24,
-                  //     height: 24,
-                  //     marginRight: 10,
-                  //   }}
-                  // />
                   <IconNew width={19.76} height={16.64} />
                 ),
                 onPress: () => {},
@@ -252,14 +236,6 @@ const SideMenu: React.FC<Props> = ({
               {renderItemMenu({
                 text: "Quản lý cá nhân",
                 icon: (
-                  // <Image
-                  //   source={require("@/assets/images/icon/icon-setting.png")}
-                  //   style={{
-                  //     width: 24,
-                  //     height: 24,
-                  //     marginRight: 10,
-                  //   }}
-                  // />
                   <IconSetting width={19.36} height={19.43} />
                 ),
                 onPress: () => {},
@@ -267,14 +243,6 @@ const SideMenu: React.FC<Props> = ({
               {renderItemMenu({
                 text: "Dịch vụ công",
                 icon: (
-                  // <Image
-                  //   source={require("@/assets/images/icon/icon-list.png")}
-                  //   style={{
-                  //     width: 24,
-                  //     height: 24,
-                  //     marginRight: 10,
-                  //   }}
-                  // />
                   <IconList width={13.39} height={17.35} />
                 ),
                 onPress: () => {},
@@ -282,15 +250,6 @@ const SideMenu: React.FC<Props> = ({
               {renderItemMenu({
                 text: "Tra cứu",
                 icon: (
-                  // <Image
-                  //   source={require("@/assets/images/icon/icon-global.png")}
-                
-                  //   style={{
-                  //     width: 24,
-                  //     height: 24,
-                  //     marginRight: 10,
-                  //   }}
-                  // />
                   <IconGlobal width={16.74} height={17.48} />
                 ),
                 onPress: () => {},
@@ -298,14 +257,6 @@ const SideMenu: React.FC<Props> = ({
               {renderItemMenu({
                 text: "Trợ giúp",
                 icon: (
-                  // <Image
-                  //   source={require("@/assets/images/icon/icon-support.png")}
-                  //   style={{    
-                  //     width: 24,
-                  //     height: 24,
-                  //     marginRight: 10,
-                  //   }}
-                  // />
                   <IconSupport width={18.26} height={18.75} />
                 ),
                 onPress: () => {},
@@ -313,14 +264,6 @@ const SideMenu: React.FC<Props> = ({
               {renderItemMenu({
                 text: "Cài đặt",
                 icon: (
-                  // <Image
-                  //   source={require("@/assets/images/icon/icon-st.png")}
-                  //   style={{
-                  //     width: 24,
-                  //     height: 24,
-                  //     marginRight: 10,
-                  //   }}
-                  // />
                   <IconSt width={19.62} height={19.76} />
                 ),
                 onPress: () => {},
@@ -329,15 +272,6 @@ const SideMenu: React.FC<Props> = ({
                 {renderItemMenu({
                   text: "Đổi mật khẩu",
                   icon: (
-                    // <Image
-                    //   source={require("@/assets/images/icon/icon-lock.png")}
-                    //   style={{
-
-                    //     width: 24,
-                    //     height: 24,
-                    //     marginRight: 10,
-                    //   }}
-                    // />
                     <IconLock width={15.4} height={19.17} />
                   ),
                   onPress: () => {},
@@ -345,25 +279,12 @@ const SideMenu: React.FC<Props> = ({
                 {renderItemMenu({
                   text: "Đăng xuất",
                   icon: (
-                    // <Image
-                    //   source={require("@/assets/images/icon/icon-logout.png")}
-
-                    //   style={{
-                    //     width: 24,
-                    //     height: 24,
-                    //     marginRight: 10,
-                    //   }}
-                    // />
                     <IconLogout width={17.02} height={17.02} />
                   ),
                   onPress: onLogout,
                 })}
-
-                {/* Footer small line (optional) */}
               </View>
             </View>
-            {/* Only one menu item: Đăng xuất */}
-
             <View style={styles.footerWrap}>
               <AppText variant="label" style={styles.footer}>
                 Phiên bản 2.6
@@ -418,11 +339,23 @@ const styles = StyleSheet.create({
   name: {
     color: "white",
     marginTop: 10,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 1.34 },
+    shadowOpacity: 0.14, 
+    shadowRadius: 1.34,
+    fontWeight: '600',
+    elevation: 2,
   },
   phone: {
     color: "white",
     opacity: 0.9,
     marginTop: 2,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 1.34 },
+    shadowOpacity: 0.14, 
+    shadowRadius: 1.34,
+    fontWeight: '600',
+    elevation: 2,
   },
   hr: {
     height: 4.5,
