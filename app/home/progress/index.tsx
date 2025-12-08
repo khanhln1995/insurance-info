@@ -39,11 +39,6 @@ const Progress = () => {
   };
   const navigation = useNavigation();
 
-   React.useEffect(() => {
-    navigation?.setOptions?.({
-        gestureEnabled: !visible
-      });
-  }, [visible, navigation]);
 
   // PanResponder cho gesture mép trái (mở menu / back nhanh)
   const { panResponder: edgePanResponder } = useSwipeMenu({
