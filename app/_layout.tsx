@@ -68,7 +68,7 @@ export default function RootLayout() {
                 gestureDirection: "horizontal",
               }}
             >
-              <Stack.Screen name="home/progress/index" options={{headerShown: false, gestureEnabled: true, }} />
+              <Stack.Screen name="home/progress/index" options={{headerShown: false, gestureEnabled: false, }} />
             </Stack>
           </ThemeProvider>
         </SafeArea>
