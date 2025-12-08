@@ -214,7 +214,10 @@ const Progress = () => {
 
   const navigation = useNavigation();
   React.useEffect(() => {
-    navigation?.setOptions?.({ gestureEnabled: !visible });
+    navigation?.setOptions?.({ 
+      // fullScreenGestureEnabled: !visible,
+      gestureEnabled: !visible
+    });
   }, [navigation]);
 
   return (
