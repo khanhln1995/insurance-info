@@ -46,7 +46,7 @@ const SideMenu: React.FC<Props> = ({
 }) => {
   const slideX = useRef(new Animated.Value(-DRAWER_W)).current;
   const startTranslateX = useRef(0);
-  const MENU_EDGE_WIDTH = 30; 
+  const MENU_EDGE_WIDTH = 300; // vùng mép phải để bắt gesture kéo đóng menu
   const { userInfo, avatar } = useUser();
 
   // Nếu không có translateX bên ngoài thì giữ behavior cũ: tự animate theo visible
@@ -109,6 +109,13 @@ const SideMenu: React.FC<Props> = ({
           }).start();
         }
       },
+      onMoveShouldSetPanResponderCapture: (_evt, gestureState) => {
+        const isHorizontal =
+          Math.abs(gestureState.dx) > 10 &&
+          Math.abs(gestureState.dx) > Math.abs(gestureState.dy);
+
+        return isHorizontal;
+      },
     })
   ).current;
 
@@ -123,10 +130,10 @@ const SideMenu: React.FC<Props> = ({
   }) => {
     return (
       <TouchableOpacity
-        style={styles.itemRow}
+      style={styles.itemRow}
         activeOpacity={0.7}
-        onPress={onPress}
-      >
+      onPress={onPress}
+    >
         <View style={{
           width: 36.17,
           alignItems: "center",
