@@ -2,13 +2,11 @@ import AppText from "@/components/AppText";
 import BottomMenuBar from "@/components/BottomMenuBar";
 import EmploymentHistoryTable from "@/components/EmploymenHistoryTable";
 import HeaderBack from "@/components/HeaderBack";
-import RoundAvatar from "@/components/RoundAvatar";
 import SideMenu, { DRAWER_W } from "@/components/SideMenu";
 import { Colors } from "@/constants/Colors";
 import { useSwipeMenu } from "@/hooks/useSwipeMenu";
 import { useUser } from "@/hooks/user";
-import { useNavigation } from "@react-navigation/native";
-import { useRouter } from "expo-router";
+import { useRouter, useNavigation } from "expo-router";
 import React, { useRef } from "react";
 import { MaterialIndicator } from "react-native-indicators";
 
@@ -20,7 +18,6 @@ import {
   ScrollView,
   StyleSheet,
   TouchableOpacity,
-  ActivityIndicator,
   View
 } from "react-native";
 
@@ -43,16 +40,6 @@ const Progress = () => {
   };
   const navigation = useNavigation();
 
-  // giảm vùng phản hồi gesture của navigation cho màn này
-  // để tránh xung đột với vùng mép trái custom mở SideMenu
-  React.useEffect(() => {
-    try {
-      (navigation as any)?.setOptions?.({
-        gestureResponseDistance: { horizontal: 10 },
-      });
-    } catch (e) {}
-  }, [navigation]);
-
   const [loading, setLoading] = React.useState(true);
   React.useEffect(() => {
     const t = setTimeout(() => {
@@ -61,30 +48,18 @@ const Progress = () => {
     return () => clearTimeout(t);
   }, []);
 
-  // PanResponder cho gesture mép trái (mở menu / back nhanh)
-  const { panResponder: edgePanResponder } = useSwipeMenu({
-    onSwipeBack: () => {
-      if (router.canGoBack?.()) {
-        router.back();
-      }
-    },
+  const { panResponder:edgePanResponder } = useSwipeMenu({
     onStart: () => {
-      navigation?.setOptions?.({
-        gestureEnabled: false
-      });
+      navigation?.setOptions?.({ gestureEnabled: false });
     },
     menuTranslateX,
     menuWidth: DRAWER_W,
     onRequestMenuVisible: (v) => {
       if (v) {
-        navigation?.setOptions?.({ 
-          gestureEnabled: false
-        });
+        navigation?.setOptions?.({ gestureEnabled: false });
         setVisible(true);
       } else {
-        navigation?.setOptions?.({ 
-          gestureEnabled: true
-        });
+        navigation?.setOptions?.({ gestureEnabled: true });
         setVisible(false);
       }
     },
@@ -401,7 +376,7 @@ const Progress = () => {
         <BottomMenuBar />
       </Animated.View>
 
-      {/* Lớp mép trái riêng cho gesture mở menu / back nhanh */}
+      {/* Lớp mép trái riêng cho gesture mở menu */}
       <View
         style={{
           position: "absolute",

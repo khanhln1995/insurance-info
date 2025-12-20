@@ -53,25 +53,6 @@ export default function RootLayout() {
   }, [fontsLoaded]);
   if (!fontsLoaded) return null;
 
-  const stackOptions: any = {
-    headerShown: false,
-    gestureEnabled: true,
-    fullScreenGestureEnabled: true,
-    gestureDirection: "horizontal",
-    animation: "simple_push",
-    cardStyleInterpolator: ({ current, layouts }: any) => ({
-      cardStyle: {
-        transform: [
-          {
-            translateX: current.progress.interpolate({
-              inputRange: [0, 1],
-              outputRange: [layouts.screen.width, 0],
-            }),
-          },
-        ],
-      },
-    }),
-  };
 
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>
@@ -80,7 +61,12 @@ export default function RootLayout() {
           <ThemeProvider
             value={colorScheme === "dark" ? DarkTheme : DefaultTheme}
           >
-            <Stack screenOptions={stackOptions} />
+            <Stack
+              screenOptions={{
+                headerShown: false,
+                gestureEnabled: false,
+              }}
+            />
           </ThemeProvider>
         </SafeArea>
       </Provider>

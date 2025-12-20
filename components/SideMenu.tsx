@@ -57,7 +57,7 @@ const SideMenu: React.FC<Props> = ({
       duration: 220,
       useNativeDriver: true,
     }).start();
-  }, [visible, translateX]);
+  }, [visible, translateX, slideX]);
 
   const animatedX = translateX ?? slideX;
 
@@ -175,8 +175,33 @@ const SideMenu: React.FC<Props> = ({
       animationType="none"
       statusBarTranslucent
     >
-      {/* Backdrop: press outside to close */}
-      <Pressable style={styles.backdrop} />
+      {/* Backdrop: press outside to close. Opacity follows `animatedX`; disable pointerEvents when fully closed. */}
+      {
+        (() => {
+          const anim = animatedX as Animated.Value;
+          const backdropOpacity = (anim as any).interpolate
+            ? (anim as any).interpolate({
+                inputRange: [-DRAWER_W, 0],
+                outputRange: [0, 0.35],
+                extrapolate: 'clamp',
+              })
+            : 0.35;
+
+          const isBackdropActive =
+            translateX == null
+              ? visible
+              : ((translateX as any)._value || -DRAWER_W) > -DRAWER_W + 0.5;
+
+          return (
+            <Animated.View
+              style={[styles.backdrop, { opacity: backdropOpacity }]}
+              pointerEvents={isBackdropActive ? 'auto' : 'none'}
+            >
+              <Pressable style={StyleSheet.absoluteFill} onPress={onClose} />
+            </Animated.View>
+          );
+        })()
+      }
 
       {/* Drawer */}
       <Animated.View

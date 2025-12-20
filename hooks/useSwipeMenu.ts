@@ -2,43 +2,24 @@ import { useRef } from "react";
 import { Animated, PanResponder } from "react-native";
 
 type UseSwipeMenuParams = {
-  /**
-   * Gọi khi người dùng NHẤN GIỮ 2–3s ở mép trái rồi kéo sang phải (vuốt chậm).
-   * Thường dùng để mở SideMenu.
-   */
   onOpenMenu?: () => void;
-  /**
-   * Gọi khi người dùng vuốt nhanh sang phải từ mép trái.
-   * Thường dùng để quay lại màn trước (router.back()).
-   */
   onSwipeBack?: () => void;
-  /**
-   * Thời gian nhấn giữ để được coi là long-press (ms).
-   * Mặc định ~2s theo yêu cầu.
-   */
   longPressDurationMs?: number;
-  /**
-   * Animated.Value điều khiển vị trí SideMenu (translateX),
-   * để có thể kéo menu mở dần theo tay.
-   */
   menuTranslateX?: Animated.Value;
-  /**
-   * Chiều rộng drawer (dùng để clamp giá trị kéo).
-   */
   menuWidth?: number;
+
+  /** 👇 callback để TẮT gesture-back native */
   onStart?: () => void;
-  /**
-   * Cho phép hook yêu cầu mở/đóng menu (điều khiển prop `visible` của SideMenu).
-   */
+
   onRequestMenuVisible?: (visible: boolean) => void;
 };
 
-const EDGE_WIDTH = 20; // chỉ bắt gesture trong vùng mép trái
+const EDGE_WIDTH = 20;
 
 export const useSwipeMenu = ({
   onOpenMenu,
-  onStart,
   onSwipeBack,
+  onStart,
   longPressDurationMs = 0,
   menuTranslateX,
   menuWidth,
@@ -61,15 +42,12 @@ export const useSwipeMenu = ({
     if (longPressTimeout.current) {
       clearTimeout(longPressTimeout.current);
       longPressTimeout.current = null;
-      onRequestMenuVisible && onRequestMenuVisible(false);
     }
   };
 
   const panResponder = useRef(
     PanResponder.create({
-      // Chỉ bắt đầu gesture nếu chạm ở mép trái
       onStartShouldSetPanResponder: (evt) => {
-        onStart?.();
         const x = evt.nativeEvent.pageX;
         return x <= EDGE_WIDTH;
       },
@@ -79,36 +57,37 @@ export const useSwipeMenu = ({
         const isHorizontal =
           Math.abs(gestureState.dx) > 10 &&
           Math.abs(gestureState.dx) > Math.abs(gestureState.dy);
-        const isRight = gestureState.dx > 0;
-        return isFromEdge && isHorizontal && isRight;
+        return isFromEdge && isHorizontal && gestureState.dx > 0;
       },
       onPanResponderGrant: (_evt, gestureState) => {
         pressStartTime.current = Date.now();
         isLongPressActive.current = false;
 
+        // 🔥 TẮT SWIPE-BACK IOS NGAY LẬP TỨC
+        onStart?.();
+
         clearLongPress();
         longPressTimeout.current = setTimeout(() => {
           isLongPressActive.current = true;
-          const dx = Math.max(0, gestureState.dx);
-          pan.setValue(dx);
+
           if (menuTranslateX && menuWidth) {
-            const clampedDx = Math.min(dx, menuWidth);
-            const nextX = -menuWidth + clampedDx;
-            menuTranslateX.setValue(nextX);
-            onRequestMenuVisible && onRequestMenuVisible(true);
+            onRequestMenuVisible?.(true);
           }
         }, longPressDurationMs);
       },
+
+      /* =========================
+       * MOVE
+       * ========================= */
       onPanResponderMove: (_evt, gestureState) => {
-        if (isLongPressActive.current) {
-          const dx = Math.max(0, gestureState.dx);
-          pan.setValue(dx);
-          if (menuTranslateX && menuWidth) {
-            const clampedDx = Math.min(dx, menuWidth);
-            const nextX = -menuWidth + clampedDx;
-            menuTranslateX.setValue(nextX);
-            onRequestMenuVisible && onRequestMenuVisible(true);
-          }
+        if (!isLongPressActive.current) return;
+
+        const dx = Math.max(0, gestureState.dx);
+        pan.setValue(dx);
+
+        if (menuTranslateX && menuWidth) {
+          const clampedDx = Math.min(dx, menuWidth);
+          menuTranslateX.setValue(-menuWidth + clampedDx);
         }
       },
       onPanResponderRelease: (_evt, gestureState) => {
@@ -118,33 +97,33 @@ export const useSwipeMenu = ({
         const isFastSwipeRight =
           duration < 600 && gestureState.vx > 0.5 && gestureState.dx > 50;
 
-        if (!isLongPressActive.current && isFastSwipeRight && onSwipeBack) {
-          onSwipeBack();
-        } else if (isLongPressActive.current && gestureState.dx > 30) {
-          // Long-press + kéo đủ xa => mở hẳn menu
-          if (menuTranslateX && menuWidth) {
-            onRequestMenuVisible && onRequestMenuVisible(true);
-            Animated.spring(menuTranslateX, {
-              toValue: 0,
-              useNativeDriver: true,
-            }).start();
-          } else {
-            onOpenMenu && onOpenMenu();
-          }
+        // 👉 swipe-back nhanh
+        if (!isLongPressActive.current && isFastSwipeRight) {
+          onSwipeBack?.();
+          resetPan();
+          return;
+        }
+
+        // 👉 mở menu
+        if (isLongPressActive.current && gestureState.dx > menuWidth! / 3) {
+          Animated.spring(menuTranslateX!, {
+            toValue: 0,
+            useNativeDriver: true,
+          }).start();
+          onRequestMenuVisible?.(true);
         } else {
-          // Thả ra mà không đủ điều kiện mở => đóng lại nếu đang kéo menu
-          if (menuTranslateX && menuWidth) {
-            Animated.spring(menuTranslateX, {
-              toValue: -menuWidth,
-              useNativeDriver: true,
-            }).start(() => {
-              onRequestMenuVisible && onRequestMenuVisible(false);
-            });
-          }
+          // 👉 đóng lại
+          Animated.spring(menuTranslateX!, {
+            toValue: -menuWidth!,
+            useNativeDriver: true,
+          }).start(() => {
+            onRequestMenuVisible?.(false);
+          });
         }
 
         resetPan();
       },
+
       onPanResponderTerminate: () => {
         clearLongPress();
         resetPan();

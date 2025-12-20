@@ -5,7 +5,7 @@ import { Colors } from "@/constants/Colors";
 import { useSwipeMenu } from "@/hooks/useSwipeMenu";
 import SideMenu, { DRAWER_W } from "@/components/SideMenu";
 import Entypo from "@expo/vector-icons/Entypo";
-import { useLocalSearchParams, useRouter } from "expo-router";
+import { useLocalSearchParams, useNavigation, useRouter } from "expo-router";
 import React from "react";
 import { Animated, SafeAreaView, ScrollView, StyleSheet, View } from "react-native";
 
@@ -25,24 +25,23 @@ const DetailProgress = () => {
     });
   };
 
-  const { panResponder, pan } = useSwipeMenu({
-    onSwipeBack: () => {
-      if (router.canGoBack?.()) {
-        router.back();
-      }
+  const navigation: any = useNavigation();
+  const { panResponder } = useSwipeMenu({
+    onStart: () => {
+      navigation?.setOptions?.({ gestureEnabled: false });
     },
     menuTranslateX,
     menuWidth: DRAWER_W,
     onRequestMenuVisible: (v) => {
       if (v) {
+        navigation?.setOptions?.({ gestureEnabled: false });
         setVisible(true);
       } else {
+        navigation?.setOptions?.({ gestureEnabled: true });
         setVisible(false);
       }
     },
   });
-
-  
 
   const renderInfoLine = (label: string, value?: string) => (
     <AppText variant="small" style={styles.infoLine}>
