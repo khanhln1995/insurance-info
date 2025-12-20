@@ -2,6 +2,7 @@ import AppText from "@/components/AppText";
 import BottomMenuBar from "@/components/BottomMenuBar";
 import EmploymentHistoryTable from "@/components/EmploymenHistoryTable";
 import HeaderBack from "@/components/HeaderBack";
+import RoundAvatar from "@/components/RoundAvatar";
 import SideMenu, { DRAWER_W } from "@/components/SideMenu";
 import { Colors } from "@/constants/Colors";
 import { useSwipeMenu } from "@/hooks/useSwipeMenu";
@@ -9,6 +10,8 @@ import { useUser } from "@/hooks/user";
 import { useNavigation } from "@react-navigation/native";
 import { useRouter } from "expo-router";
 import React, { useRef } from "react";
+import { MaterialIndicator } from "react-native-indicators";
+
 import {
   Animated,
   Dimensions,
@@ -17,7 +20,8 @@ import {
   ScrollView,
   StyleSheet,
   TouchableOpacity,
-  View,
+  ActivityIndicator,
+  View
 } from "react-native";
 
 const BOTTOM_BAR_HEIGHT = 150;
@@ -39,6 +43,23 @@ const Progress = () => {
   };
   const navigation = useNavigation();
 
+  // giảm vùng phản hồi gesture của navigation cho màn này
+  // để tránh xung đột với vùng mép trái custom mở SideMenu
+  React.useEffect(() => {
+    try {
+      (navigation as any)?.setOptions?.({
+        gestureResponseDistance: { horizontal: 10 },
+      });
+    } catch (e) {}
+  }, [navigation]);
+
+  const [loading, setLoading] = React.useState(true);
+  React.useEffect(() => {
+    const t = setTimeout(() => {
+      setLoading(false);
+    }, 700);
+    return () => clearTimeout(t);
+  }, []);
 
   // PanResponder cho gesture mép trái (mở menu / back nhanh)
   const { panResponder: edgePanResponder } = useSwipeMenu({
@@ -286,81 +307,111 @@ const Progress = () => {
           </View>
 
           {/* HORIZONTAL SWIPEABLE CONTENT (each panel = SCREEN_WIDTH) */}
-          <Animated.View
-            style={{
-              flex: 1,
-              flexDirection: "row",
-              width: SCREEN_WIDTH * progressData.length,
-              transform: [{ translateX: animatedX }],
-            }}
-          >
-            {progressData.map((tab) => (
-              <View key={tab.id} style={{ width: SCREEN_WIDTH }}>
-                {/* SCROLL CONTENT for each tab */}
-                {tab.id !== 5 && (
-                  <ScrollView
-                    style={{ flex: 1 }}
-                    contentContainerStyle={{
-                      paddingHorizontal: 7,
-                      paddingTop: 18,
-                      paddingBottom: BOTTOM_BAR_HEIGHT + 24,
-                    }}
-                    showsVerticalScrollIndicator={false}
-                  >
-                    <View style={styles.description}>
-                  <AppText
-                    variant="headingMd"
-                    style={{ color: "#306BA3" }}
-                  >
-                    Quá trình tham gia {selectedTab.title}
-                      </AppText>
+          {
+            !loading && (
+              <Animated.View
+                style={{
+                  flex: 1,
+                  flexDirection: "row",
+                  width: SCREEN_WIDTH * progressData.length,
+                  transform: [{ translateX: animatedX }],
+                }}
+              >
+                {progressData.map((tab) => (
+                  <View key={tab.id} style={{ width: SCREEN_WIDTH }}>
+                    {tab.id !== 5 && (
+                      <ScrollView
+                        style={{ flex: 1 }}
+                        contentContainerStyle={{
+                          paddingHorizontal: 7,
+                          paddingTop: 18,
+                          paddingBottom: BOTTOM_BAR_HEIGHT + 24,
+                        }}
+                        showsVerticalScrollIndicator={false}
+                      >
+                        <View style={styles.description}>
+                      <AppText
+                        variant="headingMd"
+                        style={{ color: "#306BA3" }}
+                      >
+                        Quá trình tham gia {selectedTab.title}
+                          </AppText>
 
-                      <AppText variant="small">
-                        Tổng thời gian tham gia:{" "}
-                        {calculateTotalTime(tab.data?.progress) || "-"}
-                      </AppText>
+                          <AppText variant="small">
+                            Tổng thời gian tham gia:{" "}
+                            {calculateTotalTime(tab.data?.progress) || "-"}
+                          </AppText>
 
-                      {!(tab.id == 4 || tab.id == 3) && (
-                        <AppText variant="small" style={{ color: "#CE0301" }}>
-                          Tổng thời gian chậm đóng : {tab?.data?.totalDueTime}
-                        </AppText>
-                      )}
-                    </View>
+                          {!(tab.id == 4 || tab.id == 3) && (
+                            <AppText variant="small" style={{ color: "#CE0301" }}>
+                              Tổng thời gian chậm đóng : {tab?.data?.totalDueTime}
+                            </AppText>
+                          )}
+                        </View>
 
-                    <EmploymentHistoryTable
-                      data={tab.data?.progress}
-                      onPressView={(detail) => {
-                        router.push({
-                          pathname: "/home/progress/detail",
-                          params: {
-                            detail: JSON.stringify(detail),
-                            title: tab.tabTitle,
-                          },
-                        });
-                      }}
-                      isBHYT={tab.id === 4}
-                    />
-                  </ScrollView>
-                )}
-              </View>
-            ))}
-          </Animated.View>
+                        <EmploymentHistoryTable
+                          data={tab.data?.progress}
+                          onPressView={(detail) => {
+                            router.push({
+                              pathname: "/home/progress/detail",
+                              params: {
+                                detail: JSON.stringify(detail),
+                                title: tab.tabTitle,
+                              },
+                            });
+                          }}
+                          isBHYT={tab.id === 4}
+                        />
+                      </ScrollView>
+                    )}
+                  </View>
+                ))}
+              </Animated.View>
+            )
+          }
+          {loading && (
+            <View
+              style={{
+                justifyContent: "center",
+                alignItems: "center",
+                marginTop: 60,
+              }}
+            >
+              <MaterialIndicator
+                size={66}
+                color="#05c4ceff"
+                trackWidth={3}
+              />
+  
+              <Image
+                source={require("@/assets/images/icon/logo.png")}
+                style={{
+                  position: "absolute",
+                  width: 60,
+                  height: 60,
+                  resizeMode: "contain",
+                  marginTop: 2,
+                  marginLeft: 2
+                }}
+              />
+            </View>
+          )}
         </View>
 
         <BottomMenuBar />
       </Animated.View>
 
       {/* Lớp mép trái riêng cho gesture mở menu / back nhanh */}
-        <View
-          style={{
-            position: "absolute",
-            top: 0,
-            bottom: 0,
-            left: 0,
-            width: 24, // khớp EDGE_WIDTH trong useSwipeMenu
-          }}
-          {...edgePanResponder.panHandlers}
-        />
+      <View
+        style={{
+          position: "absolute",
+          top: 0,
+          bottom: 0,
+          left: 0,
+          width: 24,
+        }}
+        {...edgePanResponder.panHandlers}
+      />
 
       <SideMenu
         visible={visible}
