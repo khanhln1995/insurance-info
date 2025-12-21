@@ -33,6 +33,7 @@ const MedInSurance = () => {
         titleVariant="headingMdRegular"
         textColor="white"
         backTitle="QUẢN LÝ CÁ NHÂN"
+        onGoBack={() => router.replace("/home")}
         backIconLeft={<Ionicons name="menu" size={33.33} color="white" />}
         backIconRight={        
           <Image
