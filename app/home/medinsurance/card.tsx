@@ -7,7 +7,7 @@ import { Entypo } from "@expo/vector-icons";
 import { useRouter } from "expo-router";
 import React, { useEffect, useState } from "react";
 import { Image, StyleSheet, TouchableOpacity, View } from "react-native";
-import MedInSurance from "./index";
+// import MedInSurance from "./index";
 
 const MAX_WIDTH = 314
 const MAX_HEIGHT = 498;
@@ -60,52 +60,56 @@ const MedCardImageScreen = () => {
   const router: any = useRouter();
 
   return (
-    <SwipeBackContainer
-      backScreen={MedInSurance}
-      onLogout={() => router.replace("/auth")}
-    >
-      <View style={styles.container}>
-        <HeaderBack
-          title="Thẻ bảo hiểm y tế"
-          textColor="#34689E"
-          titleVariant="subheading"
-          styleContainer={{ backgroundColor: "#fff" }}
-          iconLeft={<Entypo name="chevron-thin-left" size={28} color={Colors.primary} />}
-        />
-
-        <View style={styles.content}>
-          {medCardImage?.uri ? (
-            <>
-              <TouchableOpacity style={styles.rotateBtn} onPress={toggleRotation}>
-                <Image
-                  source={require("../../../assets/images/clip.png")}
-                  style={{ width: 33.49, height: 33.49 }}
-                />
-              </TouchableOpacity>
-              <View style={[styles.cardFrame, {
-                width: scaledSize?.width,
-                height: scaledSize?.height
-              }]}>
-                <Image
-                  source={{ uri: medCardImage.uri }}
-                  // source={require("../../../assets/images/1111111.png")}
-                  style={{
-                    width: rotation % 180 === 0 ? scaledSize.width : scaledSize.height,
-                    height: rotation % 180 === 0 ? scaledSize.height : scaledSize.width,
-                    transform: [{ rotate: `${rotation}deg` }],
-                  }}
-                  resizeMode={scaledSize.resizeMode as any}
-                />
-              </View>
-            </>
-          ) : (
-            <AppText variant="label" style={styles.emptyText}>
-            Chưa có ảnh thẻ bảo hiểm y tế. Vui lòng thêm ảnh trong phần nhập dữ liệu.
-          </AppText>
-        )}
+    <>
+      <HeaderBack
+        title="Thẻ bảo hiểm y tế"
+        textColor="#34689E"
+        onGoBack={() => router.back()}
+        styleContainer={{ backgroundColor: "rgba(241, 241, 241, 1)" }}
+        isGoBack={true}
+        titleVariant="subheading"
+        iconLeft={<Entypo name="chevron-thin-left" size={28} color={Colors.primary} />}
+      />
+      <SwipeBackContainer
+        enabled={false}
+        overlayColor="#fff"
+        onLogout={() => router.replace("/auth")}
+      >
+        <View style={styles.container}>
+          <View style={styles.content}>
+            {medCardImage?.uri ? (
+              <>
+                <TouchableOpacity style={styles.rotateBtn} onPress={toggleRotation}>
+                  <Image
+                    source={require("../../../assets/images/clip.png")}
+                    style={{ width: 33.49, height: 33.49 }}
+                  />
+                </TouchableOpacity>
+                <View style={[styles.cardFrame, {
+                  width: scaledSize?.width,
+                  height: scaledSize?.height
+                }]}>
+                  <Image
+                    source={{ uri: medCardImage.uri }}
+                    // source={require("../../../assets/images/1111111.png")}
+                    style={{
+                      width: rotation % 180 === 0 ? scaledSize.width : scaledSize.height,
+                      height: rotation % 180 === 0 ? scaledSize.height : scaledSize.width,
+                      transform: [{ rotate: `${rotation}deg` }],
+                    }}
+                    resizeMode={scaledSize.resizeMode as any}
+                  />
+                </View>
+              </>
+            ) : (
+              <AppText variant="label" style={styles.emptyText}>
+              Chưa có ảnh thẻ bảo hiểm y tế. Vui lòng thêm ảnh trong phần nhập dữ liệu.
+            </AppText>
+          )}
+        </View>
       </View>
-    </View>
-    </SwipeBackContainer>
+      </SwipeBackContainer>
+    </>
   );
 };
 
@@ -114,7 +118,7 @@ export default MedCardImageScreen;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "white",
+    // backgroundColor: "white",
   },
   content: {
     flex: 1,

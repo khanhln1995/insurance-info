@@ -1,7 +1,9 @@
 import SideMenu, { DRAWER_W } from "@/components/SideMenu";
+import { clearTranslateX, setTranslateX } from "@/store/slices/swipeBackSlice";
 import { useRouter } from "expo-router";
 import React from "react";
 import { Animated, Dimensions, PanResponder, StyleSheet, View, ViewStyle } from "react-native";
+import { useDispatch } from "react-redux";
 
 const SCREEN_HEIGHT = Dimensions.get("window").height;
 const HALF_SCREEN = SCREEN_HEIGHT / 2;
@@ -32,6 +34,7 @@ const SwipeBackContainer = ({
   style,
 }: SwipeBackContainerProps) => {
   const router: any = useRouter();
+  const dispatch = useDispatch();
   const [menuVisible, setMenuVisible] = React.useState(false);
   const menuTranslateX = React.useRef(new Animated.Value(-DRAWER_W)).current;
 
@@ -65,6 +68,14 @@ const SwipeBackContainer = ({
   const overlayOpacity = React.useRef(new Animated.Value(0)).current;
   const startX = React.useRef(0);
 
+  // Set translateX to store when component mounts, clear when unmounts
+  React.useEffect(() => {
+    dispatch(setTranslateX(translateX));
+    return () => {
+      dispatch(clearTranslateX());
+    };
+  }, [translateX]);
+
   // State cho swipe menu
   const menuPan = React.useRef(new Animated.Value(0)).current;
   const longPressTimeout = React.useRef<ReturnType<typeof setTimeout> | null>(null);
@@ -85,55 +96,53 @@ const SwipeBackContainer = ({
   const wrapperPanResponder = React.useRef(
     PanResponder.create({
       onStartShouldSetPanResponder: (evt) => {
-        const x = evt.nativeEvent.pageX;
         const y = evt.nativeEvent.pageY;
-        
+
         // Chỉ bắt gesture từ mép trái
-        //if (x > EDGE_WIDTH) return false;
-        
+        if (evt.nativeEvent.pageX > EDGE_WIDTH) return false;
         // Nửa trên: swipe back
-        if (y < HALF_SCREEN && enabled && !menuVisible) {
+        if (y < HALF_SCREEN && enabled && backScreen && !menuVisible) {
           return true;
         }
-        
+
         // Nửa dưới: swipe menu
         if (y >= HALF_SCREEN) {
           setMenuVisible(true);
           return true;
         }
-        
+
         return false;
       },
 
       onMoveShouldSetPanResponder: (evt, gestureState) => {
         const x0 = gestureState.x0 ?? evt.nativeEvent.pageX;
         const y0 = gestureState.y0 ?? evt.nativeEvent.pageY;
-        
+
         // Chỉ bắt gesture từ mép trái
         if (x0 > EDGE_WIDTH) return false;
-        
+
         const isHorizontal =
           Math.abs(gestureState.dx) > 10 &&
           Math.abs(gestureState.dx) > Math.abs(gestureState.dy);
-        
+
         if (!isHorizontal) return false;
-        
+
         // Nửa trên: swipe back
         if (y0 < HALF_SCREEN && enabled && !menuVisible && gestureState.dx > 8) {
           return true;
         }
-        
+
         // Nửa dưới: swipe menu
         if (y0 >= HALF_SCREEN && gestureState.dx > 0) {
           return true;
         }
-        
+
         return false;
       },
 
       onPanResponderGrant: (evt, gestureState) => {
         const y0 = gestureState.y0 ?? evt.nativeEvent.pageY;
-        
+
         if (y0 < HALF_SCREEN && enabled && !menuVisible) {
           // Swipe back logic
           translateX.stopAnimation((v: number) => {
@@ -151,12 +160,12 @@ const SwipeBackContainer = ({
 
       onPanResponderMove: (evt, gestureState) => {
         const y0 = gestureState.y0 ?? evt.nativeEvent.pageY;
-        
+
         if (y0 < HALF_SCREEN && enabled && !menuVisible) {
           // Swipe back move
           const gestureX = Math.max(0, gestureState.dx);
           translateX.setValue(gestureX);
-          
+
           const total = Math.max(0, startX.current + gestureState.dx);
           const opacity = 0.4 * (1 - total / SCREEN_WIDTH);
           overlayOpacity.setValue(Math.max(0, Math.min(0.4, opacity)));
@@ -164,7 +173,7 @@ const SwipeBackContainer = ({
           // Swipe menu move
           const dx = Math.max(0, gestureState.dx);
           menuPan.setValue(dx);
-          
+
           const clampedDx = Math.min(dx, DRAWER_W);
           menuTranslateX.setValue(-DRAWER_W + clampedDx);
         }
@@ -172,8 +181,8 @@ const SwipeBackContainer = ({
 
       onPanResponderRelease: (evt, gestureState) => {
         const y0 = gestureState.y0 ?? evt.nativeEvent.pageY;
-        
-        if (y0 < HALF_SCREEN && enabled && !menuVisible) {
+
+        if (y0 < HALF_SCREEN && enabled && backScreen && !menuVisible) {
           // Swipe back release
           translateX.flattenOffset();
           translateX.stopAnimation((v: number) => {
@@ -242,10 +251,10 @@ const SwipeBackContainer = ({
 
       onPanResponderTerminate: (evt, gestureState) => {
         const y0 = gestureState.y0 ?? evt.nativeEvent.pageY;
-        
+
         clearLongPress();
-        
-        if (y0 < HALF_SCREEN && enabled && !menuVisible) {
+
+        if (y0 < HALF_SCREEN && enabled && backScreen && !menuVisible) {
           translateX.flattenOffset();
           Animated.parallel([
             Animated.spring(translateX, {
@@ -264,7 +273,6 @@ const SwipeBackContainer = ({
     })
   ).current;
 
-
   const renderBackScreen = () => {
     if (!backScreen) {
       return null;
@@ -282,60 +290,64 @@ const SwipeBackContainer = ({
 
   return (
     <View style={[{ flex: 1 }, style]}>
-      {/* BACK SCREEN — PHẢI absolute */}
-      {backScreen && (
-        <Animated.View
-          pointerEvents="none"
-          style={[
-            StyleSheet.absoluteFillObject,
-            {
-              zIndex: 0,
-            },
-          ]}
-        >
-          {renderBackScreen()}
-        </Animated.View>
-      )}
+        {/* BACK SCREEN — PHẢI absolute */}
+        {backScreen && enabled && (
+          <Animated.View
+            pointerEvents="none"
+            style={[
+              StyleSheet.absoluteFillObject,
+              {
+                zIndex: 0,
+              },
+            ]}
+          >
+            {renderBackScreen()}
+          </Animated.View>
+        )}
 
-      {/* OVERLAY — PHẢI absolute */}
-      <Animated.View
-        pointerEvents="none"
-        style={[
-          StyleSheet.absoluteFillObject,
-          {
-            backgroundColor: overlayColor,
-            opacity: overlayOpacity,
-            zIndex: 1,
-          },
-        ]}
-      />
+        {/* OVERLAY — PHẢI absolute */}
+        {
+          backScreen && enabled && (
+            <Animated.View
+              pointerEvents="none"
+              style={[
+                StyleSheet.absoluteFillObject,
+                {
+                  backgroundColor: overlayColor,
+                  opacity: overlayOpacity,
+                  zIndex: 1,
+                },
+              ]}
+            />
+          )
+        }
 
-      {/* CURRENT SCREEN — nằm trên cùng */}
-      <Animated.View
-        style={{
-          flex: 1,
-          zIndex: 2,
-          transform: [{ translateX }],
-        }}
-      >
+        {/* CURRENT SCREEN — nằm trên cùng */}
         <Animated.View
           style={{
             flex: 1,
+            zIndex: 2,
+            transform: [{ translateX }],
           }}
-          {...wrapperPanResponder.panHandlers}
         >
-          {children}
+          <Animated.View
+            style={{
+              flex: 1,
+            }}
+            {...(enabled ? wrapperPanResponder.panHandlers : {})}
+          >
+            {children}
+          </Animated.View>
         </Animated.View>
-      </Animated.View>
 
-      {/* SIDE MENU */}
-      <SideMenu
-        visible={menuVisible}
-        translateX={menuTranslateX}
-        onClose={closeMenu}
-        onLogout={handleLogout}
-      />
-    </View>
+        {/* SIDE MENU */}
+        <SideMenu
+          visible={menuVisible}
+          translateX={menuTranslateX}
+          onClose={closeMenu}
+          onLogout={handleLogout}
+        />
+      </View>
   );
 };
 

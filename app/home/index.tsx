@@ -16,38 +16,32 @@ import { useRouter } from "expo-router";
 import React from "react";
 import { Animated, Image, TouchableOpacity, View } from "react-native";
 
-const Home = () => {
-  const [visible, setVisible] = React.useState(false);
-  const menuTranslateX = React.useRef(new Animated.Value(-DRAWER_W)).current;
-
-  const openMenu = () => {
-    menuTranslateX.setValue(0);
-    setVisible(true);
-  };
-
-  const closeMenu = () => {
-    menuTranslateX.setValue(-DRAWER_W);
-    setVisible(false);
-  };
-  const router: any = useRouter();
-  const { panResponder } = useSwipeMenu({
-    onOpenMenu: openMenu,
-    onSwipeBack: () => {
-      if (router.canGoBack?.()) {
-        router.back();
+const HomeHeader = ({ onOpenMenu }: { onOpenMenu: () => void }) => {
+  return (
+    <HeaderBack
+      title="QUẢN LÝ CÁ NHÂN"
+      titleVariant="headingMdRegular"
+      iconLeft={<Ionicons name="menu" size={33.33} color="white" />}
+      iconRight={
+        <Image
+          source={require("../../assets/images/bell.png")}
+          style={{ width: 35.16, height: 23.11 }}
+          resizeMode="contain"
+        />
       }
-    },
-    menuTranslateX,
-    menuWidth: DRAWER_W,
-    onRequestMenuVisible: (v) => {
-      if (v) {
-        setVisible(true);
-      } else {
-        setVisible(false);
-      }
-    },
-  });
+      textColor="white"
+      onGoBack={onOpenMenu}
+    />
+  );
+};
 
+export const HomeContent = ({
+  panResponder,
+  router,
+}: {
+  panResponder: any;
+  router: any;
+}) => {
   const RenderSelect = ({
     text,
     source: SvgIcon,
@@ -130,66 +124,89 @@ const Home = () => {
   };
 
   return (
-    <SafeArea>
-      <HeaderBack
-        title="QUẢN LÝ CÁ NHÂN"
-        titleVariant="headingMdRegular"
-        iconLeft={<Ionicons name="menu" size={33.33} color="white" />}
-        iconRight={
-          <Image
-            source={require("../../assets/images/bell.png")}
-            style={{ width: 35.16, height: 23.11 }}
-            resizeMode="contain"
-          />
-        }
-        textColor="white"
-        onGoBack={openMenu}
-      />
+    <View
+      {...(panResponder && panResponder.panHandlers)}
+      style={{
+        justifyContent: "space-between",
+        alignSelf: "center",
+        flex: 1,
+        width: "100%",
+      }}
+    >
       <View
-        {...panResponder.panHandlers}
         style={{
-          justifyContent: "space-between",
-          alignSelf: "center",
-          flex: 1,
-          width: "100%",
+          paddingTop: 20,
+          marginHorizontal: 17.41,
         }}
       >
-        <View
-          style={{
-            paddingTop: 20,
-            marginHorizontal: 17.41,
-          }}
-        >
-          <InfoCard type="user" />
-          <Spacer size={22.46} />
-          <RenderSelect
-            text="THẺ BHYT"
-            source={Card}
-            route="/home/medinsurance"
-            isTop={false}
-          />
+        <InfoCard type="user" />
+        <Spacer size={22.46} />
+        <RenderSelect
+          text="THẺ BHYT"
+          source={Card}
+          route="/home/medinsurance"
+          isTop={false}
+        />
 
-          <RenderSelect
-            text="QUÁ TRÌNH THAM GIA"
-            route="/home/progress"
-            isTop={false}
-          />
+        <RenderSelect
+          text="QUÁ TRÌNH THAM GIA"
+          route="/home/progress"
+          isTop={false}
+        />
 
-          <RenderSelect
-            text="THÔNG TIN HƯỞNG"
-            source={UserInfo}
-            isTop={false}
-          />
+        <RenderSelect
+          text="THÔNG TIN HƯỞNG"
+          source={UserInfo}
+          isTop={false}
+        />
 
-          <RenderSelect
-            text="SỔ KHÁM CHỮA BỆNH"
-            source={MedPlus}
-            isTop={false}
-          />
-        </View>
-        <BottomMenuBar />
+        <RenderSelect
+          text="SỔ KHÁM CHỮA BỆNH"
+          source={MedPlus}
+          isTop={false}
+        />
       </View>
+      <BottomMenuBar />
+    </View>
+  );
+};
 
+const Home = () => {
+  const [visible, setVisible] = React.useState(false);
+  const menuTranslateX = React.useRef(new Animated.Value(-DRAWER_W)).current;
+
+  const openMenu = () => {
+    menuTranslateX.setValue(0);
+    setVisible(true);
+  };
+
+  const closeMenu = () => {
+    menuTranslateX.setValue(-DRAWER_W);
+    setVisible(false);
+  };
+  const router: any = useRouter();
+  const { panResponder } = useSwipeMenu({
+    onOpenMenu: openMenu,
+    onSwipeBack: () => {
+      if (router.canGoBack?.()) {
+        router.back();
+      }
+    },
+    menuTranslateX,
+    menuWidth: DRAWER_W,
+    onRequestMenuVisible: (v) => {
+      if (v) {
+        setVisible(true);
+      } else {
+        setVisible(false);
+      }
+    },
+  });
+
+  return (
+    <SafeArea>
+      <HomeHeader onOpenMenu={openMenu} />
+      <HomeContent panResponder={panResponder} router={router} />
       <SideMenu
         visible={visible}
         translateX={menuTranslateX}

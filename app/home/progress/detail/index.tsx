@@ -4,12 +4,18 @@ import Spacer from "@/components/Spacer";
 import SwipeBackContainer from "@/components/SwipeBackContainer";
 import { Colors } from "@/constants/Colors";
 import Entypo from "@expo/vector-icons/Entypo";
-import { useLocalSearchParams, useRouter } from "expo-router";
-import React from "react";
+import { useLocalSearchParams, useRouter, useNavigation } from "expo-router";
+import React, { useEffect } from "react";
 import { SafeAreaView, ScrollView, StyleSheet, View } from "react-native";
-import Progress from "../index";
+// import Progress from "../index";
 
 const DetailProgress = () => {
+  const navigation = useNavigation();
+
+  useEffect(() => {
+    navigation.setOptions({ gestureEnabled: false });
+  }, []);
+
   const { detail, title } = useLocalSearchParams();
   const data = JSON.parse(detail as string);
   const router: any = useRouter();
@@ -26,70 +32,71 @@ const DetailProgress = () => {
   );
 
   return (
-    <SwipeBackContainer
-      backScreen={Progress}
-      onLogout={() => router.replace("/auth")}
-    >
-      <View style={{ flex: 1, backgroundColor: "white" }}>
-        <SafeAreaView />
-        <HeaderBack
-          title="Chi tiết"
-          textColor={Colors.primary}
-          titleVariant="subheading"
-          styleContainer={{ backgroundColor: "#fff" }}
-          iconLeft={
-            <Entypo name="chevron-left" size={33} color={Colors.primary} />
-          }
-        />
+    <>
+      <SafeAreaView />
+      <HeaderBack
+        title="Chi tiết"
+        textColor={Colors.primary}
+        titleVariant="subheading"
+        styleContainer={{ backgroundColor: "#fff" }}
+        iconLeft={
+          <Entypo name="chevron-left" size={33} color={Colors.primary} />
+        }
+      />
+      <SwipeBackContainer
+        enabled={false}
+        onLogout={() => router.replace("/auth")}
+      >
+        <View style={{ flex: 1, backgroundColor: "white" }}>
+          <ScrollView contentContainerStyle={{ paddingBottom: 24 }}>
+            <Spacer size={20} />
+            {/* From/To months */}
+            <View style={styles.rangeRow}>
+              <AppText variant="labelBold" style={{ fontWeight: "500" }}>
+                Từ tháng: {data?.tuthang}
+              </AppText>
+              <AppText variant="labelBold" style={{ fontWeight: "500" }}>
+                Đến tháng: {data?.denthang}
+              </AppText>
+            </View>
 
-        <ScrollView contentContainerStyle={{ paddingBottom: 24 }}>
-          <Spacer size={20} />
-          {/* From/To months */}
-          <View style={styles.rangeRow}>
-            <AppText variant="labelBold" style={{ fontWeight: "500" }}>
-              Từ tháng: {data?.tuthang}
-            </AppText>
-            <AppText variant="labelBold" style={{ fontWeight: "500" }}>
-              Đến tháng: {data?.denthang}
-            </AppText>
-          </View>
+            {/* Blue info card */}
+            <View style={styles.infoCard}>
+              {title !== 'BHYT' && renderInfoLine("Chức vụ", data?.chucvu)}
+              {renderInfoLine("Đơn vị công tác", data?.donvi)}
+              {renderInfoLine("Nơi làm việc", data?.chitiet?.noilamviec)}
+              {renderInfoLine("Loại tiền", data?.chitiet?.loaitien)}
+            </View>
 
-          {/* Blue info card */}
-          <View style={styles.infoCard}>
-            {title !== 'BHYT' && renderInfoLine("Chức vụ", data?.chucvu)}
-            {renderInfoLine("Đơn vị công tác", data?.donvi)}
-            {renderInfoLine("Nơi làm việc", data?.chitiet?.noilamviec)}
-            {renderInfoLine("Loại tiền", data?.chitiet?.loaitien)}
-          </View>
-
-          {/* Salary rows */}
-          <View style={styles.table}>
-            {(data?.chitiet?.tienluong || []).map((val: string, idx: number) => (
-              <View
-                key={idx}
-                style={[styles.row, idx === 0 && styles.rowTopBorder]}
-              >
-                <View style={styles.cellLeftWrapper}>
-                  <AppText variant="small" style={styles.cellLeft}>
-                    {idx === 1
-                      ? "Mức lương"
-                      : `Tiền lương đóng ${
-                          title == "BHTNLĐ-BNN" ? "quỹ TNLĐ, BNN" : title
-                        }`}
-                  </AppText>
+            {/* Salary rows */}
+            <View style={styles.table}>
+              {(data?.chitiet?.tienluong || []).map((val: string, idx: number) => (
+                <View
+                  key={idx}
+                  style={[styles.row, idx === 0 && styles.rowTopBorder]}
+                >
+                  <View style={styles.cellLeftWrapper}>
+                    <AppText variant="small" style={styles.cellLeft}>
+                      {idx === 1
+                        ? "Mức lương"
+                        : `Tiền lương đóng ${
+                            title == "BHTNLĐ-BNN" ? "quỹ TNLĐ, BNN" : title
+                          }`}
+                    </AppText>
+                  </View>
+                  <View style={styles.divider} />
+                  <View style={styles.cellRightWrapper}>
+                    <AppText variant="small" style={styles.cellRight}>
+                      {val}
+                    </AppText>
+                  </View>
                 </View>
-                <View style={styles.divider} />
-                <View style={styles.cellRightWrapper}>
-                  <AppText variant="small" style={styles.cellRight}>
-                    {val}
-                  </AppText>
-                </View>
-              </View>
-            ))}
-          </View>
-        </ScrollView>
-      </View>
-    </SwipeBackContainer>
+              ))}
+            </View>
+          </ScrollView>
+        </View>
+      </SwipeBackContainer>
+    </>
   );
 };
 
