@@ -2,21 +2,19 @@ import AppText from "@/components/AppText";
 import BottomMenuBar from "@/components/BottomMenuBar";
 import HeaderBack from "@/components/HeaderBack";
 import InfoCard from "@/components/InfoCard";
-import SideMenu, { DRAWER_W } from "@/components/SideMenu";
 import Spacer from "@/components/Spacer";
+import SwipeBackContainer from "@/components/SwipeBackContainer";
 import { Colors } from "@/constants/Colors";
-import { useSwipeBack } from "@/hooks/useSwipeBack";
-import { useSwipeMenu } from "@/hooks/useSwipeMenu";
-import { useFocusEffect, useNavigation, useRouter } from "expo-router";
-import React, { useRef } from "react";
-import { Animated, Image, StyleSheet, TouchableOpacity, View } from "react-native";
+import { useRouter } from "expo-router";
+import React from "react";
+import { Image, TouchableOpacity, View } from "react-native";
 import { MaterialIndicator } from "react-native-indicators";
 import Home from "../index";
+
 const MedInSurance = () => {
   const router: any = useRouter();
-  const [visible, setVisible] = React.useState(false);
-  const menuTranslateX = React.useRef(new Animated.Value(-DRAWER_W)).current;
   const [loading, setLoading] = React.useState(true);
+  
   React.useEffect(() => {
     const t = setTimeout(() => {
       setLoading(false);
@@ -24,107 +22,26 @@ const MedInSurance = () => {
     return () => clearTimeout(t);
   }, []);
 
-  const closeMenu = () => {
-    Animated.spring(menuTranslateX, {
-      toValue: -DRAWER_W,
-      useNativeDriver: true,
-    }).start(() => {
-      setVisible(false);
-    });
-  };
-
-  const navigation: any = useNavigation();
-
-  const { panResponder } = useSwipeMenu({
-    onStart: () => {
-      navigation?.setOptions?.({ gestureEnabled: false });
-    },
-    menuTranslateX,
-    menuWidth: DRAWER_W,
-    onRequestMenuVisible: (v) => {
-      if (v) {
-        navigation?.setOptions?.({ gestureEnabled: false });
-        setVisible(true);
-      } else {
-        navigation?.setOptions?.({ gestureEnabled: true });
-        setVisible(false);
-      }
-    },
-  });
-  useFocusEffect(() => {
-    navigation.setOptions({
-      animation: "none",
-      gestureEnabled: false,
-    });
-  });
-  const { translateX, overlayOpacity, panResponder: panResponderBack } = useSwipeBack({
-    enabled: !visible, // ❗ menu mở thì KHÔNG cho swipe back
-    onBack: () => {
-      if (router.canGoBack()) {
-        router.back();
-      }
-    },
-  });
-
   return (
-
-    <View style={{ flex: 1 }}>
-      {/* BACK SCREEN — PHẢI absolute */}
-      <Animated.View
-        pointerEvents="none"
-        style={[
-          StyleSheet.absoluteFillObject,
-          {
-            zIndex: 0,
-          },
-        ]}
-      >
-        <Home />
-      </Animated.View>
-
-      {/* OVERLAY — PHẢI absolute */}
-      <Animated.View
-        pointerEvents="none"
-        style={[
-          StyleSheet.absoluteFillObject,
-          {
-            backgroundColor: "#000",
-            opacity: overlayOpacity,
-            zIndex: 1,
-          },
-        ]}
-      />
-
-      {/* CURRENT SCREEN — nằm trên cùng */}
-      <Animated.View
+    <SwipeBackContainer
+      backScreen={Home}
+      onLogout={() => router.replace("/auth")}
+    >
+      <View
         style={{
           flex: 1,
-          zIndex: 2,
-          transform: [{ translateX }],
+          backgroundColor: "white",
         }}
       >
-        <Animated.View
+        <HeaderBack title="THẺ BẢO HIỂM Y TẾ" titleVariant="headingMdRegular" />
+        <View
           style={{
+            padding: 20,
             flex: 1,
+            backgroundColor: "white",
+            justifyContent: "space-between",
           }}
-          {...panResponderBack.panHandlers}
-        >
-            <View
-              style={{
-                flex: 1,
-                backgroundColor: "white",
-              }}
-            >
-              <HeaderBack title="THẺ BẢO HIỂM Y TẾ" titleVariant="headingMdRegular" />
-              <Animated.View
-                {...panResponder.panHandlers}
-                style={{
-                  padding: 20,
-                  flex: 1,
-                  backgroundColor: "white",
-                  justifyContent: "space-between",
-                }}
-              > 
+        > 
                 {
                   !loading && (
                     <>
@@ -186,7 +103,12 @@ const MedInSurance = () => {
                         </TouchableOpacity>
                         <TouchableOpacity
                           style={{ flexDirection: "row", alignItems: "center", gap: 4 }}
-                          onPress={() => router.push("/home/medinsurance/card")}
+                          onPress={() => {
+
+                            console.log("onPress");
+                            router.push("/home/medinsurance/card")
+                          }
+                          }
                         >
                           <Image
                             source={require("@/assets/images/icon/info-card.png")}
@@ -227,21 +149,11 @@ const MedInSurance = () => {
                     />
                   </View>
                 )}
-              </Animated.View>
-            
-              <BottomMenuBar />
+        </View>
 
-              <SideMenu
-                visible={visible}
-                translateX={menuTranslateX}
-                onClose={closeMenu}
-                onLogout={() => router.replace("/auth")}
-              />
-            </View>
-        </Animated.View>
-      </Animated.View>
-    </View>
-
+        <BottomMenuBar />
+      </View>
+    </SwipeBackContainer>
   );
 };
 

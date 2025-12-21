@@ -2,11 +2,10 @@ import AppText from "@/components/AppText";
 import BottomMenuBar from "@/components/BottomMenuBar";
 import EmploymentHistoryTable from "@/components/EmploymenHistoryTable";
 import HeaderBack from "@/components/HeaderBack";
-import SideMenu, { DRAWER_W } from "@/components/SideMenu";
+import SwipeBackContainer from "@/components/SwipeBackContainer";
 import { Colors } from "@/constants/Colors";
-import { useSwipeMenu } from "@/hooks/useSwipeMenu";
 import { useUser } from "@/hooks/user";
-import { useRouter, useNavigation } from "expo-router";
+import { useRouter } from "expo-router";
 import React, { useRef } from "react";
 import { MaterialIndicator } from "react-native-indicators";
 
@@ -27,43 +26,14 @@ const SCREEN_WIDTH = Dimensions.get("window").width;
 const Progress = () => {
   const router: any = useRouter();
   const { progressList } = useUser();
-  const [visible, setVisible] = React.useState(false);
-  const menuTranslateX = React.useRef(new Animated.Value(-DRAWER_W)).current;
-
-  const closeMenu = () => {
-    Animated.spring(menuTranslateX, {
-      toValue: -DRAWER_W,
-      useNativeDriver: true,
-    }).start(() => {
-      setVisible(false);
-    });
-  };
-  const navigation = useNavigation();
-
   const [loading, setLoading] = React.useState(true);
+  
   React.useEffect(() => {
     const t = setTimeout(() => {
       setLoading(false);
     }, 700);
     return () => clearTimeout(t);
   }, []);
-
-  const { panResponder:edgePanResponder } = useSwipeMenu({
-    onStart: () => {
-      navigation?.setOptions?.({ gestureEnabled: false });
-    },
-    menuTranslateX,
-    menuWidth: DRAWER_W,
-    onRequestMenuVisible: (v) => {
-      if (v) {
-        navigation?.setOptions?.({ gestureEnabled: false });
-        setVisible(true);
-      } else {
-        navigation?.setOptions?.({ gestureEnabled: true });
-        setVisible(false);
-      }
-    },
-  });
 
   const progressData = [
     {
@@ -222,19 +192,23 @@ const Progress = () => {
   };
 
   return (
-    <View style={{ flex: 1, backgroundColor: "white" }}>
-      <HeaderBack
-        title="QUÁ TRÌNH THAM GIA"
-        titleVariant="headingMdRegular"
-        textStyle={{ marginBottom: 10 }}
-        containerStyle={{ height: 60 }}
-      />
+    <SwipeBackContainer
+      enabled={false}
+      onLogout={() => router.replace("/auth")}
+    >
+      <View style={{ flex: 1, backgroundColor: "white" }}>
+        <HeaderBack
+          title="QUÁ TRÌNH THAM GIA"
+          titleVariant="headingMdRegular"
+          textStyle={{ marginBottom: 10 }}
+          containerStyle={{ height: 60 }}
+        />
 
-      {/* GẮN gesture SWIPE TAB vào nội dung chính + trượt cả màn theo tay */}
-      <Animated.View
-        style={{ flex: 1 }}
-        {...panResponder.panHandlers}
-      >
+        {/* GẮN gesture SWIPE TAB vào nội dung chính + trượt cả màn theo tay */}
+        <Animated.View
+          style={{ flex: 1 }}
+          {...panResponder.panHandlers}
+        >
         <View style={{ flex: 1 }}>
           {/* TAB ROW */}
           <View style={styles.tabsRow}>
@@ -375,26 +349,8 @@ const Progress = () => {
 
         <BottomMenuBar />
       </Animated.View>
-
-      {/* Lớp mép trái riêng cho gesture mở menu */}
-      <View
-        style={{
-          position: "absolute",
-          top: 0,
-          bottom: 0,
-          left: 0,
-          width: 24,
-        }}
-        {...edgePanResponder.panHandlers}
-      />
-
-      <SideMenu
-        visible={visible}
-        translateX={menuTranslateX}
-        onClose={closeMenu}
-        onLogout={() => router.replace("/auth")}
-      />
     </View>
+    </SwipeBackContainer>
   );
 };
 

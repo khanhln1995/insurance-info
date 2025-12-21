@@ -1,47 +1,18 @@
 import AppText from "@/components/AppText";
 import HeaderBack from "@/components/HeaderBack";
 import Spacer from "@/components/Spacer";
+import SwipeBackContainer from "@/components/SwipeBackContainer";
 import { Colors } from "@/constants/Colors";
-import { useSwipeMenu } from "@/hooks/useSwipeMenu";
-import SideMenu, { DRAWER_W } from "@/components/SideMenu";
 import Entypo from "@expo/vector-icons/Entypo";
-import { useLocalSearchParams, useNavigation, useRouter } from "expo-router";
+import { useLocalSearchParams, useRouter } from "expo-router";
 import React from "react";
-import { Animated, SafeAreaView, ScrollView, StyleSheet, View } from "react-native";
+import { SafeAreaView, ScrollView, StyleSheet, View } from "react-native";
+import Progress from "../index";
 
 const DetailProgress = () => {
   const { detail, title } = useLocalSearchParams();
   const data = JSON.parse(detail as string);
   const router: any = useRouter();
-  const [visible, setVisible] = React.useState(false);
-  const menuTranslateX = React.useRef(new Animated.Value(-DRAWER_W)).current;
-
-  const closeMenu = () => {
-    Animated.spring(menuTranslateX, {
-      toValue: -DRAWER_W,
-      useNativeDriver: true,
-    }).start(() => {
-      setVisible(false);
-    });
-  };
-
-  const navigation: any = useNavigation();
-  const { panResponder } = useSwipeMenu({
-    onStart: () => {
-      navigation?.setOptions?.({ gestureEnabled: false });
-    },
-    menuTranslateX,
-    menuWidth: DRAWER_W,
-    onRequestMenuVisible: (v) => {
-      if (v) {
-        navigation?.setOptions?.({ gestureEnabled: false });
-        setVisible(true);
-      } else {
-        navigation?.setOptions?.({ gestureEnabled: true });
-        setVisible(false);
-      }
-    },
-  });
 
   const renderInfoLine = (label: string, value?: string) => (
     <AppText variant="small" style={styles.infoLine}>
@@ -55,77 +26,70 @@ const DetailProgress = () => {
   );
 
   return (
-    <View style={{ flex: 1, backgroundColor: "white" }}>
-    <Animated.View
-      style={{ backgroundColor: "#fff", flex: 1 }}
-      {...panResponder.panHandlers}
+    <SwipeBackContainer
+      backScreen={Progress}
+      onLogout={() => router.replace("/auth")}
     >
-      <SafeAreaView />
-      <HeaderBack
-        title="Chi tiết"
-        textColor={Colors.primary}
-        titleVariant="subheading"
-        styleContainer={{ backgroundColor: "#fff" }}
-        iconLeft={
-          <Entypo name="chevron-left" size={33} color={Colors.primary} />
-        }
-      />
+      <View style={{ flex: 1, backgroundColor: "white" }}>
+        <SafeAreaView />
+        <HeaderBack
+          title="Chi tiết"
+          textColor={Colors.primary}
+          titleVariant="subheading"
+          styleContainer={{ backgroundColor: "#fff" }}
+          iconLeft={
+            <Entypo name="chevron-left" size={33} color={Colors.primary} />
+          }
+        />
 
-      <ScrollView contentContainerStyle={{ paddingBottom: 24 }}>
-        <Spacer size={20} />
-        {/* From/To months */}
-        <View style={styles.rangeRow}>
-          <AppText variant="labelBold" style={{ fontWeight: "500" }}>
-            Từ tháng: {data?.tuthang}
-          </AppText>
-          <AppText variant="labelBold" style={{ fontWeight: "500" }}>
-            Đến tháng: {data?.denthang}
-          </AppText>
-        </View>
+        <ScrollView contentContainerStyle={{ paddingBottom: 24 }}>
+          <Spacer size={20} />
+          {/* From/To months */}
+          <View style={styles.rangeRow}>
+            <AppText variant="labelBold" style={{ fontWeight: "500" }}>
+              Từ tháng: {data?.tuthang}
+            </AppText>
+            <AppText variant="labelBold" style={{ fontWeight: "500" }}>
+              Đến tháng: {data?.denthang}
+            </AppText>
+          </View>
 
-        {/* Blue info card */}
-        <View style={styles.infoCard}>
-          {title !== 'BHYT' && renderInfoLine("Chức vụ", data?.chucvu)}
-          {renderInfoLine("Đơn vị công tác", data?.donvi)}
-          {renderInfoLine("Nơi làm việc", data?.chitiet?.noilamviec)}
-          {renderInfoLine("Loại tiền", data?.chitiet?.loaitien)}
-        </View>
+          {/* Blue info card */}
+          <View style={styles.infoCard}>
+            {title !== 'BHYT' && renderInfoLine("Chức vụ", data?.chucvu)}
+            {renderInfoLine("Đơn vị công tác", data?.donvi)}
+            {renderInfoLine("Nơi làm việc", data?.chitiet?.noilamviec)}
+            {renderInfoLine("Loại tiền", data?.chitiet?.loaitien)}
+          </View>
 
-        {/* Salary rows */}
-        <View style={styles.table}>
-          {(data?.chitiet?.tienluong || []).map((val: string, idx: number) => (
-            <View
-              key={idx}
-              style={[styles.row, idx === 0 && styles.rowTopBorder]}
-            >
-              <View style={styles.cellLeftWrapper}>
-                <AppText variant="small" style={styles.cellLeft}>
-                  {idx === 1
-                    ? "Mức lương"
-                    : `Tiền lương đóng ${
-                        title == "BHTNLĐ-BNN" ? "quỹ TNLĐ, BNN" : title
-                      }`}
-                </AppText>
+          {/* Salary rows */}
+          <View style={styles.table}>
+            {(data?.chitiet?.tienluong || []).map((val: string, idx: number) => (
+              <View
+                key={idx}
+                style={[styles.row, idx === 0 && styles.rowTopBorder]}
+              >
+                <View style={styles.cellLeftWrapper}>
+                  <AppText variant="small" style={styles.cellLeft}>
+                    {idx === 1
+                      ? "Mức lương"
+                      : `Tiền lương đóng ${
+                          title == "BHTNLĐ-BNN" ? "quỹ TNLĐ, BNN" : title
+                        }`}
+                  </AppText>
+                </View>
+                <View style={styles.divider} />
+                <View style={styles.cellRightWrapper}>
+                  <AppText variant="small" style={styles.cellRight}>
+                    {val}
+                  </AppText>
+                </View>
               </View>
-              <View style={styles.divider} />
-              <View style={styles.cellRightWrapper}>
-                <AppText variant="small" style={styles.cellRight}>
-                  {val}
-                </AppText>
-              </View>
-            </View>
-          ))}
-        </View>
-      </ScrollView>
-
-      <SideMenu
-        visible={visible}
-        translateX={menuTranslateX}
-        onClose={closeMenu}
-        onLogout={() => router.replace("/auth")}
-      />
-    </Animated.View>
-    </View>
+            ))}
+          </View>
+        </ScrollView>
+      </View>
+    </SwipeBackContainer>
   );
 };
 

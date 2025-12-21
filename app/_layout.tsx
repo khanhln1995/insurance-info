@@ -65,6 +65,7 @@ export default function RootLayout() {
               screenOptions={{
                 headerShown: false,
                 gestureEnabled: false,
+                animation: "none",
               }}
             />
           </ThemeProvider>

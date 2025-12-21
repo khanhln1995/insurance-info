@@ -99,7 +99,7 @@ export const useSwipeMenu = ({
 
         // 👉 swipe-back nhanh
         if (!isLongPressActive.current && isFastSwipeRight) {
-          onSwipeBack?.();
+          // onSwipeBack?.();
           resetPan();
           return;
         }

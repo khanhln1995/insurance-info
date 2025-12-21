@@ -57,7 +57,6 @@ export const useSwipeBack = ({
         const gestureX = Math.max(0, g.dx);
         // value + offset will be applied; setValue only with gesture delta
         translateX.setValue(gestureX);
-        console.log(gestureX);
         
         // overlay real-time from total translation (offset + gesture)
         const total = Math.max(0, startX.current + g.dx);
