@@ -131,6 +131,7 @@ export const HomeContent = ({
         alignSelf: "center",
         flex: 1,
         width: "100%",
+        backgroundColor: '#fff',
       }}
     >
       <View
