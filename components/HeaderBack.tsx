@@ -30,6 +30,7 @@ export interface HeaderBackProps {
   backTitle?: string;
   backIconRight?: any;
   backIconLeft?: any;
+  colors?: string[];
 }
 
 // Helper function to get variant text styles for Animated.Text
@@ -71,6 +72,7 @@ const HeaderBack = (props: HeaderBackProps) => {
     iconLeft,
     textStyle,
     titleVariant = "headingMdRegular",
+    colors = ["#26B8F1", "#0D71C7"],
   } = props;
   console.log(pathName);
 
@@ -94,21 +96,21 @@ const HeaderBack = (props: HeaderBackProps) => {
   return (
     <Animated.View>
       <LinearGradient
-        colors={["#26B8F1", "#0D71C7"]}
+        colors={colors}
         start={{ x: 0, y: 0 }}
         style={{
           paddingTop: [
             "/home/medinsurance/card",
             "/home/progress/detail",
           ].includes(pathName)
-            ? 0
-            : 27,
-          marginTop: [
-            "/home/medinsurance/card",
-            // "/home/progress/detail",
-          ].includes(pathName)
             ? 66
-            : 0,
+            : 27,
+          // marginTop: [
+          //   "/home/medinsurance/card",
+          //   "/home/progress/detail",
+          // ].includes(pathName)
+          //   ? 66
+          //   : 0,
           justifyContent: "flex-end",
           height: !["/home/medinsurance/card", "/home/progress/detail"].includes(
             pathName

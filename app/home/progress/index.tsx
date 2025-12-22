@@ -8,7 +8,6 @@ import { useUser } from "@/hooks/user";
 import { Ionicons } from "@expo/vector-icons";
 import { useRouter } from "expo-router";
 import React, { useRef } from "react";
-import { MaterialIndicator } from "react-native-indicators";
 
 import {
   Animated,
@@ -21,6 +20,7 @@ import {
   View
 } from "react-native";
 import { HomeContent } from "..";
+import Loading from "@/components/Loading";
 
 const BOTTOM_BAR_HEIGHT = 150;
 const SCREEN_WIDTH = Dimensions.get("window").width;
@@ -238,6 +238,7 @@ const Progress = () => {
       <SwipeBackContainer
         enabled={enabled}
         backScreen={Home}
+        onBack={() => router.replace("/home")}
         onLogout={() => router.replace("/auth")}
         >
         <View style={{ flex: 1, backgroundColor: "white" }}>
@@ -357,31 +358,7 @@ const Progress = () => {
               )
             }
             {loading && (
-              <View
-                style={{
-                  justifyContent: "center",
-                  alignItems: "center",
-                  marginTop: 60,
-                }}
-              >
-                <MaterialIndicator
-                  size={66}
-                  color="#05c4ceff"
-                  trackWidth={3}
-                />
-    
-                <Image
-                  source={require("@/assets/images/icon/logo.png")}
-                  style={{
-                    position: "absolute",
-                    width: 60,
-                    height: 60,
-                    resizeMode: "contain",
-                    marginTop: 2,
-                    marginLeft: 2
-                  }}
-                />
-              </View>
+              <Loading />
             )}
           </View>
 

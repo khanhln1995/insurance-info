@@ -6,7 +6,7 @@ import { Colors } from "@/constants/Colors";
 import Entypo from "@expo/vector-icons/Entypo";
 import { useLocalSearchParams, useRouter, useNavigation } from "expo-router";
 import React, { useEffect } from "react";
-import { SafeAreaView, ScrollView, StyleSheet, View } from "react-native";
+import { ScrollView, StyleSheet, SafeAreaView, View } from "react-native";
 // import Progress from "../index";
 
 const DetailProgress = () => {
@@ -33,12 +33,14 @@ const DetailProgress = () => {
 
   return (
     <>
-      <SafeAreaView />
+    <SafeAreaView />
       <HeaderBack
         title="Chi tiết"
         textColor={Colors.primary}
         titleVariant="subheading"
+        onGoBack={() => router.replace('/home/progress')}
         styleContainer={{ backgroundColor: "#fff" }}
+        colors={['#fff', '#fff']}
         iconLeft={
           <Entypo name="chevron-left" size={33} color={Colors.primary} />
         }
@@ -79,9 +81,8 @@ const DetailProgress = () => {
                     <AppText variant="small" style={styles.cellLeft}>
                       {idx === 1
                         ? "Mức lương"
-                        : `Tiền lương đóng ${
-                            title == "BHTNLĐ-BNN" ? "quỹ TNLĐ, BNN" : title
-                          }`}
+                        : `Tiền lương đóng ${title == "BHTNLĐ-BNN" ? "quỹ TNLĐ, BNN" : title
+                        }`}
                     </AppText>
                   </View>
                   <View style={styles.divider} />

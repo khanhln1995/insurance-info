@@ -6,7 +6,7 @@ import { useUser } from "@/hooks/user";
 import { Entypo } from "@expo/vector-icons";
 import { useRouter } from "expo-router";
 import React, { useEffect, useState } from "react";
-import { Image, StyleSheet, TouchableOpacity, View } from "react-native";
+import { Image, SafeAreaView, StyleSheet, TouchableOpacity, View } from "react-native";
 // import MedInSurance from "./index";
 
 const MAX_WIDTH = 314
@@ -61,11 +61,14 @@ const MedCardImageScreen = () => {
 
   return (
     <>
+      <SafeAreaView />
+    
       <HeaderBack
         title="Thẻ bảo hiểm y tế"
         textColor="#34689E"
-        onGoBack={() => router.back()}
-        styleContainer={{ backgroundColor: "rgba(241, 241, 241, 1)" }}
+        onGoBack={() => router.replace("/home/medinsurance")}
+        styleContainer={{ backgroundColor: "#fff" }}
+        colors={['#fff', '#fff']}
         isGoBack={true}
         titleVariant="subheading"
         iconLeft={<Entypo name="chevron-thin-left" size={28} color={Colors.primary} />}
@@ -118,7 +121,7 @@ export default MedCardImageScreen;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    // backgroundColor: "white",
+    backgroundColor: "#fff",
   },
   content: {
     flex: 1,

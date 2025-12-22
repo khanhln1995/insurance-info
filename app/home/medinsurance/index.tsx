@@ -2,6 +2,7 @@ import AppText from "@/components/AppText";
 import BottomMenuBar from "@/components/BottomMenuBar";
 import HeaderBack from "@/components/HeaderBack";
 import InfoCard from "@/components/InfoCard";
+import Loading from "@/components/Loading";
 import Spacer from "@/components/Spacer";
 import SwipeBackContainer from "@/components/SwipeBackContainer";
 import { Colors } from "@/constants/Colors";
@@ -9,7 +10,6 @@ import { Ionicons } from "@expo/vector-icons";
 import { useRouter } from "expo-router";
 import React from "react";
 import { Image, TouchableOpacity, View } from "react-native";
-import { MaterialIndicator } from "react-native-indicators";
 import { HomeContent } from "../index";
 
 const MedInSurance = () => {
@@ -28,14 +28,14 @@ const MedInSurance = () => {
   }
   return (
     <>
-      <HeaderBack 
-        title="THẺ BẢO HIỂM Y TẾ" 
+      <HeaderBack
+        title="THẺ BẢO HIỂM Y TẾ"
         titleVariant="headingMdRegular"
         textColor="white"
         backTitle="QUẢN LÝ CÁ NHÂN"
         onGoBack={() => router.replace("/home")}
         backIconLeft={<Ionicons name="menu" size={33.33} color="white" />}
-        backIconRight={        
+        backIconRight={
           <Image
             source={require("@/assets/images/bell.png")}
             style={{ width: 35.16, height: 23.11 }}
@@ -45,6 +45,7 @@ const MedInSurance = () => {
       />
       <SwipeBackContainer
         backScreen={Home}
+        onBack={() => router.replace("/home")}
         onLogout={() => router.replace("/auth")}
       >
         <View
@@ -122,7 +123,7 @@ const MedInSurance = () => {
                     </TouchableOpacity>
                     <TouchableOpacity
                       style={{ flexDirection: "row", alignItems: "center", gap: 4 }}
-                      onPress={() => 
+                      onPress={() =>
                         router.push("/home/medinsurance/card")
                       }
                     >
@@ -140,29 +141,9 @@ const MedInSurance = () => {
             }
             {loading && (
               <View
-                style={{
-                  flex: 1,
-                  justifyContent: "center",
-                  alignItems: "center",
-                }}
+                style={{ flex: 1, justifyContent: "center", alignItems: "center" }}
               >
-                <MaterialIndicator
-                  size={66}
-                  color="#05c4ceff"
-                  trackWidth={3}
-                />
-
-                <Image
-                  source={require("@/assets/images/icon/logo.png")}
-                  style={{
-                    position: "absolute",
-                    width: 60,
-                    height: 60,
-                    resizeMode: "contain",
-                    marginTop: 2,
-                    marginLeft: 2
-                  }}
-                />
+                <Loading />
               </View>
             )}
           </View>
