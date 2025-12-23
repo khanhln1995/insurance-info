@@ -9,6 +9,7 @@ import Input from "@/components/Input";
 import RoundAvatar from "@/components/RoundAvatar";
 import Spacer from "@/components/Spacer";
 import { Colors } from "@/constants/Colors";
+import { useUser } from "@/hooks/user";
 import { useRouter } from "expo-router";
 import React from "react";
 import {
@@ -23,6 +24,8 @@ import {
 const { width, height } = Dimensions.get("window");
 const HEADER_HEIGHT = height / 1.4;
 const LoginScreen = () => {
+  const { userInfo } = useUser();
+  const [masoBHXH, setMasoBHXH] = React.useState(userInfo?.masoBHXH || "");
   const router = useRouter();
   return (
     <View
@@ -64,7 +67,7 @@ const LoginScreen = () => {
             {
               alignSelf: "center",
               // boxShadow
-              boxShadow: '#00000029'
+              boxShadow: "#00000029",
             },
           ]}
           uri={require("../../assets/images/icon/logo.png")}
@@ -83,6 +86,10 @@ const LoginScreen = () => {
                 </View>
               }
               placeholder="Mã số BHXH/ Số ĐDCN/ CCCD"
+              value={masoBHXH}
+              setValue={(text) => {
+                setMasoBHXH(text);
+              }}
             />
             <Spacer size={13.23} />
             <Input

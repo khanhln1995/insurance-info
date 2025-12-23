@@ -61,7 +61,7 @@ const MedCardImageScreen = () => {
 
   return (
     <>
-      <SafeAreaView />
+      {/* <SafeAreaView /> */}
     
       <HeaderBack
         title="Thẻ bảo hiểm y tế"

@@ -33,7 +33,7 @@ const DetailProgress = () => {
 
   return (
     <>
-    <SafeAreaView />
+    {/* <SafeAreaView /> */}
       <HeaderBack
         title="Chi tiết"
         textColor={Colors.primary}

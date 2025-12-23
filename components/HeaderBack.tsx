@@ -76,10 +76,13 @@ const HeaderBack = (props: HeaderBackProps) => {
   } = props;
   console.log(pathName);
 
-  const translateX = useSelector((state: RootState) => state.swipeBack.translateX);
-  const { currentHeaderOpacity, backHeaderOpacity } = useHeaderBackFade(translateX);
+  const translateX = useSelector(
+    (state: RootState) => state.swipeBack.translateX
+  );
+  const { currentHeaderOpacity, backHeaderOpacity } =
+    useHeaderBackFade(translateX);
   const [currentTranslateX, setCurrentTranslateX] = React.useState(0);
-  
+
   useEffect(() => {
     if (!translateX) {
       return;
@@ -99,27 +102,13 @@ const HeaderBack = (props: HeaderBackProps) => {
         colors={colors}
         start={{ x: 0, y: 0 }}
         style={{
-          paddingTop: [
-            "/home/medinsurance/card",
-            "/home/progress/detail",
-          ].includes(pathName)
-            ? 66
-            : 27,
-          // marginTop: [
-          //   "/home/medinsurance/card",
-          //   "/home/progress/detail",
-          // ].includes(pathName)
-          //   ? 66
-          //   : 0,
+          paddingTop: 27,
+          marginTop: 0,
           justifyContent: "flex-end",
-          height: !["/home/medinsurance/card", "/home/progress/detail"].includes(
-            pathName
-          )
-            ? 63.63
-            : "auto",
+          height: 63.63
         }}
       >
-        {pathName !== "/home/medinsurance/card" && <SafeAreaView />}
+        {/* {pathName !== "/home/medinsurance/card" && <SafeAreaView />} */}
         <View style={[styles.container, styleContainer]}>
           {isGoBack && (
             <Animated.View
@@ -148,7 +137,7 @@ const HeaderBack = (props: HeaderBackProps) => {
               </TouchableOpacity>
             </Animated.View>
           )}
-           { backIconLeft && (
+          {backIconLeft && (
             <Animated.View
               style={{
                 zIndex: 9999,
@@ -158,7 +147,7 @@ const HeaderBack = (props: HeaderBackProps) => {
                 opacity: backHeaderOpacity,
               }}
             >
-              { backIconLeft }
+              {backIconLeft}
             </Animated.View>
           )}
           <Animated.Text
@@ -179,28 +168,26 @@ const HeaderBack = (props: HeaderBackProps) => {
           >
             {title ?? ""}
           </Animated.Text>
-          {
-            backTitle && (
-              <Animated.Text
-                style={[
-                  getVariantStyle(titleVariant),
-                  {
-                    color: "white",
-                    textAlign: "center",
-                    position: "absolute",
-                    left: 0,
-                    right: 0,
-                    bottom: 0,
-                    opacity: backHeaderOpacity,
-                  },
-                  { color: textColor || "" },
-                  textStyle,
-                ]}
-              >
-                {backTitle ?? ""}
-              </Animated.Text>
-            )
-          }
+          {backTitle && (
+            <Animated.Text
+              style={[
+                getVariantStyle(titleVariant),
+                {
+                  color: "white",
+                  textAlign: "center",
+                  position: "absolute",
+                  left: 0,
+                  right: 0,
+                  bottom: 0,
+                  opacity: backHeaderOpacity,
+                },
+                { color: textColor || "" },
+                textStyle,
+              ]}
+            >
+              {backTitle ?? ""}
+            </Animated.Text>
+          )}
           {iconRight && (
             <Animated.View
               style={{
@@ -213,7 +200,7 @@ const HeaderBack = (props: HeaderBackProps) => {
               {iconRight}
             </Animated.View>
           )}
-            {backIconRight && (
+          {backIconRight && (
             <Animated.View
               style={{
                 zIndex: 9999,

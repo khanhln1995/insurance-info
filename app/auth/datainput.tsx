@@ -183,7 +183,7 @@ const DataInput = () => {
   };
 
   return (
-    <SafeAreaView style={{ flex: 1 }}>
+    <>
       <ScrollView
         style={{ flex: 1, backgroundColor: "white" }}
         keyboardShouldPersistTaps="handled"
@@ -191,6 +191,7 @@ const DataInput = () => {
         <HeaderBack
           title="Data"
           titleVariant="headingMdRegular"
+          textColor={'white'}
           iconRight={
             <TouchableOpacity onPress={onSubmit}>
               <FontAwesome name="save" size={24} color="white" />
@@ -332,7 +333,7 @@ const DataInput = () => {
           </View>
         </View>
       </Modal>
-    </SafeAreaView>
+    </>
   );
 };
 

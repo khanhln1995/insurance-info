@@ -6,6 +6,8 @@ interface InputProps {
   iconLeft?: React.ReactNode;
   keyboardType?: KeyboardType;
   secureTextEntry?: boolean;
+  value?: string;
+  setValue?: (text: string) => void;
   placeholder?: string;
 }
 
@@ -14,6 +16,8 @@ const Input = ({
   keyboardType = "default",
   secureTextEntry = false,
   placeholder,
+  value,
+  setValue,
 }: InputProps) => {
   return (
     <View style={styles.vInput}>
@@ -24,6 +28,12 @@ const Input = ({
         secureTextEntry={secureTextEntry}
         keyboardType={keyboardType}
         placeholderTextColor={Colors.border}
+        value={value}
+        onChangeText={(text) => {
+          if (setValue) {
+            setValue(text);
+          }
+        }}
       />
     </View>
   );
