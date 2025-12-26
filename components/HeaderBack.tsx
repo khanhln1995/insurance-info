@@ -1,12 +1,11 @@
 import React, { useEffect } from "react";
 import {
   Animated,
-  SafeAreaView,
   StyleSheet,
   TextStyle,
   TouchableOpacity,
   View,
-  ViewStyle,
+  ViewStyle
 } from "react-native";
 
 import { TextVariant } from "@/components/AppText";
@@ -102,10 +101,21 @@ const HeaderBack = (props: HeaderBackProps) => {
         colors={colors}
         start={{ x: 0, y: 0 }}
         style={{
-          paddingTop: 27,
+          paddingTop: [
+            "/home/medinsurance/card",
+            "/home/progress/detail",
+          ].includes(pathName)
+            ? 66
+            : 27,
           marginTop: 0,
           justifyContent: "flex-end",
-          height: 63.63
+          height: [
+            "/home/medinsurance/card",
+            "/home/progress/detail",
+          ].includes(pathName)
+            ? 'auto'
+            : 63.63
+          ,
         }}
       >
         {/* {pathName !== "/home/medinsurance/card" && <SafeAreaView />} */}
@@ -116,7 +126,7 @@ const HeaderBack = (props: HeaderBackProps) => {
                 zIndex: 9999,
                 position: "absolute",
                 left: "5%",
-                top: 2,
+                // top: 2,
                 opacity: currentHeaderOpacity,
               }}
             >
@@ -143,7 +153,6 @@ const HeaderBack = (props: HeaderBackProps) => {
                 zIndex: 9999,
                 position: "absolute",
                 left: "5%",
-                top: 2,
                 opacity: backHeaderOpacity,
               }}
             >
@@ -161,6 +170,7 @@ const HeaderBack = (props: HeaderBackProps) => {
                 right: 0,
                 bottom: 0,
                 opacity: currentHeaderOpacity,
+                marginBottom: 4
               },
               { color: textColor || "" },
               textStyle,
@@ -180,6 +190,7 @@ const HeaderBack = (props: HeaderBackProps) => {
                   right: 0,
                   bottom: 0,
                   opacity: backHeaderOpacity,
+                  marginBottom: 4
                 },
                 { color: textColor || "" },
                 textStyle,

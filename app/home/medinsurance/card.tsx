@@ -71,8 +71,11 @@ const MedCardImageScreen = () => {
         colors={['#fff', '#fff']}
         isGoBack={true}
         titleVariant="subheading"
-        iconLeft={<Entypo name="chevron-thin-left" size={28} color={Colors.primary} />}
+        iconLeft={
+          <Entypo name="chevron-left" size={33} color={Colors.primary} />
+        }
       />
+      
       <SwipeBackContainer
         enabled={false}
         overlayColor="#fff"

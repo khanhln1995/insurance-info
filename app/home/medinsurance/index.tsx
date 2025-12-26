@@ -147,10 +147,9 @@ const MedInSurance = () => {
               </View>
             )}
           </View>
-
-          <BottomMenuBar />
         </View>
       </SwipeBackContainer>
+      <BottomMenuBar />
     </>
   );
 };
