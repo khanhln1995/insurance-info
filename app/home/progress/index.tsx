@@ -29,7 +29,7 @@ const Progress = () => {
   const router: any = useRouter();
   const { progressList } = useUser();
   const [loading, setLoading] = React.useState(true);
-  
+
   React.useEffect(() => {
     const t = setTimeout(() => {
       setLoading(false);
@@ -101,7 +101,7 @@ const Progress = () => {
       useNativeDriver: false,
       bounciness: 0,
     }).start();
-    if( index === 0 ) {
+    if (index === 0) {
       setEnabled(true);
     } else {
       setEnabled(false);
@@ -118,13 +118,13 @@ const Progress = () => {
         const currentIndex = progressData.findIndex(
           (t) => t.id === selectedTabRef.current.id
         );
-        if( currentIndex === 0 ) {
+        if (currentIndex === 0) {
           setEnabled(true);
         } else {
           setEnabled(false);
         }
         // Nếu ở tab đầu tiên và vuốt phải từ mép trái, để SwipeBackContainer xử lý
-        if (currentIndex === 0 && gestureState.dx > 0 ) {
+        if (currentIndex === 0 && gestureState.dx > 0) {
           return false;
         }
 
@@ -145,7 +145,7 @@ const Progress = () => {
         const currentIndex = progressData.findIndex(
           (t) => t.id === selectedTabRef.current.id
         );
-        
+
         // Nếu ở tab đầu tiên và vuốt phải, không xử lý (để SwipeBackContainer xử lý)
         // Nhưng nếu vuốt trái thì vẫn cho phép chuyển tab
         if (currentIndex === 0 && gestureState.dx > 0) {
@@ -226,146 +226,145 @@ const Progress = () => {
         backTitle="QUẢN LÝ CÁ NHÂN"
         onGoBack={() => router.replace("/home")}
         backIconLeft={<Ionicons name="menu" size={33.33} color="white" />}
-        backIconRight={        
+        backIconRight={
           <Image
             source={require("@/assets/images/bell.png")}
             style={{ width: 35.16, height: 23.11 }}
             resizeMode="contain"
           />
         }
-        textStyle={{ marginBottom: 5 }}
       />
       <SwipeBackContainer
         enabled={enabled}
         backScreen={Home}
         onBack={() => router.replace("/home")}
         onLogout={() => router.replace("/auth")}
-        >
+      >
         <View style={{ flex: 1, backgroundColor: "white" }}>
 
           {/* GẮN gesture SWIPE TAB vào nội dung chính + trượt cả màn theo tay */}
-        <Animated.View
-          style={{ flex: 1 }}
-          {...panResponder.panHandlers}
-        >
-          <View style={{ flex: 1 }}>
-            {/* TAB ROW */}
-            <View style={styles.tabsRow}>
-              {progressData.map((tab) => {
-                const isSelected = selectedTab.id === tab.id;
-                return (
-                  <View key={tab.id} style={styles.tabItem}>
-                    <TouchableOpacity
-                      style={[
-                        styles.tab,
-                        {
-                          borderColor: isSelected
-                            ? tab.id === 5
-                              ? "#0574CE"
-                              : ""
-                            : tab.id === 5
-                            ? Colors.border
-                            : "",
-                          borderWidth: tab.id === 5 ? 2 : 0,
-                        },
-                      ]}
-                      onPress={() => setSelectedTab(tab)}
-                    >
-                      <Image
-                        source={isSelected ? tab.tabActiveIcon : tab.tabIcon}
-                        style={{ width: 47.89, height: 47.89 }}
-                        resizeMode="contain"
-                      />
-                    </TouchableOpacity>
+          <Animated.View
+            style={{ flex: 1 }}
+            {...panResponder.panHandlers}
+          >
+            <View style={{ flex: 1 }}>
+              {/* TAB ROW */}
+              <View style={styles.tabsRow}>
+                {progressData.map((tab) => {
+                  const isSelected = selectedTab.id === tab.id;
+                  return (
+                    <View key={tab.id} style={styles.tabItem}>
+                      <TouchableOpacity
+                        style={[
+                          styles.tab,
+                          {
+                            borderColor: isSelected
+                              ? tab.id === 5
+                                ? "#0574CE"
+                                : ""
+                              : tab.id === 5
+                                ? Colors.border
+                                : "",
+                            borderWidth: tab.id === 5 ? 2 : 0,
+                          },
+                        ]}
+                        onPress={() => setSelectedTab(tab)}
+                      >
+                        <Image
+                          source={isSelected ? tab.tabActiveIcon : tab.tabIcon}
+                          style={{ width: 47.89, height: 47.89 }}
+                          resizeMode="contain"
+                        />
+                      </TouchableOpacity>
 
-                    <AppText
-                      variant="label"
-                      style={[
-                        styles.tabLabel,
-                        { color: isSelected ? "#0574CE" : Colors.border },
-                      ]}
-                      numberOfLines={2}
-                      ellipsizeMode="tail"
-                    >
-                      {tab.tabTitle}
-                    </AppText>
-                  </View>
-                );
-              })}
+                      <AppText
+                        variant="label"
+                        style={[
+                          styles.tabLabel,
+                          { color: isSelected ? "#0574CE" : Colors.border },
+                        ]}
+                        numberOfLines={2}
+                        ellipsizeMode="tail"
+                      >
+                        {tab.tabTitle}
+                      </AppText>
+                    </View>
+                  );
+                })}
+              </View>
+
+              {/* HORIZONTAL SWIPEABLE CONTENT (each panel = SCREEN_WIDTH) */}
+              {
+                !loading && (
+                  <Animated.View
+                    style={{
+                      flex: 1,
+                      flexDirection: "row",
+                      width: SCREEN_WIDTH * progressData.length,
+                      transform: [{ translateX: animatedX }],
+                    }}
+                  >
+                    {progressData.map((tab) => (
+                      <View key={tab.id} style={{ width: SCREEN_WIDTH }}>
+                        {tab.id !== 5 && (
+                          <ScrollView
+                            style={{ flex: 1 }}
+                            contentContainerStyle={{
+                              paddingHorizontal: 7,
+                              paddingTop: 18,
+                              paddingBottom: BOTTOM_BAR_HEIGHT + 24,
+                            }}
+                            showsVerticalScrollIndicator={false}
+                          >
+                            <View style={styles.description}>
+                              <AppText
+                                variant="headingMd"
+                                style={{ color: "#306BA3" }}
+                              >
+                                Quá trình tham gia {selectedTab.title}
+                              </AppText>
+
+                              <AppText variant="small">
+                                Tổng thời gian tham gia:{" "}
+                                {calculateTotalTime(tab.data?.progress) || "-"}
+                              </AppText>
+
+                              {!(tab.id == 4 || tab.id == 3) && (
+                                <AppText variant="small" style={{ color: "#CE0301" }}>
+                                  Tổng thời gian chậm đóng : {tab?.data?.totalDueTime}
+                                </AppText>
+                              )}
+                            </View>
+
+                            <EmploymentHistoryTable
+                              data={tab.data?.progress}
+                              onPressView={(detail) => {
+                                router.push({
+                                  pathname: "/home/progress/detail",
+                                  params: {
+                                    detail: JSON.stringify(detail),
+                                    title: tab.tabTitle,
+                                  },
+                                });
+                              }}
+                              isBHYT={tab.id === 4}
+                            />
+                          </ScrollView>
+                        )}
+                      </View>
+                    ))}
+                  </Animated.View>
+                )
+              }
+              {loading && (
+                <Loading />
+              )}
             </View>
 
-            {/* HORIZONTAL SWIPEABLE CONTENT (each panel = SCREEN_WIDTH) */}
-            {
-              !loading && (
-                <Animated.View
-                  style={{
-                    flex: 1,
-                    flexDirection: "row",
-                    width: SCREEN_WIDTH * progressData.length,
-                    transform: [{ translateX: animatedX }],
-                  }}
-                >
-                  {progressData.map((tab) => (
-                    <View key={tab.id} style={{ width: SCREEN_WIDTH }}>
-                      {tab.id !== 5 && (
-                        <ScrollView
-                          style={{ flex: 1 }}
-                          contentContainerStyle={{
-                            paddingHorizontal: 7,
-                            paddingTop: 18,
-                            paddingBottom: BOTTOM_BAR_HEIGHT + 24,
-                          }}
-                          showsVerticalScrollIndicator={false}
-                        >
-                          <View style={styles.description}>
-                        <AppText
-                          variant="headingMd"
-                          style={{ color: "#306BA3" }}
-                        >
-                          Quá trình tham gia {selectedTab.title}
-                            </AppText>
-
-                            <AppText variant="small">
-                              Tổng thời gian tham gia:{" "}
-                              {calculateTotalTime(tab.data?.progress) || "-"}
-                            </AppText>
-
-                            {!(tab.id == 4 || tab.id == 3) && (
-                              <AppText variant="small" style={{ color: "#CE0301" }}>
-                                Tổng thời gian chậm đóng : {tab?.data?.totalDueTime}
-                              </AppText>
-                            )}
-                          </View>
-
-                          <EmploymentHistoryTable
-                            data={tab.data?.progress}
-                            onPressView={(detail) => {
-                              router.push({
-                                pathname: "/home/progress/detail",
-                                params: {
-                                  detail: JSON.stringify(detail),
-                                  title: tab.tabTitle,
-                                },
-                              });
-                            }}
-                            isBHYT={tab.id === 4}
-                          />
-                        </ScrollView>
-                      )}
-                    </View>
-                  ))}
-                </Animated.View>
-              )
-            }
-            {loading && (
-              <Loading />
-            )}
-          </View>
-
-          <BottomMenuBar />
-        </Animated.View>
-      </View>
+          </Animated.View>
+        </View>
       </SwipeBackContainer>
+      <BottomMenuBar />
     </>
   );
 };

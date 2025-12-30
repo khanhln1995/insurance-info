@@ -124,51 +124,52 @@ export const HomeContent = ({
   };
 
   return (
-    <View
-      {...(panResponder && panResponder.panHandlers)}
-      style={{
-        justifyContent: "space-between",
-        alignSelf: "center",
-        flex: 1,
-        width: "100%",
-        backgroundColor: '#fff',
-      }}
-    >
+    <>
       <View
+        {...(panResponder && panResponder.panHandlers)}
         style={{
-          paddingTop: 20,
-          marginHorizontal: 17.41,
+          justifyContent: "space-between",
+          alignSelf: "center",
+          flex: 1,
+          width: "100%",
+          backgroundColor: '#fff',
         }}
       >
-        <InfoCard type="user" />
-        <Spacer size={22.46} />
-        <RenderSelect
-          text="THẺ BHYT"
-          source={Card}
-          route="/home/medinsurance"
-          isTop={false}
-        />
+        <View
+          style={{
+            paddingTop: 20,
+            marginHorizontal: 17.41,
+          }}
+        >
+          <InfoCard type="user" />
+          <Spacer size={22.46} />
+          <RenderSelect
+            text="THẺ BHYT"
+            source={Card}
+            route="/home/medinsurance"
+            isTop={false}
+          />
 
-        <RenderSelect
-          text="QUÁ TRÌNH THAM GIA"
-          route="/home/progress"
-          isTop={false}
-        />
+          <RenderSelect
+            text="QUÁ TRÌNH THAM GIA"
+            route="/home/progress"
+            isTop={false}
+          />
 
-        <RenderSelect
-          text="THÔNG TIN HƯỞNG"
-          source={UserInfo}
-          isTop={false}
-        />
+          <RenderSelect
+            text="THÔNG TIN HƯỞNG"
+            source={UserInfo}
+            isTop={false}
+          />
 
-        <RenderSelect
-          text="SỔ KHÁM CHỮA BỆNH"
-          source={MedPlus}
-          isTop={false}
-        />
+          <RenderSelect
+            text="SỔ KHÁM CHỮA BỆNH"
+            source={MedPlus}
+            isTop={false}
+          />
+        </View>
       </View>
-      <BottomMenuBar />
-    </View>
+    </>
   );
 };
 
@@ -216,6 +217,7 @@ const Home = () => {
           router.replace("/auth");
         }}
       />
+      <BottomMenuBar />
     </SafeArea>
   );
 };

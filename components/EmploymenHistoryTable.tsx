@@ -55,7 +55,7 @@ const defaultColumns: Column<EmploymentRow>[] = [
   },
   {
     key: "denthang",
-    label: "Đến tháng",
+    label: "Đến \n tháng",
     flex: 1,
     align: "center",
     headerLines: 1,
@@ -129,19 +129,24 @@ const EmploymentHistoryTable: React.FC<Props> = ({
     <View style={[styles.row, { backgroundColor: "white" }]}>
       {displayColumns.map((col, idx) => {
         const value = String(item[col.key] ?? "");
+        const isLast = idx === displayColumns.length - 1;
         const alignStyle: TextStyle =
           col.align === "right"
             ? { textAlign: "right" }
             : col.align === "left"
-            ? { textAlign: "left" }
-            : { textAlign: "center" };
+              ? { textAlign: "left" }
+              : { textAlign: "center" };
 
         return (
           <View
             key={`c-${item.id}-${String(col.key)}`}
             style={[
-              styles.cell,
-              { flex: col.flex ?? 1 },
+              {
+                flex: col.flex ?? 1,
+                paddingHorizontal: isLast ? 4 : 8,
+                paddingVertical: 8.48,
+                justifyContent: "center",
+              },
               idx !== 0 && styles.borderLeftGrey,
             ]}
           >
@@ -157,11 +162,10 @@ const EmploymentHistoryTable: React.FC<Props> = ({
 
       {/* Action cell */}
       <View
-        style={[styles.cell, styles.borderLeftGrey, { width: 44, flexGrow: 0 }]}
+        style={[styles.cell, styles.borderLeftGrey]}
       >
         {onPressView ? (
           <TouchableOpacity
-            hitSlop={{ top: 8, bottom: 8, left: 8, right: 8 }}
             onPress={() => onPressView(item)}
             style={styles.eyeButton}
           >
@@ -199,7 +203,7 @@ export default EmploymentHistoryTable;
 const styles = StyleSheet.create({
   container: {
     borderWidth: 0.67,
-    borderColor: "#74A6BA",
+    borderColor: "#e8f4ff",
     overflow: "hidden",
   },
   row: {
@@ -207,7 +211,7 @@ const styles = StyleSheet.create({
     alignItems: "stretch",
   },
   cell: {
-    paddingHorizontal: 8,
+    paddingHorizontal: 4,
     paddingVertical: 8.48,
     justifyContent: "center",
   },
@@ -220,7 +224,7 @@ const styles = StyleSheet.create({
   },
   separator: {
     height: 0.67,
-    backgroundColor: "#74A6BA",
+    backgroundColor: "#e8f4ff",
   },
   borderLeftWhite: {
     borderLeftWidth: 1,
@@ -228,7 +232,7 @@ const styles = StyleSheet.create({
   },
   borderLeftGrey: {
     borderLeftWidth: 0.67,
-    borderLeftColor: "#74A6BA",
+    borderLeftColor: "#e8f4ff",
   },
-  eyeButton: { alignItems: "center", justifyContent: "center" },
+  eyeButton: { flex: 1, alignItems: "center", justifyContent: "center" },
 });
