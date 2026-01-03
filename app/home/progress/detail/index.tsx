@@ -4,9 +4,9 @@ import Spacer from "@/components/Spacer";
 import SwipeBackContainer from "@/components/SwipeBackContainer";
 import { Colors } from "@/constants/Colors";
 import Entypo from "@expo/vector-icons/Entypo";
-import { useLocalSearchParams, useRouter, useNavigation } from "expo-router";
+import { useLocalSearchParams, useNavigation, useRouter } from "expo-router";
 import React, { useEffect } from "react";
-import { ScrollView, StyleSheet, SafeAreaView, View } from "react-native";
+import { ScrollView, StyleSheet, View } from "react-native";
 // import Progress from "../index";
 
 const DetailProgress = () => {
@@ -16,7 +16,7 @@ const DetailProgress = () => {
     navigation.setOptions({ gestureEnabled: false });
   }, []);
 
-  const { detail, title } = useLocalSearchParams();
+  const { detail, title, tabId } = useLocalSearchParams();
   const data = JSON.parse(detail as string);
   const router: any = useRouter();
 
@@ -38,7 +38,12 @@ const DetailProgress = () => {
         title="Chi tiết"
         textColor={Colors.primary}
         titleVariant="subheading"
-        onGoBack={() => router.replace('/home/progress')}
+        onGoBack={() => {
+          router.replace({
+            pathname: '/home/progress',
+            params: { tabId: tabId }
+          });
+        }}
         styleContainer={{ backgroundColor: "#fff" }}
         colors={['#fff', '#fff']}
         iconLeft={

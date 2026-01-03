@@ -1,3 +1,4 @@
+import AppText from "@/components/AppText";
 import FontAwesome from "@expo/vector-icons/FontAwesome";
 import React from "react";
 import {
@@ -9,7 +10,6 @@ import {
   View,
   ViewStyle,
 } from "react-native";
-import AppText from "@/components/AppText";
 
 // Types
 export type EmploymentRow = {
@@ -99,8 +99,12 @@ const EmploymentHistoryTable: React.FC<Props> = ({
         <View
           key={`h-${String(col.key)}`}
           style={[
-            styles.cell,
-            { flex: col.flex ?? 1 },
+            {
+              flex: col.flex ?? 1,
+              paddingHorizontal: 8,
+              paddingVertical: 8.48,
+              justifyContent: "center",
+            },
             idx !== 0 && isBHYT && styles.borderLeftWhite,
           ]}
         >
@@ -117,9 +121,14 @@ const EmploymentHistoryTable: React.FC<Props> = ({
       {/* Action column */}
       <View
         style={[
-          styles.cell,
+          {
+            paddingHorizontal: 4,
+            paddingVertical: 8.48,
+            justifyContent: "center",
+            width: 32,
+            flexGrow: 0,
+          },
           isBHYT && styles.borderLeftWhite,
-          { width: 44, flexGrow: 0 },
         ]}
       />
     </View>
@@ -143,7 +152,7 @@ const EmploymentHistoryTable: React.FC<Props> = ({
             style={[
               {
                 flex: col.flex ?? 1,
-                paddingHorizontal: isLast ? 4 : 8,
+                paddingHorizontal: 8,
                 paddingVertical: 8.48,
                 justifyContent: "center",
               },
@@ -162,7 +171,16 @@ const EmploymentHistoryTable: React.FC<Props> = ({
 
       {/* Action cell */}
       <View
-        style={[styles.cell, styles.borderLeftGrey]}
+        style={[
+          {
+            // paddingHorizontal: 4,
+            paddingVertical: 8.48,
+            justifyContent: "center",
+            width: 32,
+            flexGrow: 0,
+          },
+          styles.borderLeftGrey,
+        ]}
       >
         {onPressView ? (
           <TouchableOpacity
