@@ -6,9 +6,10 @@ import SwipeBackContainer from "@/components/SwipeBackContainer";
 import { Colors } from "@/constants/Colors";
 import { useUser } from "@/hooks/user";
 import { Ionicons } from "@expo/vector-icons";
-import { useRouter } from "expo-router";
+import { useLocalSearchParams, useRouter } from "expo-router";
 import React, { useRef } from "react";
 
+import Loading from "@/components/Loading";
 import {
   Animated,
   Dimensions,
@@ -20,7 +21,6 @@ import {
   View
 } from "react-native";
 import { HomeContent } from "..";
-import Loading from "@/components/Loading";
 
 const BOTTOM_BAR_HEIGHT = 150;
 const SCREEN_WIDTH = Dimensions.get("window").width;
@@ -80,6 +80,17 @@ const Progress = () => {
   ];
 
   const [selectedTab, setSelectedTab] = React.useState(progressData[0]);
+  const { tabId } = useLocalSearchParams();
+
+  // Restore the selected tab when returning from detail screen
+  React.useEffect(() => {
+    if (tabId) {
+      const tab = progressData.find((t) => t.id === parseInt(tabId as string));
+      if (tab) {
+        setSelectedTab(tab);
+      }
+    }
+  }, [tabId]);
 
   // keep a ref to the latest selectedTab so PanResponder callbacks see updated value
   const selectedTabRef = React.useRef(selectedTab);
@@ -344,6 +355,7 @@ const Progress = () => {
                                   params: {
                                     detail: JSON.stringify(detail),
                                     title: tab.tabTitle,
+                                    tabId: tab.id,
                                   },
                                 });
                               }}
