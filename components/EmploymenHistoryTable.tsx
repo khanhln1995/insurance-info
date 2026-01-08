@@ -81,7 +81,8 @@ const EmploymentHistoryTable: React.FC<Props> = ({
   data,
   onPressView,
   actionIcon,
-  headerColor = "#345E94", // blue like screenshot
+  headerColor = "#345E94", // blue like screenshot DCE7FA
+  
   containerStyle,
   headerTextStyle,
   cellTextStyle,
@@ -220,8 +221,8 @@ export default EmploymentHistoryTable;
 
 const styles = StyleSheet.create({
   container: {
-    borderWidth: 0.67,
-    borderColor: "#e8f4ff",
+    borderWidth: 0.9,
+    borderColor: "#DEEEF8",
     overflow: "hidden",
   },
   row: {
@@ -241,16 +242,16 @@ const styles = StyleSheet.create({
     color: "#2E2F33",
   },
   separator: {
-    height: 0.67,
-    backgroundColor: "#e8f4ff",
+    height: 0.9,
+    backgroundColor: "#DEEEF8",
   },
   borderLeftWhite: {
-    borderLeftWidth: 1,
-    borderLeftColor: "rgba(255,255,255,0.8)",
+    borderLeftWidth: 0.9,
+    borderLeftColor: "#DEEEF8",
   },
   borderLeftGrey: {
-    borderLeftWidth: 0.67,
-    borderLeftColor: "#e8f4ff",
+    borderLeftWidth: 0.9,
+    borderLeftColor: "#DEEEF8",
   },
   eyeButton: { flex: 1, alignItems: "center", justifyContent: "center" },
 });
