@@ -222,7 +222,7 @@ export default EmploymentHistoryTable;
 const styles = StyleSheet.create({
   container: {
     borderWidth: 0.9,
-    borderColor: "#DEEEF8",
+    borderColor: "#E6F1FA",
     overflow: "hidden",
   },
   row: {
@@ -243,15 +243,15 @@ const styles = StyleSheet.create({
   },
   separator: {
     height: 0.9,
-    backgroundColor: "#DEEEF8",
+    backgroundColor: "#E6F1FA",
   },
   borderLeftWhite: {
     borderLeftWidth: 0.9,
-    borderLeftColor: "#DEEEF8",
+    borderLeftColor: "#E6F1FA",
   },
   borderLeftGrey: {
     borderLeftWidth: 0.9,
-    borderLeftColor: "#DEEEF8",
+    borderLeftColor: "#E6F1FA",
   },
   eyeButton: { flex: 1, alignItems: "center", justifyContent: "center" },
 });
