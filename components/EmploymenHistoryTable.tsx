@@ -157,7 +157,10 @@ const EmploymentHistoryTable: React.FC<Props> = ({
                 paddingVertical: 8.48,
                 justifyContent: "center",
               },
-              idx !== 0 && styles.borderLeftGrey,
+              idx !== 0 && {
+                borderLeftWidth: 0.9,
+                borderLeftColor: isBHYT ? "#D9EBFF" : "#6E95C2",
+              },
             ]}
           >
             <AppText
@@ -204,13 +207,18 @@ const EmploymentHistoryTable: React.FC<Props> = ({
   );
 
   return (
-    <View style={[styles.container, containerStyle]}>
+    <View style={[styles.container, containerStyle, {
+      borderColor: isBHYT ? "#D9EBFF" : "#6E95C2",
+    }]}>
       {renderHeader()}
       <FlatList
         data={data}
         renderItem={renderItem}
         keyExtractor={(item, index) => String(index)}
-        ItemSeparatorComponent={() => <View style={styles.separator} />}
+        ItemSeparatorComponent={() => <View style={{
+          height: 0.9,
+          backgroundColor: isBHYT ? "#D9EBFF" : "#6E95C2",
+        }} />}
         scrollEnabled={false}
       />
     </View>
@@ -222,7 +230,6 @@ export default EmploymentHistoryTable;
 const styles = StyleSheet.create({
   container: {
     borderWidth: 0.9,
-    borderColor: "#E6F1FA",
     overflow: "hidden",
   },
   row: {
@@ -247,7 +254,7 @@ const styles = StyleSheet.create({
   },
   borderLeftWhite: {
     borderLeftWidth: 0.9,
-    borderLeftColor: "#E6F1FA",
+    borderLeftColor: "#D9EBFF",
   },
   borderLeftGrey: {
     borderLeftWidth: 0.9,
