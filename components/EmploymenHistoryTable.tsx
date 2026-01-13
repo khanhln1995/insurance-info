@@ -156,6 +156,8 @@ const EmploymentHistoryTable: React.FC<Props> = ({
                 paddingHorizontal: 8,
                 paddingVertical: 8.48,
                 justifyContent: "center",
+                borderTopWidth: 0.9,
+                borderTopColor: isBHYT ? "#D9EBFF" : "#6E95C2",
               },
               idx !== 0 && {
                 borderLeftWidth: 0.9,
@@ -181,9 +183,12 @@ const EmploymentHistoryTable: React.FC<Props> = ({
             paddingVertical: 8.48,
             justifyContent: "center",
             width: 32,
+            borderLeftWidth: 0.9,
+            borderLeftColor: isBHYT ? "#D9EBFF" : "#6E95C2",
             flexGrow: 0,
+            borderTopColor: isBHYT ? "#D9EBFF" : "#6E95C2",
+            borderTopWidth: 0.9,
           },
-          styles.borderLeftGrey,
         ]}
       >
         {onPressView ? (
@@ -216,8 +221,8 @@ const EmploymentHistoryTable: React.FC<Props> = ({
         renderItem={renderItem}
         keyExtractor={(item, index) => String(index)}
         ItemSeparatorComponent={() => <View style={{
-          height: 0.9,
-          backgroundColor: isBHYT ? "#D9EBFF" : "#6E95C2",
+          // height: 0.9,
+          // backgroundColor: isBHYT ? "#D9EBFF" : "#6E95C2",
         }} />}
         scrollEnabled={false}
       />
