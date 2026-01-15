@@ -10,6 +10,7 @@ import { useLocalSearchParams, useRouter } from "expo-router";
 import React, { useRef } from "react";
 
 import Loading from "@/components/Loading";
+import SideMenu, { DRAWER_W } from "@/components/SideMenu";
 import {
   Animated,
   Dimensions,
@@ -24,6 +25,7 @@ import { HomeContent } from "..";
 
 const BOTTOM_BAR_HEIGHT = 150;
 const SCREEN_WIDTH = Dimensions.get("window").width;
+const SCREEN_HEIGHT = Dimensions.get("window").height;
 
 const Progress = () => {
   const router: any = useRouter();
@@ -228,6 +230,78 @@ const Progress = () => {
     return <HomeContent panResponder={null} router={router} />;
   }
 
+  // SIDE MENU ANIMATION
+  const menuTranslateX = React.useRef(new Animated.Value(-DRAWER_W)).current;
+  const menuDragStartX = React.useRef(-DRAWER_W);
+  const [menuVisible, setMenuVisible] = React.useState(false);
+
+  const closeMenu = React.useCallback(() => {
+    Animated.spring(menuTranslateX, {
+      toValue: -DRAWER_W,
+      useNativeDriver: true,
+    }).start(() => {
+      setMenuVisible(false);
+    });
+  }, [menuTranslateX]);
+
+  // Drag from the left edge area to open the SideMenu smoothly
+  const menuOpenPanResponder = React.useRef(
+    PanResponder.create({
+      onStartShouldSetPanResponder: () => false,
+      onMoveShouldSetPanResponder: (_evt, gestureState) => {
+        if (menuVisible) return false;
+        const isHorizontal =
+          Math.abs(gestureState.dx) > 6 &&
+          Math.abs(gestureState.dx) > Math.abs(gestureState.dy);
+        return isHorizontal && gestureState.dx > 0;
+      },
+      onMoveShouldSetPanResponderCapture: (_evt, gestureState) => {
+        if (menuVisible) return false;
+        const isHorizontal =
+          Math.abs(gestureState.dx) > 6 &&
+          Math.abs(gestureState.dx) > Math.abs(gestureState.dy);
+        return isHorizontal && gestureState.dx > 0;
+      },
+      onPanResponderGrant: () => {
+        // show modal immediately so user sees it follow the finger
+        setMenuVisible(true);
+        menuTranslateX.stopAnimation((value) => {
+          menuDragStartX.current = value;
+        });
+      },
+      onPanResponderMove: (_evt, gestureState) => {
+        const newX = Math.max(
+          -DRAWER_W,
+          Math.min(0, menuDragStartX.current + gestureState.dx)
+        );
+        menuTranslateX.setValue(newX);
+      },
+      onPanResponderRelease: (_evt, gestureState) => {
+        const finalX = menuDragStartX.current + gestureState.dx;
+        const shouldOpen = finalX > -DRAWER_W * 0.5 || gestureState.vx > 0.5;
+
+        Animated.spring(menuTranslateX, {
+          toValue: shouldOpen ? 0 : -DRAWER_W,
+          useNativeDriver: true,
+        }).start(() => {
+          if (!shouldOpen) setMenuVisible(false);
+        });
+      },
+      onPanResponderTerminate: () => {
+        // If gesture is interrupted, snap closed
+        Animated.spring(menuTranslateX, {
+          toValue: -DRAWER_W,
+          useNativeDriver: true,
+        }).start(() => {
+          setMenuVisible(false);
+        });
+      },
+    })
+  ).current;
+  const handleLogout = React.useCallback(() => {
+      router.replace("/auth");
+  }, [router]);
+
   return (
     <>
       <HeaderBack
@@ -372,8 +446,33 @@ const Progress = () => {
                 <Loading />
               )}
             </View>
-
           </Animated.View>
+
+          {/* EDGE HANDLE (drag right to open menu) */}
+          {
+            selectedTab.id !== 1 && (
+              <View
+                collapsable={false}
+                {...menuOpenPanResponder.panHandlers}
+                style={{
+                  position: "absolute",
+                  left: 0,
+                  bottom: 0,
+                  height: SCREEN_HEIGHT / 2,
+                  width: 30,
+                  zIndex: 50,
+                }}
+              />
+            )
+          }
+
+          {/* SIDE MENU (Modal) */}
+          <SideMenu
+            visible={menuVisible}
+            translateX={menuTranslateX}
+            onClose={closeMenu}
+            onLogout={handleLogout}
+          />
         </View>
       </SwipeBackContainer>
       <BottomMenuBar />
