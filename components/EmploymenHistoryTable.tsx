@@ -157,11 +157,11 @@ const EmploymentHistoryTable: React.FC<Props> = ({
                 paddingVertical: 8.48,
                 justifyContent: "center",
                 borderTopWidth: 0.9,
-                borderTopColor: isBHYT ? "#D9EBFF" : "#6E95C2",
+                borderTopColor: isBHYT ? "#bfdcfc" : "#6E95C2",
               },
               idx !== 0 && {
                 borderLeftWidth: 0.9,
-                borderLeftColor: isBHYT ? "#D9EBFF" : "#6E95C2",
+                borderLeftColor: isBHYT ? "#bfdcfc" : "#6E95C2",
               },
             ]}
           >
@@ -184,9 +184,9 @@ const EmploymentHistoryTable: React.FC<Props> = ({
             justifyContent: "center",
             width: 32,
             borderLeftWidth: 0.9,
-            borderLeftColor: isBHYT ? "#D9EBFF" : "#6E95C2",
+            borderLeftColor: isBHYT ? "#bfdcfc" : "#6E95C2",
             flexGrow: 0,
-            borderTopColor: isBHYT ? "#D9EBFF" : "#6E95C2",
+            borderTopColor: isBHYT ? "#bfdcfc" : "#6E95C2",
             borderTopWidth: 0.9,
           },
         ]}
@@ -213,7 +213,7 @@ const EmploymentHistoryTable: React.FC<Props> = ({
 
   return (
     <View style={[styles.container, containerStyle, {
-      borderColor: isBHYT ? "#D9EBFF" : "#6E95C2",
+      borderColor: isBHYT ? "#bfdcfc" : "#6E95C2",
     }]}>
       {renderHeader()}
       <FlatList
@@ -222,7 +222,7 @@ const EmploymentHistoryTable: React.FC<Props> = ({
         keyExtractor={(item, index) => String(index)}
         ItemSeparatorComponent={() => <View style={{
           // height: 0.9,
-          // backgroundColor: isBHYT ? "#D9EBFF" : "#6E95C2",
+          // backgroundColor: isBHYT ? "#bfdcfc" : "#6E95C2",
         }} />}
         scrollEnabled={false}
       />
@@ -259,7 +259,7 @@ const styles = StyleSheet.create({
   },
   borderLeftWhite: {
     borderLeftWidth: 0.9,
-    borderLeftColor: "#D9EBFF",
+    borderLeftColor: "#bfdcfc",
   },
   borderLeftGrey: {
     borderLeftWidth: 0.9,

@@ -140,7 +140,7 @@ const styles = StyleSheet.create({
     // borderRadius: 6,
     overflow: "hidden",
     borderWidth: 1.1,
-    borderColor: "#6E95C2",
+    borderColor: "#bfdcfc",
   },
   rowTopBorder: {
     borderTopWidth: 0,
@@ -150,7 +150,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     paddingHorizontal: 13.23,
     borderTopWidth: 1.1,
-    borderColor: "#6E95C2",
+    borderColor: "#bfdcfc",
     justifyContent: "space-between",
   },
   cellLeft: {
@@ -174,7 +174,7 @@ const styles = StyleSheet.create({
 
   divider: {
     width: 1.1,
-    backgroundColor: "#6E95C2",
+    backgroundColor: "#bfdcfc",
     alignSelf: "stretch", // ensures it fills full row height
   },
 });
