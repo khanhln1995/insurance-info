@@ -1,6 +1,7 @@
 import AppText from "@/components/AppText";
 import { Colors } from "@/constants/Colors";
 import { useUser } from "@/hooks/user";
+import { LinearGradient } from "expo-linear-gradient";
 import React from "react";
 import { Image, StyleSheet, View } from "react-native";
 
@@ -19,28 +20,31 @@ const InfoCard = ({ type }: Props) => {
     value,
     isFlex = true,
     isBorderBottom = true,
+    alignTop = false,
   }: {
     title: string;
     value: string;
     isFlex?: boolean;
     isBorderBottom?: boolean;
+    alignTop?: boolean;
   }) => {
     return (
       <View
         style={{
           flexDirection: "row",
           justifyContent: "space-between",
-          alignItems: "center",
+          alignItems: alignTop ? "flex-start" : "center",
           borderBottomColor: isBorderBottom ? '#C5CED3' : '',
           borderBottomWidth: isBorderBottom ? 0.67 : 0,
           paddingBottom: 7.37,
           paddingTop: 11.39
         }}
       >
-        <AppText variant="label" style={{ 
-            color: "#4E4E4E", 
-            marginRight: 24
-            // flex: 1 
+        <AppText variant="label" style={{
+            color: "#4E4E4E",
+            marginRight: 24,
+            fontSize: 13.07,
+            // flex: 1
           }}
         >
           {title}
@@ -49,8 +53,10 @@ const InfoCard = ({ type }: Props) => {
           variant="label"
           style={{
             color: "#4E4E4E",
-            flex: isFlex ? 1 : 2, 
+            flex: isFlex ? 1 : 2,
             textAlign: "right", // align to right if you want
+            fontSize: 13.07,
+            maxWidth: 250,
           }}
         >
           {value}
@@ -73,7 +79,7 @@ const InfoCard = ({ type }: Props) => {
           <RenderInfoLine title="Ngày sinh" value={userInfo?.ngaysinh} />
           <RenderInfoLine title="ĐDCN/CCCD/Hộ chiếu" value={userInfo?.cmnd} />
           <RenderInfoLine title="Số điện thoại" value={userInfo?.sdt} />
-          <RenderInfoLine title="Địa chỉ" value={userInfo?.diachi} isBorderBottom={false}/>
+          <RenderInfoLine title="Địa chỉ" value={userInfo?.diachi} isBorderBottom={false} alignTop />
         </View>
       );
       name = userInfo?.ten;
@@ -94,7 +100,7 @@ const InfoCard = ({ type }: Props) => {
           <RenderInfoLine title="Ngày sinh" value={medInsurance?.ngaysinh} />
           <RenderInfoLine title="Giới tính" value={medInsurance?.gioitinh} />
           <RenderInfoLine title="Số thẻ BHYT" value={medInsurance?.sothebhyt} />
-          <RenderInfoLine title="Nơi ĐKKCB BĐ" value={medInsurance?.noidk} />
+          <RenderInfoLine title="Nơi ĐKKCB BĐ" value={medInsurance?.noidk} alignTop />
           <RenderInfoLine
             title="Thời điểm 5 năm liên tục"
             value={medInsurance?.thoidiem5namlientuc}
@@ -106,23 +112,28 @@ const InfoCard = ({ type }: Props) => {
   }
 
   return (
-    <View
-      style={{ backgroundColor: Colors.bgInfo, padding: 17.41, borderRadius: 5 }}
+    <LinearGradient
+      colors={[Colors.bgInfoGradientStart, Colors.bgInfoGradientEnd]}
+      start={{ x: 0, y: 0 }}
+      end={{ x: 1, y: 0 }}
+      style={{ padding: type === "user" ? 17.41 : 10, borderRadius: 5 }}
     >
       <View style={{
-          flexDirection: "row", 
-          gap: 12, 
+          flexDirection: "row",
+          gap: 12,
           alignItems: "center",
           borderBottomColor: '#949899',
-          borderBottomWidth: 0.67, 
-          paddingBottom: 10.02,
+          borderBottomWidth: 0.67,
+          paddingBottom: type === "user" ? 10.02 : 6,
+          paddingTop: type === "user" ? 12 : 0,
+          marginTop: type === "insurance" ? -4 : 0
         }}
       >
         <View
           style={{
             backgroundColor: "white",
-            width: 60,
-            height: 60,
+            width: 56,
+            height: 56,
             borderRadius: 50,
             justifyContent: "center",
             alignItems: "center",
@@ -150,7 +161,7 @@ const InfoCard = ({ type }: Props) => {
         </View>
       </View>
       {contentCard}
-    </View>
+    </LinearGradient>
   );
 };
 

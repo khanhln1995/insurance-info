@@ -11,13 +11,14 @@ const BottomMenuBar = () => {
   return (
     <View
       style={{
-        borderTopWidth: 0.5,
+        borderTopWidth: 0.6,
         borderTopColor: "#C6C6C6",
         flexDirection: "row",
         // alignItems: "center",
         justifyContent: "space-around",
         backgroundColor: "white",
         height: 49.23,
+        paddingTop:6,
       }}
     >
       <TouchableOpacity

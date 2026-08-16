@@ -30,6 +30,7 @@ const HomeHeader = ({ onOpenMenu }: { onOpenMenu: () => void }) => {
         />
       }
       textColor="white"
+      textStyle={{ fontSize: 17.08 }}
       onGoBack={onOpenMenu}
     />
   );
@@ -132,7 +133,7 @@ export const HomeContent = ({
           alignSelf: "center",
           flex: 1,
           width: "100%",
-          backgroundColor: '#fff',
+          backgroundColor: Colors.bgScreen,
         }}
       >
         <View
@@ -142,7 +143,7 @@ export const HomeContent = ({
           }}
         >
           <InfoCard type="user" />
-          <Spacer size={22.46} />
+          <Spacer size={36} />
           <RenderSelect
             text="THẺ BHYT"
             source={Card}

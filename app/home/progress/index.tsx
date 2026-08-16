@@ -142,8 +142,8 @@ const Progress = () => {
         }
 
         return (
-          Math.abs(gestureState.dx) > Math.abs(gestureState.dy) &&
-          Math.abs(gestureState.dx) > 6
+          Math.abs(gestureState.dx) > Math.abs(gestureState.dy) * 2 &&
+          Math.abs(gestureState.dx) > 10
         );
       },
 
@@ -308,6 +308,7 @@ const Progress = () => {
         title="QUÁ TRÌNH THAM GIA"
         titleVariant="headingMdRegular"
         textColor="white"
+        textStyle={{ fontSize: 17.08 }}
         backTitle="QUẢN LÝ CÁ NHÂN"
         onGoBack={() => router.replace("/home")}
         backIconLeft={<Ionicons name="menu" size={33.33} color="white" />}
@@ -325,7 +326,7 @@ const Progress = () => {
         onBack={() => router.replace("/home")}
         onLogout={() => router.replace("/auth")}
       >
-        <View style={{ flex: 1, backgroundColor: "white" }}>
+        <View style={{ flex: 1, backgroundColor:  Colors.bgScreen }}>
 
           {/* GẮN gesture SWIPE TAB vào nội dung chính + trượt cả màn theo tay */}
           <Animated.View
@@ -490,6 +491,7 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     paddingTop: 10.05,
     paddingHorizontal: 19,
+    paddingBottom: 10.05,
   },
   tabItem: {
     width: TAB_ITEM_WIDTH,
@@ -501,7 +503,6 @@ const styles = StyleSheet.create({
     height: 50,
     justifyContent: "center",
     alignItems: "center",
-    backgroundColor: "white",
   },
   tabLabel: {
     marginTop: 5,

@@ -105,8 +105,12 @@ const HeaderBack = (props: HeaderBackProps) => {
             "/home/medinsurance/card",
             "/home/progress/detail",
           ].includes(pathName)
-            ? 66
-            : 27,
+            ? 100
+            : ["/home", "/home/progress"].includes(pathName)
+              ? 100
+              : ["/home/medinsurance"].includes(pathName)
+                ? 102
+                : 27,
           marginTop: 0,
           justifyContent: "flex-end",
           height: [
@@ -114,7 +118,9 @@ const HeaderBack = (props: HeaderBackProps) => {
             "/home/progress/detail",
           ].includes(pathName)
             ? 'auto'
-            : 63.63
+            // : ["/home", "/home/progress"].includes(pathName)
+            //   ? 84
+              : 63.63
           ,
         }}
       >
@@ -128,6 +134,7 @@ const HeaderBack = (props: HeaderBackProps) => {
                 left: "5%",
                 // top: 2,
                 opacity: currentHeaderOpacity,
+                paddingBottom: 4
               }}
             >
               <TouchableOpacity
@@ -154,6 +161,7 @@ const HeaderBack = (props: HeaderBackProps) => {
                 position: "absolute",
                 left: "5%",
                 opacity: backHeaderOpacity,
+                paddingBottom: 4
               }}
             >
               {backIconLeft}
@@ -170,7 +178,7 @@ const HeaderBack = (props: HeaderBackProps) => {
                 right: 0,
                 bottom: 0,
                 opacity: currentHeaderOpacity,
-                marginBottom: 4
+                marginBottom: 8
               },
               { color: textColor || "" },
               textStyle,
@@ -206,6 +214,7 @@ const HeaderBack = (props: HeaderBackProps) => {
                 position: "absolute",
                 right: "6%",
                 opacity: currentHeaderOpacity,
+                paddingBottom: 4
               }}
             >
               {iconRight}
@@ -218,6 +227,7 @@ const HeaderBack = (props: HeaderBackProps) => {
                 position: "absolute",
                 right: "6%",
                 opacity: backHeaderOpacity,
+                paddingBottom: 4
               }}
             >
               {backIconRight}
