@@ -10,6 +10,10 @@ const HALF_SCREEN = SCREEN_HEIGHT / 2;
 
 type SwipeBackContainerProps = {
   children: React.ReactNode;
+  /** Header render cùng khối bị đẩy theo SideMenu (không bị vuốt-back translateX) */
+  header?: React.ReactNode;
+  /** Footer (VD BottomMenuBar) render cùng khối bị đẩy theo SideMenu */
+  footer?: React.ReactNode;
   /** Component hoặc ReactNode render màn hình phía sau (back screen) */
   backScreen?: React.ComponentType<any> | React.ReactNode;
   /** Callback khi swipe back thành công. Nếu không truyền, sẽ tự động dùng router.back() */
@@ -26,6 +30,8 @@ type SwipeBackContainerProps = {
 
 const SwipeBackContainer = ({
   children,
+  header,
+  footer,
   backScreen,
   onBack,
   onLogout,
@@ -37,14 +43,20 @@ const SwipeBackContainer = ({
   const dispatch = useDispatch();
   const [menuVisible, setMenuVisible] = React.useState(false);
   const menuTranslateX = React.useRef(new Animated.Value(-DRAWER_W)).current;
+  // Đẩy nội dung màn hình sang phải theo mép phải của SideMenu khi mở
+  const menuPushX = menuTranslateX.interpolate({
+    inputRange: [-DRAWER_W, 0],
+    outputRange: [0, DRAWER_W],
+  });
 
   const handleBack = React.useCallback(() => {
+    dispatch(clearTranslateX());
     if (onBack) {
       onBack();
     } else if (router.canGoBack()) {
       router.back();
     }
-  }, [onBack, router]);
+  }, [onBack, router, dispatch]);
 
   const handleLogout = React.useCallback(() => {
     if (onLogout) {
@@ -63,10 +75,21 @@ const SwipeBackContainer = ({
     });
   }, [menuTranslateX]);
 
+  const SCREEN_WIDTH = Dimensions.get("window").width;
+
   // Animated values cho swipe back
   const translateX = React.useRef(new Animated.Value(0)).current;
   const overlayOpacity = React.useRef(new Animated.Value(0)).current;
   const startX = React.useRef(0);
+
+  // Hiệu ứng "slide_from_left": trang phía sau (backScreen) trượt nhẹ từ trái vào đúng vị trí
+  // khi được lộ ra, thay vì đứng yên tuyệt đối — giống parallax của Stack native.
+  const BACK_SCREEN_PARALLAX_RATIO = 0.3;
+  const backScreenTranslateX = translateX.interpolate({
+    inputRange: [0, SCREEN_WIDTH],
+    outputRange: [-SCREEN_WIDTH * BACK_SCREEN_PARALLAX_RATIO, 0],
+    extrapolate: "clamp",
+  });
 
   // Set translateX to store when component mounts, clear when unmounts
   React.useEffect(() => {
@@ -83,7 +106,6 @@ const SwipeBackContainer = ({
   const pressStartTime = React.useRef(0);
 
   const EDGE_WIDTH = 20;
-  const SCREEN_WIDTH = Dimensions.get("window").width;
 
   const clearLongPress = React.useCallback(() => {
     if (longPressTimeout.current) {
@@ -289,55 +311,63 @@ const SwipeBackContainer = ({
   };
 
   return (
-    <View style={[{ flex: 1 }, style]}>
-        {/* BACK SCREEN — PHẢI absolute */}
-        {backScreen && enabled && (
-          <Animated.View
-            pointerEvents="none"
-            style={[
-              StyleSheet.absoluteFillObject,
-              {
-                zIndex: 0,
-              },
-            ]}
-          >
-            {renderBackScreen()}
-          </Animated.View>
-        )}
+    <View style={[{ flex: 1}, style]}>
+        {/* Đẩy CẢ TRANG (header + nội dung) sang phải theo mép phải SideMenu khi mở */}
+        <Animated.View style={{ flex: 1, transform: [{ translateX: menuPushX }] }}>
+          {header}
+          <View style={{ flex: 1 }}>
+            {/* BACK SCREEN — PHẢI absolute, trượt nhẹ (parallax) theo tiến độ vuốt-back */}
+            {backScreen && enabled && (
+              <Animated.View
+                pointerEvents="none"
+                style={[
+                  StyleSheet.absoluteFillObject,
+                  {
+                    zIndex: 0,
+                    transform: [{ translateX: backScreenTranslateX }],
+                  },
+                ]}
+              >
+                {renderBackScreen()}
+              </Animated.View>
+            )}
 
-        {/* OVERLAY — PHẢI absolute */}
-        {
-          backScreen && enabled && (
+            {/* OVERLAY — PHẢI absolute */}
+            {
+              backScreen && enabled && (
+                <Animated.View
+                  pointerEvents="none"
+                  style={[
+                    StyleSheet.absoluteFillObject,
+                    {
+                      backgroundColor: overlayColor,
+                      opacity: overlayOpacity,
+                      zIndex: 1,
+                    },
+                  ]}
+                />
+              )
+            }
+
+            {/* CURRENT SCREEN — nằm trên cùng, chỉ translateX theo vuốt-back (header không bị ảnh hưởng) */}
             <Animated.View
-              pointerEvents="none"
-              style={[
-                StyleSheet.absoluteFillObject,
-                {
-                  backgroundColor: overlayColor,
-                  opacity: overlayOpacity,
-                  zIndex: 1,
-                },
-              ]}
-            />
-          )
-        }
-
-        {/* CURRENT SCREEN — nằm trên cùng */}
-        <Animated.View
-          style={{
-            flex: 1,
-            zIndex: 2,
-            transform: [{ translateX }],
-          }}
-        >
-          <Animated.View
-            style={{
-              flex: 1,
-            }}
-            {...(enabled ? wrapperPanResponder.panHandlers : {})}
-          >
-            {children}
-          </Animated.View>
+              style={{
+                flex: 1,
+                zIndex: 2,
+                transform: [{ translateX }],
+              }}
+            >
+              <Animated.View
+                style={{
+                  flex: 1,
+                }}
+                {...(enabled ? wrapperPanResponder.panHandlers : {})}
+              >
+                {children}
+              </Animated.View>
+            </Animated.View>
+          </View>
+          {footer}
         </Animated.View>
 
         {/* SIDE MENU */}

@@ -63,20 +63,21 @@ const MedCardImageScreen = () => {
     <>
       {/* <SafeAreaView /> */}
     
-      <HeaderBack
-        title="Thẻ bảo hiểm y tế"
-        textColor="#34689E"
-        onGoBack={() => router.replace("/home/medinsurance")}
-        styleContainer={{ backgroundColor: "#fff" }}
-        colors={['#fff', '#fff']}
-        isGoBack={true}
-        titleVariant="subheading"
-        iconLeft={
-          <Entypo name="chevron-left" size={33} color={Colors.primary} />
-        }
-      />
-      
       <SwipeBackContainer
+        header={
+          <HeaderBack
+            title="Thẻ bảo hiểm y tế"
+            textColor="#34689E"
+            onGoBack={() => (router.canGoBack() ? router.back() : router.replace("/home/medinsurance"))}
+            styleContainer={{ backgroundColor: "#fff" }}
+            colors={['#fff', '#fff']}
+            isGoBack={true}
+            titleVariant="subheading"
+            iconLeft={
+              <Entypo name="chevron-left" size={33} color={Colors.primary} />
+            }
+          />
+        }
         enabled={false}
         overlayColor="#fff"
         onLogout={() => router.replace("/auth")}

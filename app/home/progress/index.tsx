@@ -304,26 +304,29 @@ const Progress = () => {
 
   return (
     <>
-      <HeaderBack
-        title="QUÁ TRÌNH THAM GIA"
-        titleVariant="headingMdRegular"
-        textColor="white"
-        textStyle={{ fontSize: 17.08 }}
-        backTitle="QUẢN LÝ CÁ NHÂN"
-        onGoBack={() => router.replace("/home")}
-        backIconLeft={<Ionicons name="menu" size={33.33} color="white" />}
-        backIconRight={
-          <Image
-            source={require("@/assets/images/bell.png")}
-            style={{ width: 35.16, height: 23.11 }}
-            resizeMode="contain"
+      <SwipeBackContainer
+        header={
+          <HeaderBack
+            title="QUÁ TRÌNH THAM GIA"
+            titleVariant="headingMdRegular"
+            textColor="white"
+            textStyle={{ fontSize: 17.08 }}
+            backTitle="QUẢN LÝ CÁ NHÂN"
+            onGoBack={() => (router.canGoBack() ? router.back() : router.replace("/home"))}
+            backIconLeft={<Ionicons name="menu" size={33.33} color="white" />}
+            backIconRight={
+              <Image
+                source={require("@/assets/images/bell.png")}
+                style={{ width: 35.16, height: 23.11 }}
+                resizeMode="contain"
+              />
+            }
           />
         }
-      />
-      <SwipeBackContainer
+        footer={<BottomMenuBar />}
         enabled={enabled}
         backScreen={Home}
-        onBack={() => router.replace("/home")}
+        onBack={() => (router.canGoBack() ? router.back() : router.replace("/home"))}
         onLogout={() => router.replace("/auth")}
       >
         <View style={{ flex: 1, backgroundColor:  Colors.bgScreen }}>
@@ -466,17 +469,16 @@ const Progress = () => {
               />
             )
           }
-
-          {/* SIDE MENU (Modal) */}
-          <SideMenu
-            visible={menuVisible}
-            translateX={menuTranslateX}
-            onClose={closeMenu}
-            onLogout={handleLogout}
-          />
         </View>
       </SwipeBackContainer>
-      <BottomMenuBar />
+
+      {/* SIDE MENU (Modal) cục bộ của trang — dự phòng, thực tế gesture ở SwipeBackContainer xử lý trước */}
+      <SideMenu
+        visible={menuVisible}
+        translateX={menuTranslateX}
+        onClose={closeMenu}
+        onLogout={handleLogout}
+      />
     </>
   );
 };

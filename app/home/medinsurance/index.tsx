@@ -29,32 +29,34 @@ const MedInSurance = () => {
   }
   return (
     <>
-      <HeaderBack
-        title="THẺ BẢO HIỂM Y TẾ"
-        titleVariant="headingMdRegular"
-        textColor="white"
-        textStyle={{ fontSize: 17.08 }}
-        backTitle="QUẢN LÝ CÁ NHÂN"
-        onGoBack={() => router.replace("/home")}
-        backIconLeft={<Ionicons name="menu" size={33.33} color="white" />}
-        backIconRight={
-          <Image
-            source={require("@/assets/images/bell.png")}
-            style={{ width: 35.16, height: 23.11 }}
-            resizeMode="contain"
+      <SwipeBackContainer
+        header={
+          <HeaderBack
+            title="THẺ BẢO HIỂM Y TẾ"
+            titleVariant="headingMdRegular"
+            textColor="white"
+            textStyle={{ fontSize: 17.08 }}
+            backTitle="QUẢN LÝ CÁ NHÂN"
+            onGoBack={() => (router.canGoBack() ? router.back() : router.replace("/home"))}
+            backIconLeft={<Ionicons name="menu" size={33.33} color="white" />}
+            backIconRight={
+              <Image
+                source={require("@/assets/images/bell.png")}
+                style={{ width: 35.16, height: 23.11 }}
+                resizeMode="contain"
+              />
+            }
           />
         }
-      />
-      <SwipeBackContainer
+        footer={<BottomMenuBar />}
         backScreen={Home}
-        onBack={() => router.replace("/home")}
+        onBack={() => (router.canGoBack() ? router.back() : router.replace("/home"))}
         onLogout={() => router.replace("/auth")}
       >
         <View
           style={{
             flex: 1,
-              backgroundColor: "#fff",
-              marginTop: 4,
+            backgroundColor: "#fff",
           }}
         >
           <View
@@ -160,7 +162,6 @@ const MedInSurance = () => {
           </View>
         </View>
       </SwipeBackContainer>
-      <BottomMenuBar />
     </>
   );
 };

@@ -106,11 +106,9 @@ const HeaderBack = (props: HeaderBackProps) => {
             "/home/progress/detail",
           ].includes(pathName)
             ? 100
-            : ["/home", "/home/progress"].includes(pathName)
+            : ["/home", "/home/progress", "/home/medinsurance"].includes(pathName)
               ? 100
-              : ["/home/medinsurance"].includes(pathName)
-                ? 102
-                : 27,
+              : 27,
           marginTop: 0,
           justifyContent: "flex-end",
           height: [
@@ -120,7 +118,7 @@ const HeaderBack = (props: HeaderBackProps) => {
             ? 'auto'
             // : ["/home", "/home/progress"].includes(pathName)
             //   ? 84
-              : 63.63
+            : 63.63
           ,
         }}
       >
@@ -198,7 +196,7 @@ const HeaderBack = (props: HeaderBackProps) => {
                   right: 0,
                   bottom: 0,
                   opacity: backHeaderOpacity,
-                  marginBottom: 4
+                  marginBottom: 8
                 },
                 { color: textColor || "" },
                 textStyle,
