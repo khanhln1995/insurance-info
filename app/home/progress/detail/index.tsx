@@ -34,23 +34,25 @@ const DetailProgress = () => {
   return (
     <>
     {/* <SafeAreaView /> */}
-      <HeaderBack
-        title="Chi tiết"
-        textColor={Colors.primary}
-        titleVariant="subheading"
-        onGoBack={() => {
-          router.replace({
-            pathname: '/home/progress',
-            params: { tabId: tabId }
-          });
-        }}
-        styleContainer={{ backgroundColor: "#fff" }}
-        colors={['#fff', '#fff']}
-        iconLeft={
-          <Entypo name="chevron-left" size={33} color={Colors.primary} />
-        }
-      />
       <SwipeBackContainer
+        header={
+          <HeaderBack
+            title="Chi tiết"
+            textColor={Colors.primary}
+            titleVariant="subheading"
+            onGoBack={() => {
+              router.replace({
+                pathname: '/home/progress',
+                params: { tabId: tabId }
+              });
+            }}
+            styleContainer={{ backgroundColor: "#fff" }}
+            colors={['#fff', '#fff']}
+            iconLeft={
+              <Entypo name="chevron-left" size={33} color={Colors.primary} />
+            }
+          />
+        }
         enabled={false}
         onLogout={() => router.replace("/auth")}
       >

@@ -30,6 +30,7 @@ const HomeHeader = ({ onOpenMenu }: { onOpenMenu: () => void }) => {
         />
       }
       textColor="white"
+      textStyle={{ fontSize: 17.08 }}
       onGoBack={onOpenMenu}
     />
   );
@@ -132,7 +133,7 @@ export const HomeContent = ({
           alignSelf: "center",
           flex: 1,
           width: "100%",
-          backgroundColor: '#fff',
+          backgroundColor: Colors.bgScreen,
         }}
       >
         <View
@@ -142,7 +143,7 @@ export const HomeContent = ({
           }}
         >
           <InfoCard type="user" />
-          <Spacer size={22.46} />
+          <Spacer size={36} />
           <RenderSelect
             text="THẺ BHYT"
             source={Card}
@@ -176,6 +177,11 @@ export const HomeContent = ({
 const Home = () => {
   const [visible, setVisible] = React.useState(false);
   const menuTranslateX = React.useRef(new Animated.Value(-DRAWER_W)).current;
+  // Đẩy nội dung màn hình sang phải theo mép phải của SideMenu khi mở
+  const menuPushX = menuTranslateX.interpolate({
+    inputRange: [-DRAWER_W, 0],
+    outputRange: [0, DRAWER_W],
+  });
 
   const openMenu = () => {
     menuTranslateX.setValue(0);
@@ -207,8 +213,11 @@ const Home = () => {
 
   return (
     <SafeArea>
-      <HomeHeader onOpenMenu={openMenu} />
-      <HomeContent panResponder={panResponder} router={router} />
+      <Animated.View style={{ flex: 1, transform: [{ translateX: menuPushX }] }}>
+        <HomeHeader onOpenMenu={openMenu} />
+        <HomeContent panResponder={panResponder} router={router} />
+        <BottomMenuBar />
+      </Animated.View>
       <SideMenu
         visible={visible}
         translateX={menuTranslateX}
@@ -217,7 +226,6 @@ const Home = () => {
           router.replace("/auth");
         }}
       />
-      <BottomMenuBar />
     </SafeArea>
   );
 };

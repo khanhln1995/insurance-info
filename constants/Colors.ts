@@ -27,6 +27,9 @@ export const Colors = {
   textPrimary: "#488DAC",
   border: "#BAB8B8",
   bgInfo: "#EAEFF3",
+  bgInfoGradientStart: "#EFF1F2",
+  bgInfoGradientEnd: "#E2EDF3",
+  bgScreen: "#F2F3F2",
   txtDark: "#2E2E2E",
   txtSecondary: "#4F4F4F",
 };

@@ -7,6 +7,7 @@ import Spacer from "@/components/Spacer";
 import SwipeBackContainer from "@/components/SwipeBackContainer";
 import { Colors } from "@/constants/Colors";
 import { Ionicons } from "@expo/vector-icons";
+import { LinearGradient } from "expo-linear-gradient";
 import { useRouter } from "expo-router";
 import React from "react";
 import { Image, TouchableOpacity, View } from "react-native";
@@ -28,61 +29,72 @@ const MedInSurance = () => {
   }
   return (
     <>
-      <HeaderBack
-        title="THẺ BẢO HIỂM Y TẾ"
-        titleVariant="headingMdRegular"
-        textColor="white"
-        backTitle="QUẢN LÝ CÁ NHÂN"
-        onGoBack={() => router.replace("/home")}
-        backIconLeft={<Ionicons name="menu" size={33.33} color="white" />}
-        backIconRight={
-          <Image
-            source={require("@/assets/images/bell.png")}
-            style={{ width: 35.16, height: 23.11 }}
-            resizeMode="contain"
+      <SwipeBackContainer
+        header={
+          <HeaderBack
+            title="THẺ BẢO HIỂM Y TẾ"
+            titleVariant="headingMdRegular"
+            textColor="white"
+            textStyle={{ fontSize: 17.08 }}
+            backTitle="QUẢN LÝ CÁ NHÂN"
+            onGoBack={() => (router.canGoBack() ? router.back() : router.replace("/home"))}
+            backIconLeft={<Ionicons name="menu" size={33.33} color="white" />}
+            backIconRight={
+              <Image
+                source={require("@/assets/images/bell.png")}
+                style={{ width: 35.16, height: 23.11 }}
+                resizeMode="contain"
+              />
+            }
           />
         }
-      />
-      <SwipeBackContainer
+        footer={<BottomMenuBar />}
         backScreen={Home}
-        onBack={() => router.replace("/home")}
+        onBack={() => (router.canGoBack() ? router.back() : router.replace("/home"))}
         onLogout={() => router.replace("/auth")}
       >
         <View
           style={{
             flex: 1,
-            backgroundColor: "white",
+            backgroundColor: "#fff",
           }}
         >
           <View
             style={{
-              padding: 20,
               flex: 1,
-              backgroundColor: "white",
               justifyContent: "space-between",
+              width: "100%",
             }}
           >
             {
               !loading && (
                 <>
-                  <View>
+                  <View style={{
+                    width: "100%",
+                    height: "92%",
+                    padding: 16,
+                    backgroundColor: Colors.bgScreen,
+                   }}>
                     <InfoCard type="insurance" />
                     <Spacer size={39.52} />
-                    <View
+                    <LinearGradient
+                      colors={[Colors.bgInfoGradientStart, Colors.bgInfoGradientEnd]}
+                      start={{ x: 0, y: 0 }}
+                      end={{ x: 1, y: 0 }}
                       style={{
                         paddingHorizontal: 13.4,
                         paddingVertical: 9.38,
-                        backgroundColor: Colors.bgInfo,
                         borderRadius: 5,
+                        paddingBottom: 40.02,
                       }}
                     >
-                      <AppText variant="headingMdBold" style={{ color: "#306BA3" }}>
-                        Thông tin quyền lợi
+                      <AppText variant="headingMdBold" style={{ color: "#306BA3", fontSize: 13.74 }}>
+                        Thông tin quyền lợi:
                       </AppText>
                       <Spacer size={10} />
                       <AppText
                         variant="small"
-                        style={{ marginLeft: 10, lineHeight: 17.4 }}
+                        style={{ marginLeft: 10, lineHeight: 17.4, fontSize: 12.4 }}
                       >
                         Được hưởng 80% chi phí khám bệnh, chữa bệnh trong phạm vi được
                         hưởng BHYT (áp dụng tỷ lệ thanh toán một số thuốc, hoá chất, vật
@@ -90,7 +102,7 @@ const MedInSurance = () => {
                       </AppText>
                       <AppText
                         variant="small"
-                        style={{ marginLeft: 10, lineHeight: 17.4 }}
+                        style={{ marginLeft: 10, lineHeight: 17.4, fontSize: 12.4 }}
                       >
                         Trong trường hợp điều trị nội trú trái tuyến tại CSKCB tuyến TW sẽ
                         được hưởng 32% (TH trên thẻ có mã nơi sinh sống là K1 hoặc K2 hoặc
@@ -101,13 +113,14 @@ const MedInSurance = () => {
                         toán một số thuốc, hoá chất, vật tư y tế và dịch vụ kỹ thuật theo
                         quy định của Bộ trưởng Bộ Y tế)..
                       </AppText>
-                    </View>
+                    </LinearGradient>
                   </View>
                   <View
                     style={{
                       flexDirection: "row",
                       justifyContent: "space-between",
-                      paddingHorizontal: 20,
+                      paddingHorizontal: 60,
+                      marginBottom: 16,
                     }}
                   >
                     <TouchableOpacity
@@ -149,7 +162,6 @@ const MedInSurance = () => {
           </View>
         </View>
       </SwipeBackContainer>
-      <BottomMenuBar />
     </>
   );
 };

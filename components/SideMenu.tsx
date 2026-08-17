@@ -319,7 +319,7 @@ const SideMenu: React.FC<Props> = ({
             </View>
             <View style={styles.footerWrap}>
               <AppText variant="label" style={styles.footer}>
-                Phiên bản 2.6
+                Phiên bản 2.7
               </AppText>
               <AppText variant="label" style={styles.footer}>
                 © Bản quyền thuộc về Bảo hiểm xã hội Việt Nam.
