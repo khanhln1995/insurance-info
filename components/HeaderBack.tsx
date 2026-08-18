@@ -104,10 +104,9 @@ const HeaderBack = (props: HeaderBackProps) => {
           paddingTop: [
             "/home/medinsurance/card",
             "/home/progress/detail",
+            "/home", "/home/progress", "/home/medinsurance"
           ].includes(pathName)
-            ? 100
-            : ["/home", "/home/progress", "/home/medinsurance"].includes(pathName)
-              ? 100
+            ? 106
               : 27,
           marginTop: 0,
           justifyContent: "flex-end",
@@ -129,7 +128,7 @@ const HeaderBack = (props: HeaderBackProps) => {
               style={{
                 zIndex: 9999,
                 position: "absolute",
-                left: "5%",
+                left: "2%",
                 // top: 2,
                 opacity: currentHeaderOpacity,
                 paddingBottom: 4
@@ -157,7 +156,7 @@ const HeaderBack = (props: HeaderBackProps) => {
               style={{
                 zIndex: 9999,
                 position: "absolute",
-                left: "5%",
+                left: "2%",
                 opacity: backHeaderOpacity,
                 paddingBottom: 4
               }}

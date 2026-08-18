@@ -332,23 +332,6 @@ const SwipeBackContainer = ({
               </Animated.View>
             )}
 
-            {/* OVERLAY — PHẢI absolute */}
-            {
-              backScreen && enabled && (
-                <Animated.View
-                  pointerEvents="none"
-                  style={[
-                    StyleSheet.absoluteFillObject,
-                    {
-                      backgroundColor: overlayColor,
-                      opacity: overlayOpacity,
-                      zIndex: 1,
-                    },
-                  ]}
-                />
-              )
-            }
-
             {/* CURRENT SCREEN — nằm trên cùng, chỉ translateX theo vuốt-back (header không bị ảnh hưởng) */}
             <Animated.View
               style={{

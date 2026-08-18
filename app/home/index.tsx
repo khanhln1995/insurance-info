@@ -108,7 +108,7 @@ export const HomeContent = ({
             <AppText
               variant="headingMdRegular"
               numberOfLines={1}
-              style={{ color: Colors.txtSecondary }}
+              style={{ color: Colors.txtSecondary, fontSize: 17.08 }}
             >
               {text}
             </AppText>
@@ -143,7 +143,7 @@ export const HomeContent = ({
           }}
         >
           <InfoCard type="user" />
-          <Spacer size={36} />
+          <Spacer size={24} />
           <RenderSelect
             text="THẺ BHYT"
             source={Card}

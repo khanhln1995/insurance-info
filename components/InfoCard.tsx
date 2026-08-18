@@ -36,14 +36,14 @@ const InfoCard = ({ type }: Props) => {
           alignItems: alignTop ? "flex-start" : "center",
           borderBottomColor: isBorderBottom ? '#C5CED3' : '',
           borderBottomWidth: isBorderBottom ? 0.67 : 0,
-          paddingBottom: 7.37,
-          paddingTop: 11.39
+          paddingBottom: 8,
+          paddingTop: 8
         }}
       >
         <AppText variant="label" style={{
             color: "#4E4E4E",
             marginRight: 24,
-            fontSize: 13.07,
+            // fontSize: 13.07,
             // flex: 1
           }}
         >
@@ -55,7 +55,7 @@ const InfoCard = ({ type }: Props) => {
             color: "#4E4E4E",
             flex: isFlex ? 1 : 2,
             textAlign: "right", // align to right if you want
-            fontSize: 13.07,
+            // fontSize: 13.07,
             maxWidth: 250,
           }}
         >
@@ -69,8 +69,8 @@ const InfoCard = ({ type }: Props) => {
     case "user":
       subInfo = (
         <View>
-          <AppText variant="body" style={styles.txtSubInfo}>
-            Mã BHXH : {userInfo?.masoBHXH}
+          <AppText variant="small" style={styles.txtSubInfo}>
+            Mã BHXH: {userInfo?.masoBHXH}
           </AppText>
         </View>
       );
@@ -86,11 +86,11 @@ const InfoCard = ({ type }: Props) => {
       break;
     case "insurance":
       subInfo = (
-        <View>
-          <AppText variant="body" style={styles.txtSubInfo}>
+        <View style={{ paddingBottom: 4 }}>
+          <AppText variant="small" style={styles.txtSubInfo}>
             Thời hạn có giá trị
           </AppText>
-          <AppText variant="body" style={styles.txtSubInfo}>
+          <AppText variant="small" style={styles.txtSubInfo}>
             {medInsurance?.thoigian}
           </AppText>
         </View>
@@ -116,7 +116,7 @@ const InfoCard = ({ type }: Props) => {
       colors={[Colors.bgInfoGradientStart, Colors.bgInfoGradientEnd]}
       start={{ x: 0, y: 0 }}
       end={{ x: 1, y: 0 }}
-      style={{ padding: type === "user" ? 17.41 : 10, borderRadius: 5 }}
+      style={{ padding: 8, borderRadius: 5, paddingBottom:  type === "user" ? 18 : 10}}
     >
       <View style={{
           flexDirection: "row",
@@ -154,10 +154,10 @@ const InfoCard = ({ type }: Props) => {
           )}
         </View>
         <View>
-          <AppText variant="bodyBold" style={{ marginBottom: 4, fontWeight: '600' }}>
+          <AppText variant="headingMdBold" style={{ marginBottom: 4, fontWeight: '600' }}>
             {name}
           </AppText>
-          <AppText variant="body">{subInfo}</AppText>
+          <AppText variant="small">{subInfo}</AppText>
         </View>
       </View>
       {contentCard}

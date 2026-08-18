@@ -361,7 +361,7 @@ const Progress = () => {
                       >
                         <Image
                           source={isSelected ? tab.tabActiveIcon : tab.tabIcon}
-                          style={{ width: 47.89, height: 47.89 }}
+                          style={ tab.id === 5 ? { width: 38.89, height: 40.89 } : { width: 47.89, height: 47.89 }}
                           resizeMode="contain"
                         />
                       </TouchableOpacity>
@@ -371,6 +371,7 @@ const Progress = () => {
                         style={[
                           styles.tabLabel,
                           { color: isSelected ? "#0574CE" : Colors.border },
+                          { fontSize: 13.4 },
                         ]}
                         numberOfLines={2}
                         ellipsizeMode="tail"

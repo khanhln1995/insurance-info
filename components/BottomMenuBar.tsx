@@ -17,39 +17,39 @@ const BottomMenuBar = () => {
         // alignItems: "center",
         justifyContent: "space-around",
         backgroundColor: "white",
-        height: 49.23,
-        paddingTop:6,
+        height: 74,
+        paddingTop: 8,
       }}
     >
       <TouchableOpacity
-        style={{ alignItems: "center", justifyContent: "center" }}
+        style={{ alignItems: "center" }}
       >
-        <SettingUser width={21.53} height={21.6}/>
-        <AppText variant="captionBold" style={{ color: Colors.primary, marginTop: 6 }}>
+        <SettingUser width={20.53} height={20.6}/>
+        <AppText variant="captionBold" style={{ color: Colors.primary, marginTop: 4, fontSize: 10 }}>
           QL cá nhân
         </AppText>
       </TouchableOpacity>
       <TouchableOpacity
-        style={{ alignItems: "center", justifyContent: "center" }}
+        style={{ alignItems: "center" }}
       >
         <ListInactive width={14.41} height={20.93} />
-        <AppText variant="captionBold" style={{ color: Colors.txtDark, marginTop: 6 }}>
+        <AppText variant="captionBold" style={{ color: Colors.txtDark, marginTop: 4, fontSize: 10 }}>
           Dịch vụ công
         </AppText>
       </TouchableOpacity>
       <TouchableOpacity
-        style={{ alignItems: "center", justifyContent: "center" }}
+        style={{ alignItems: "center" }}
       >
         <GlobalSearchInactive width={19.79} height={20.63} />
-        <AppText variant="captionBold" style={{ color: Colors.txtDark, marginTop: 6 }}>
+        <AppText variant="captionBold" style={{ color: Colors.txtDark, marginTop: 4, fontSize: 10 }}>
           Tra cứu
         </AppText>
       </TouchableOpacity>
       <TouchableOpacity
-        style={{ alignItems: "center", justifyContent: "center" }}
+        style={{ alignItems: "center" }}
       >
         <SupportInactive width={16.74} height={16.26} />
-        <AppText variant="captionBold" style={{ color: Colors.txtDark, marginTop: 6 }}>
+        <AppText variant="captionBold" style={{ color: Colors.txtDark, marginTop: 4, fontSize: 10 }}>
           Trợ giúp
         </AppText>
       </TouchableOpacity>

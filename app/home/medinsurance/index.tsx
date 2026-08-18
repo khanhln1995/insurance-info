@@ -88,13 +88,13 @@ const MedInSurance = () => {
                         paddingBottom: 40.02,
                       }}
                     >
-                      <AppText variant="headingMdBold" style={{ color: "#306BA3", fontSize: 13.74 }}>
+                      <AppText variant="headingMdBold" style={{ color: "#426EA2", fontSize: 13.74 }}>
                         Thông tin quyền lợi:
                       </AppText>
                       <Spacer size={10} />
                       <AppText
                         variant="small"
-                        style={{ marginLeft: 10, lineHeight: 17.4, fontSize: 12.4 }}
+                        style={{ marginLeft: 10, lineHeight: 17.4, fontSize: 13 }}
                       >
                         Được hưởng 80% chi phí khám bệnh, chữa bệnh trong phạm vi được
                         hưởng BHYT (áp dụng tỷ lệ thanh toán một số thuốc, hoá chất, vật
@@ -102,7 +102,7 @@ const MedInSurance = () => {
                       </AppText>
                       <AppText
                         variant="small"
-                        style={{ marginLeft: 10, lineHeight: 17.4, fontSize: 12.4 }}
+                        style={{ marginLeft: 10, lineHeight: 17.4, fontSize: 13 }}
                       >
                         Trong trường hợp điều trị nội trú trái tuyến tại CSKCB tuyến TW sẽ
                         được hưởng 32% (TH trên thẻ có mã nơi sinh sống là K1 hoặc K2 hoặc

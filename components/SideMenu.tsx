@@ -182,7 +182,7 @@ const SideMenu: React.FC<Props> = ({
           const backdropOpacity = (anim as any).interpolate
             ? (anim as any).interpolate({
                 inputRange: [-DRAWER_W, 0],
-                outputRange: [0, 0.35],
+                outputRange: [0, 0.7],
                 extrapolate: 'clamp',
               })
             : 0.35;
@@ -318,10 +318,10 @@ const SideMenu: React.FC<Props> = ({
               </View>
             </View>
             <View style={styles.footerWrap}>
-              <AppText variant="label" style={styles.footer}>
+              <AppText variant="label" style={{marginBottom: 12, color: "white",}}>
                 Phiên bản 2.7
               </AppText>
-              <AppText variant="label" style={styles.footer}>
+              <AppText variant="label" style={ { fontSize: 15, color: "white",}}>
                 © Bản quyền thuộc về Bảo hiểm xã hội Việt Nam.
               </AppText>
             </View>
@@ -337,7 +337,7 @@ export default SideMenu;
 const styles = StyleSheet.create({
   backdrop: {
     ...StyleSheet.absoluteFillObject,
-    backgroundColor: "rgba(0,0,0,0.35)",
+    backgroundColor: "rgba(0,0,0,0.7)",
   },
   drawerWrap: {
     position: "absolute",
@@ -406,13 +406,9 @@ const styles = StyleSheet.create({
   itemText: {
     color: "white",
   },
-  footer: {
-    color: "#FFFFFF",
-    bottom: 10,
-    marginBottom: 10,
-  },
   footerWrap: {
     // paddingVertical: 12,
+    
     paddingHorizontal: 10.04,
   },
 });
