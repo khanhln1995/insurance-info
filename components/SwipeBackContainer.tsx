@@ -139,26 +139,12 @@ const SwipeBackContainer = ({
   // Tạo pan responder wrapper để phân biệt nửa trên/nửa dưới
   const wrapperPanResponder = React.useRef(
     PanResponder.create({
-      onStartShouldSetPanResponder: (evt) => {
-        const y = evt.nativeEvent.pageY;
-        const boundary = getBoundaryY();
-
-        // Chỉ bắt gesture từ mép trái
-        if (evt.nativeEvent.pageX > EDGE_WIDTH) return false;
-        // Nửa trên (dưới header): swipe back
-        if (y < boundary && enabled && backScreen && !menuVisible) {
-          return true;
-        }
-
-        // Nửa dưới: swipe menu — CHỈ khai báo có thể nhận gesture, không set
-        // state ở đây (should-set là hàm truy vấn thuần, có thể bị gọi cho cả
-        // những chạm không bao giờ trở thành gesture thật, ví dụ tap/scroll dọc)
-        if (y >= boundary) {
-          return true;
-        }
-
-        return false;
-      },
+      // KHÔNG claim ngay khi vừa chạm (touch-start) — tại thời điểm này chưa
+      // có thông tin hướng vuốt (dx/dy đều bằng 0), nên claim sớm ở đây sẽ
+      // "cướp" luôn những gesture mà người dùng thực ra định vuốt-đổi-tab chỉ
+      // vì họ chạm gần mép trái (rất dễ xảy ra). Để onMoveShouldSetPanResponder
+      // (có đủ dx/dy) quyết định — nó đã tự kiểm tra đúng zone + đúng hướng.
+      onStartShouldSetPanResponder: () => false,
 
       onMoveShouldSetPanResponder: (evt, gestureState) => {
         const x0 = gestureState.x0 ?? evt.nativeEvent.pageX;
@@ -390,15 +376,28 @@ const SwipeBackContainer = ({
                 transform: [{ translateX }],
               }}
             >
-              <Animated.View
-                style={{
-                  flex: 1,
-                }}
-                {...(enabled ? wrapperPanResponder.panHandlers : {})}
-              >
-                {children}
-              </Animated.View>
+              {children}
             </Animated.View>
+
+            {/* DẢI MÉP TRÁI — CHỈ vùng này mới gắn PanResponder back/menu. Tách
+                riêng khỏi children (thay vì phủ panHandlers lên toàn màn hình)
+                để gesture chuyển-tab/scroll ở giữa màn hình không bao giờ bị
+                PanResponder này tranh chấp — việc lọc theo toạ độ bên trong
+                logic chỉ còn là chốt chặn dự phòng, không phải cơ chế chính. */}
+            {enabled && (
+              <View
+                collapsable={false}
+                {...wrapperPanResponder.panHandlers}
+                style={{
+                  position: "absolute",
+                  left: 0,
+                  top: 0,
+                  bottom: 0,
+                  width: EDGE_WIDTH,
+                  zIndex: 3,
+                }}
+              />
+            )}
           </View>
           <View
             onLayout={(e) => {

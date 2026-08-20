@@ -10,7 +10,6 @@ import { useLocalSearchParams, useRouter } from "expo-router";
 import React, { useRef } from "react";
 
 import Loading from "@/components/Loading";
-import SideMenu, { DRAWER_W } from "@/components/SideMenu";
 import {
   Animated,
   Dimensions,
@@ -25,7 +24,6 @@ import { HomeContent } from "..";
 
 const BOTTOM_BAR_HEIGHT = 150;
 const SCREEN_WIDTH = Dimensions.get("window").width;
-const SCREEN_HEIGHT = Dimensions.get("window").height;
 
 const Progress = () => {
   const router: any = useRouter();
@@ -94,13 +92,8 @@ const Progress = () => {
     }
   }, [tabId]);
 
-  // keep a ref to the latest selectedTab so PanResponder callbacks see updated value
-  const selectedTabRef = React.useRef(selectedTab);
-  React.useEffect(() => {
-    selectedTabRef.current = selectedTab;
-  }, [selectedTab]);
-
-  const [enabled, setEnabled] = React.useState(true);
+  // SwipeBackContainer luôn bật để back/mở-menu từ mép trái hoạt động trên MỌI tab.
+  const enabled = true;
 
   // Animated horizontal swipe state
   const animatedX = React.useRef(new Animated.Value(0)).current;
@@ -114,33 +107,18 @@ const Progress = () => {
       useNativeDriver: false,
       bounciness: 0,
     }).start();
-    if (index === 0) {
-      setEnabled(true);
-    } else {
-      setEnabled(false);
-    }
   }, [selectedTab]);
   const pressStartTime = useRef(0);
 
   // ------------------------------------
   //  INTERACTIVE PANRESPONDER — SMOOTH DRAG
+  //  Gesture ở dải mép trái (back/mở-menu) được SwipeBackContainer bắt riêng
+  //  bằng một overlay vật lý tách biệt, nên panResponder này không cần tự đoán
+  //  toạ độ để nhường nữa — cứ vuốt ngang là chuyển tab, hai chiều như nhau.
   // ------------------------------------
   const panResponder = React.useRef(
     PanResponder.create({
       onMoveShouldSetPanResponderCapture: (evt, gestureState) => {
-        const currentIndex = progressData.findIndex(
-          (t) => t.id === selectedTabRef.current.id
-        );
-        if (currentIndex === 0) {
-          setEnabled(true);
-        } else {
-          setEnabled(false);
-        }
-        // Nếu ở tab đầu tiên và vuốt phải từ mép trái, để SwipeBackContainer xử lý
-        if (currentIndex === 0 && gestureState.dx > 0) {
-          return false;
-        }
-
         return (
           Math.abs(gestureState.dx) > Math.abs(gestureState.dy) * 2 &&
           Math.abs(gestureState.dx) > 10
@@ -155,37 +133,11 @@ const Progress = () => {
       },
 
       onPanResponderMove: (_, gestureState) => {
-        const currentIndex = progressData.findIndex(
-          (t) => t.id === selectedTabRef.current.id
-        );
-
-        // Nếu ở tab đầu tiên và vuốt phải, không xử lý (để SwipeBackContainer xử lý)
-        // Nhưng nếu vuốt trái thì vẫn cho phép chuyển tab
-        if (currentIndex === 0 && gestureState.dx > 0) {
-          return;
-        }
-
         // follow finger for normal horizontal swipes
         animatedX.setValue(panStartOffset.current + gestureState.dx);
       },
 
       onPanResponderRelease: (_, gestureState) => {
-        const currentIndex = progressData.findIndex(
-          (t) => t.id === selectedTabRef.current.id
-        );
-
-        // Nếu ở tab đầu tiên và vuốt phải, không xử lý ở đây (để SwipeBackContainer xử lý)
-        // Logic swipe back đã được xử lý trong SwipeBackContainer
-        if (currentIndex === 0 && gestureState.dx > 0) {
-          // Reset về vị trí tab đầu tiên
-          Animated.spring(animatedX, {
-            toValue: 0,
-            useNativeDriver: false,
-            bounciness: 0,
-          }).start();
-          return;
-        }
-
         // compute final offset and decide nearest index
         const finalOffset = panStartOffset.current + gestureState.dx;
         let targetIndex = Math.round(-finalOffset / SCREEN_WIDTH);
@@ -230,78 +182,6 @@ const Progress = () => {
     return <HomeContent panResponder={null} router={router} />;
   }
 
-  // SIDE MENU ANIMATION
-  const menuTranslateX = React.useRef(new Animated.Value(-DRAWER_W)).current;
-  const menuDragStartX = React.useRef(-DRAWER_W);
-  const [menuVisible, setMenuVisible] = React.useState(false);
-
-  const closeMenu = React.useCallback(() => {
-    Animated.spring(menuTranslateX, {
-      toValue: -DRAWER_W,
-      useNativeDriver: true,
-    }).start(() => {
-      setMenuVisible(false);
-    });
-  }, [menuTranslateX]);
-
-  // Drag from the left edge area to open the SideMenu smoothly
-  const menuOpenPanResponder = React.useRef(
-    PanResponder.create({
-      onStartShouldSetPanResponder: () => false,
-      onMoveShouldSetPanResponder: (_evt, gestureState) => {
-        if (menuVisible) return false;
-        const isHorizontal =
-          Math.abs(gestureState.dx) > 6 &&
-          Math.abs(gestureState.dx) > Math.abs(gestureState.dy);
-        return isHorizontal && gestureState.dx > 0;
-      },
-      onMoveShouldSetPanResponderCapture: (_evt, gestureState) => {
-        if (menuVisible) return false;
-        const isHorizontal =
-          Math.abs(gestureState.dx) > 6 &&
-          Math.abs(gestureState.dx) > Math.abs(gestureState.dy);
-        return isHorizontal && gestureState.dx > 0;
-      },
-      onPanResponderGrant: () => {
-        // show modal immediately so user sees it follow the finger
-        setMenuVisible(true);
-        menuTranslateX.stopAnimation((value) => {
-          menuDragStartX.current = value;
-        });
-      },
-      onPanResponderMove: (_evt, gestureState) => {
-        const newX = Math.max(
-          -DRAWER_W,
-          Math.min(0, menuDragStartX.current + gestureState.dx)
-        );
-        menuTranslateX.setValue(newX);
-      },
-      onPanResponderRelease: (_evt, gestureState) => {
-        const finalX = menuDragStartX.current + gestureState.dx;
-        const shouldOpen = finalX > -DRAWER_W * 0.5 || gestureState.vx > 0.5;
-
-        Animated.spring(menuTranslateX, {
-          toValue: shouldOpen ? 0 : -DRAWER_W,
-          useNativeDriver: true,
-        }).start(() => {
-          if (!shouldOpen) setMenuVisible(false);
-        });
-      },
-      onPanResponderTerminate: () => {
-        // If gesture is interrupted, snap closed
-        Animated.spring(menuTranslateX, {
-          toValue: -DRAWER_W,
-          useNativeDriver: true,
-        }).start(() => {
-          setMenuVisible(false);
-        });
-      },
-    })
-  ).current;
-  const handleLogout = React.useCallback(() => {
-      router.replace("/auth");
-  }, [router]);
-
   return (
     <>
       <SwipeBackContainer
@@ -329,7 +209,7 @@ const Progress = () => {
         onBack={() => (router.canGoBack() ? router.back() : router.replace("/home"))}
         onLogout={() => router.replace("/auth")}
       >
-        <View style={{ flex: 1, backgroundColor:  Colors.bgScreen }}>
+        <View style={{ flex: 1, backgroundColor:  Colors.bgScreen, overflow: "hidden" }}>
 
           {/* GẮN gesture SWIPE TAB vào nội dung chính + trượt cả màn theo tay */}
           <Animated.View
@@ -452,34 +332,8 @@ const Progress = () => {
               )}
             </View>
           </Animated.View>
-
-          {/* EDGE HANDLE (drag right to open menu) */}
-          {
-            selectedTab.id !== 1 && (
-              <View
-                collapsable={false}
-                {...menuOpenPanResponder.panHandlers}
-                style={{
-                  position: "absolute",
-                  left: 0,
-                  bottom: 0,
-                  height: SCREEN_HEIGHT / 2,
-                  width: 30,
-                  zIndex: 50,
-                }}
-              />
-            )
-          }
         </View>
       </SwipeBackContainer>
-
-      {/* SIDE MENU (Modal) cục bộ của trang — dự phòng, thực tế gesture ở SwipeBackContainer xử lý trước */}
-      <SideMenu
-        visible={menuVisible}
-        translateX={menuTranslateX}
-        onClose={closeMenu}
-        onLogout={handleLogout}
-      />
     </>
   );
 };
