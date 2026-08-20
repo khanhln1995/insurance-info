@@ -17,7 +17,7 @@ const BottomMenuBar = () => {
         // alignItems: "center",
         justifyContent: "space-around",
         backgroundColor: "white",
-        height: 74,
+        height: 79,
         paddingTop: 8,
       }}
     >
@@ -33,7 +33,7 @@ const BottomMenuBar = () => {
         style={{ alignItems: "center" }}
       >
         <ListInactive width={14.41} height={20.93} />
-        <AppText variant="captionBold" style={{ color: Colors.txtDark, marginTop: 4, fontSize: 10 }}>
+        <AppText variant="captionBold" style={{ color: "#000", marginTop: 4, fontSize: 10 }}>
           Dịch vụ công
         </AppText>
       </TouchableOpacity>
@@ -41,7 +41,7 @@ const BottomMenuBar = () => {
         style={{ alignItems: "center" }}
       >
         <GlobalSearchInactive width={19.79} height={20.63} />
-        <AppText variant="captionBold" style={{ color: Colors.txtDark, marginTop: 4, fontSize: 10 }}>
+        <AppText variant="captionBold" style={{ color: "#000", marginTop: 4, fontSize: 10 }}>
           Tra cứu
         </AppText>
       </TouchableOpacity>
@@ -49,7 +49,7 @@ const BottomMenuBar = () => {
         style={{ alignItems: "center" }}
       >
         <SupportInactive width={16.74} height={16.26} />
-        <AppText variant="captionBold" style={{ color: Colors.txtDark, marginTop: 4, fontSize: 10 }}>
+        <AppText variant="captionBold" style={{ color: "#000", marginTop: 4, fontSize: 10 }}>
           Trợ giúp
         </AppText>
       </TouchableOpacity>

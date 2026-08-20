@@ -86,7 +86,7 @@ const InfoCard = ({ type }: Props) => {
       break;
     case "insurance":
       subInfo = (
-        <View style={{ paddingBottom: 4 }}>
+        <View style={{ gap: 4 }}>
           <AppText variant="small" style={styles.txtSubInfo}>
             Thời hạn có giá trị
           </AppText>
@@ -132,8 +132,8 @@ const InfoCard = ({ type }: Props) => {
         <View
           style={{
             backgroundColor: "white",
-            width: 56,
-            height: 56,
+            width: 60,
+            height: 60,
             borderRadius: 50,
             justifyContent: "center",
             alignItems: "center",
@@ -153,8 +153,8 @@ const InfoCard = ({ type }: Props) => {
             />
           )}
         </View>
-        <View>
-          <AppText variant="headingMdBold" style={{ marginBottom: 4, fontWeight: '600' }}>
+        <View style={{ gap: 4 }}>
+          <AppText variant="headingMdBold" style={{ fontWeight: '600' }}>
             {name}
           </AppText>
           <AppText variant="small">{subInfo}</AppText>

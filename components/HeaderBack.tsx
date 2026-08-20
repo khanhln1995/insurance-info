@@ -104,7 +104,9 @@ const HeaderBack = (props: HeaderBackProps) => {
           paddingTop: [
             "/home/medinsurance/card",
             "/home/progress/detail",
-            "/home", "/home/progress", "/home/medinsurance"
+          ].includes(pathName)
+          ? 66 :
+            ["/home", "/home/progress", "/home/medinsurance"
           ].includes(pathName)
             ? 106
               : 27,
@@ -115,8 +117,6 @@ const HeaderBack = (props: HeaderBackProps) => {
             "/home/progress/detail",
           ].includes(pathName)
             ? 'auto'
-            // : ["/home", "/home/progress"].includes(pathName)
-            //   ? 84
             : 63.63
           ,
         }}
@@ -128,10 +128,10 @@ const HeaderBack = (props: HeaderBackProps) => {
               style={{
                 zIndex: 9999,
                 position: "absolute",
-                left: "2%",
+                left: 7.56,
                 // top: 2,
                 opacity: currentHeaderOpacity,
-                paddingBottom: 4
+                paddingBottom: 6.99
               }}
             >
               <TouchableOpacity
@@ -156,9 +156,9 @@ const HeaderBack = (props: HeaderBackProps) => {
               style={{
                 zIndex: 9999,
                 position: "absolute",
-                left: "2%",
+                left: 7.56,
                 opacity: backHeaderOpacity,
-                paddingBottom: 4
+                paddingBottom: 6.99
               }}
             >
               {backIconLeft}
@@ -175,7 +175,7 @@ const HeaderBack = (props: HeaderBackProps) => {
                 right: 0,
                 bottom: 0,
                 opacity: currentHeaderOpacity,
-                marginBottom: 8
+                marginBottom: 10.85
               },
               { color: textColor || "" },
               textStyle,
@@ -195,7 +195,7 @@ const HeaderBack = (props: HeaderBackProps) => {
                   right: 0,
                   bottom: 0,
                   opacity: backHeaderOpacity,
-                  marginBottom: 8
+                  marginBottom: 10.85
                 },
                 { color: textColor || "" },
                 textStyle,
@@ -209,9 +209,9 @@ const HeaderBack = (props: HeaderBackProps) => {
               style={{
                 zIndex: 9999,
                 position: "absolute",
-                right: "6%",
+                right: 15.12,
                 opacity: currentHeaderOpacity,
-                paddingBottom: 4
+                paddingBottom: 5.48
               }}
             >
               {iconRight}
@@ -222,9 +222,9 @@ const HeaderBack = (props: HeaderBackProps) => {
               style={{
                 zIndex: 9999,
                 position: "absolute",
-                right: "6%",
+                right: 15.12,
                 opacity: backHeaderOpacity,
-                paddingBottom: 4
+                paddingBottom: 5.48
               }}
             >
               {backIconRight}

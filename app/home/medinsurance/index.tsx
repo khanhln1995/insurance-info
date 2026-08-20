@@ -1,8 +1,8 @@
 import AppText from "@/components/AppText";
 import BottomMenuBar from "@/components/BottomMenuBar";
 import HeaderBack from "@/components/HeaderBack";
-import InfoCard from "@/components/InfoCard";
 import Loading from "@/components/Loading";
+import MedInsuranceCard from "@/components/MedInsuranceCard";
 import Spacer from "@/components/Spacer";
 import SwipeBackContainer from "@/components/SwipeBackContainer";
 import { Colors } from "@/constants/Colors";
@@ -37,7 +37,7 @@ const MedInSurance = () => {
             textColor="white"
             textStyle={{ fontSize: 17.08 }}
             backTitle="QUẢN LÝ CÁ NHÂN"
-            onGoBack={() => (router.canGoBack() ? router.back() : router.replace("/home"))}
+            onGoBack={() => (router.replace("/home"))}
             backIconLeft={<Ionicons name="menu" size={33.33} color="white" />}
             backIconRight={
               <Image
@@ -72,17 +72,17 @@ const MedInSurance = () => {
                   <View style={{
                     width: "100%",
                     height: "92%",
-                    padding: 16,
+                    padding: 18,
                     backgroundColor: Colors.bgScreen,
                    }}>
-                    <InfoCard type="insurance" />
+                    <MedInsuranceCard />
                     <Spacer size={39.52} />
                     <LinearGradient
                       colors={[Colors.bgInfoGradientStart, Colors.bgInfoGradientEnd]}
                       start={{ x: 0, y: 0 }}
                       end={{ x: 1, y: 0 }}
                       style={{
-                        paddingHorizontal: 13.4,
+                        paddingHorizontal: 8,
                         paddingVertical: 9.38,
                         borderRadius: 5,
                         paddingBottom: 40.02,
@@ -108,10 +108,10 @@ const MedInSurance = () => {
                         được hưởng 32% (TH trên thẻ có mã nơi sinh sống là K1 hoặc K2 hoặc
                         K3 sẽ được 80%), CSKCB tuyến tỉnh sẽ được hưởng 48% (TH trên thẻ
                         có mã nơi sinh sống là K1 hoặc K2 hoặc K3 sẽ được 80%), từ ngày
-                        01/01/2021 sẽ được hưởng 80%, CSKCB là bệnh viện tuyến huyện sẽ
+                        01/01/2021 sẽ hưởng 80%, CSKCB là bệnh viện tuyến huyện sẽ
                         hưởng 80% Chi phí trong phạm vi hưởng BHYT (áp dụng tỷ lệ thanh
                         toán một số thuốc, hoá chất, vật tư y tế và dịch vụ kỹ thuật theo
-                        quy định của Bộ trưởng Bộ Y tế)..
+                        quy định của Bộ trưởng Bộ Y tế).
                       </AppText>
                     </LinearGradient>
                   </View>

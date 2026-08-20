@@ -102,8 +102,7 @@ const EmploymentHistoryTable: React.FC<Props> = ({
           style={[
             {
               flex: col.flex ?? 1,
-              paddingHorizontal: 8,
-              paddingVertical: 8.48,
+              padding: 7.56,
               justifyContent: "center",
             },
             idx !== 0 && isBHYT && styles.borderLeftWhite,
@@ -123,8 +122,7 @@ const EmploymentHistoryTable: React.FC<Props> = ({
       <View
         style={[
           {
-            paddingHorizontal: 4,
-            paddingVertical: 8.48,
+            padding: 7.56,
             justifyContent: "center",
             width: 32,
             flexGrow: 0,
@@ -139,7 +137,6 @@ const EmploymentHistoryTable: React.FC<Props> = ({
     <View style={[styles.row, { backgroundColor: "white" }]}>
       {displayColumns.map((col, idx) => {
         const value = String(item[col.key] ?? "");
-        const isLast = idx === displayColumns.length - 1;
         const alignStyle: TextStyle =
           col.align === "right"
             ? { textAlign: "right" }

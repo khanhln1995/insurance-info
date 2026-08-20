@@ -5,7 +5,7 @@ import UserInfo from "@/assets/images/icon/user-info.svg";
 import AppText from "@/components/AppText";
 import BottomMenuBar from "@/components/BottomMenuBar";
 import HeaderBack from "@/components/HeaderBack";
-import InfoCard from "@/components/InfoCard";
+import UserInfoCard from "@/components/UserInfoCard";
 import SafeArea from "@/components/SafeArea";
 import SideMenu, { DRAWER_W } from "@/components/SideMenu";
 import Spacer from "@/components/Spacer";
@@ -138,36 +138,37 @@ export const HomeContent = ({
       >
         <View
           style={{
-            paddingTop: 20,
-            marginHorizontal: 17.41,
+            padding: 20,
           }}
         >
-          <InfoCard type="user" />
+          <UserInfoCard />
           <Spacer size={24} />
-          <RenderSelect
-            text="THẺ BHYT"
-            source={Card}
-            route="/home/medinsurance"
-            isTop={false}
-          />
+          <View style={{ padding:4 }}>
+            <RenderSelect
+              text="THẺ BHYT"
+              source={Card}
+              route="/home/medinsurance"
+              isTop={false}
+            />
 
-          <RenderSelect
-            text="QUÁ TRÌNH THAM GIA"
-            route="/home/progress"
-            isTop={false}
-          />
+            <RenderSelect
+              text="QUÁ TRÌNH THAM GIA"
+              route="/home/progress"
+              isTop={false}
+            />
 
-          <RenderSelect
-            text="THÔNG TIN HƯỞNG"
-            source={UserInfo}
-            isTop={false}
-          />
+            <RenderSelect
+              text="THÔNG TIN HƯỞNG"
+              source={UserInfo}
+              isTop={false}
+            />
 
-          <RenderSelect
-            text="SỔ KHÁM CHỮA BỆNH"
-            source={MedPlus}
-            isTop={false}
-          />
+            <RenderSelect
+              text="SỔ KHÁM CHỮA BỆNH"
+              source={MedPlus}
+              isTop={false}
+            />
+          </View>
         </View>
       </View>
     </>

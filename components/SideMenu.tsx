@@ -318,10 +318,10 @@ const SideMenu: React.FC<Props> = ({
               </View>
             </View>
             <View style={styles.footerWrap}>
-              <AppText variant="label" style={{marginBottom: 12, color: "white",}}>
+              <AppText variant="label" style={{fontSize: 14.4,marginBottom: 12, color: "white",}}>
                 Phiên bản 2.7
               </AppText>
-              <AppText variant="label" style={ { fontSize: 15, color: "white",}}>
+              <AppText variant="label" style={ { fontSize: 14.4, color: "white",}}>
                 © Bản quyền thuộc về Bảo hiểm xã hội Việt Nam.
               </AppText>
             </View>
@@ -341,14 +341,13 @@ const styles = StyleSheet.create({
   },
   drawerWrap: {
     position: "absolute",
-    top: 0,
+    top: -8.69,
     bottom: 0,
     left: 0,
     width: DRAWER_W,
   },
   drawer: {
     flex: 1,
-    // paddingHorizontal: 16,
   },
   header: {
     alignItems: "center",
@@ -371,23 +370,22 @@ const styles = StyleSheet.create({
   name: {
     color: "white",
     marginTop: 10,
-    shadowColor: '#000',
-    shadowOffset: { width: 1, height: 1.34 },
-    shadowOpacity: 0.2, 
-    shadowRadius: 1.34,
+    shadowColor: '#0A3D66',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.45,
+    shadowRadius: 3,
     fontWeight: '600',
-    elevation: 2,
+    elevation: 3,
   },
   phone: {
     color: "white",
-    opacity: 0.9,
     marginTop: 2,
-    shadowColor: '#000',
-    shadowOffset: { width: 1, height: 1.34 },
-    shadowOpacity: 0.2, 
-    shadowRadius: 1.34,
+    shadowColor: '#0A3D66',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.45,
+    shadowRadius: 3,
     fontWeight: '600',
-    elevation: 2,
+    elevation: 3,
   },
   hr: {
     height: 4.5,
@@ -408,7 +406,7 @@ const styles = StyleSheet.create({
   },
   footerWrap: {
     // paddingVertical: 12,
-    
-    paddingHorizontal: 10.04,
+    marginBottom: -16,
+    paddingHorizontal: 13.47,
   },
 });

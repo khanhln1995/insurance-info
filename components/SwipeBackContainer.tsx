@@ -6,7 +6,6 @@ import { Animated, Dimensions, PanResponder, StyleSheet, View, ViewStyle } from 
 import { useDispatch } from "react-redux";
 
 const SCREEN_HEIGHT = Dimensions.get("window").height;
-const HALF_SCREEN = SCREEN_HEIGHT / 2;
 
 type SwipeBackContainerProps = {
   children: React.ReactNode;
@@ -50,13 +49,17 @@ const SwipeBackContainer = ({
   });
 
   const handleBack = React.useCallback(() => {
-    dispatch(clearTranslateX());
+    // Không clearTranslateX() ở đây: làm vậy sẽ snap header về trạng thái
+    // "hiện tại" (opacity 1) ngay khi vừa crossfade xong sang backTitle/backIcon,
+    // trước khi màn hình thật sự bị unmount — gây hiệu ứng header nhảy ngược/ẩn
+    // mất đúng lúc vừa vuốt xong. Cleanup ở useEffect (khi component unmount,
+    // tức lúc điều hướng thật sự xảy ra) đã tự lo việc reset store.
     if (onBack) {
       onBack();
     } else if (router.canGoBack()) {
       router.back();
     }
-  }, [onBack, router, dispatch]);
+  }, [onBack, router]);
 
   const handleLogout = React.useCallback(() => {
     if (onLogout) {
@@ -107,6 +110,25 @@ const SwipeBackContainer = ({
 
   const EDGE_WIDTH = 20;
 
+  // Đo chiều cao thực tế của header/footer để tính ranh giới nửa-trên/nửa-dưới
+  // dựa trên vùng NỘI DUNG thực sự vuốt được, thay vì SCREEN_HEIGHT / 2 (không
+  // tính header) — đây chính là nguyên nhân gây hiệu ứng "xé đôi" màn hình khi
+  // vuốt ở vị trí trực quan là "nửa dưới" nhưng vẫn rơi vào vùng pageY < nửa
+  // màn hình vật lý.
+  const headerHeightRef = React.useRef(0);
+  const footerHeightRef = React.useRef(0);
+
+  const getBoundaryY = React.useCallback(() => {
+    const usableHeight =
+      SCREEN_HEIGHT - headerHeightRef.current - footerHeightRef.current;
+    return headerHeightRef.current + usableHeight / 2;
+  }, []);
+
+  // Zone được QUYẾT ĐỊNH DUY NHẤT MỘT LẦN tại onPanResponderGrant và tái sử dụng
+  // xuyên suốt move/release/terminate — tránh việc mỗi callback tự so sánh lại
+  // y0 với ranh giới (có thể lệch nhau) khiến 2 nhánh xử lý cùng chạy và xung đột.
+  const activeZone = React.useRef<"back" | "menu" | null>(null);
+
   const clearLongPress = React.useCallback(() => {
     if (longPressTimeout.current) {
       clearTimeout(longPressTimeout.current);
@@ -119,17 +141,19 @@ const SwipeBackContainer = ({
     PanResponder.create({
       onStartShouldSetPanResponder: (evt) => {
         const y = evt.nativeEvent.pageY;
+        const boundary = getBoundaryY();
 
         // Chỉ bắt gesture từ mép trái
         if (evt.nativeEvent.pageX > EDGE_WIDTH) return false;
-        // Nửa trên: swipe back
-        if (y < HALF_SCREEN && enabled && backScreen && !menuVisible) {
+        // Nửa trên (dưới header): swipe back
+        if (y < boundary && enabled && backScreen && !menuVisible) {
           return true;
         }
 
-        // Nửa dưới: swipe menu
-        if (y >= HALF_SCREEN) {
-          setMenuVisible(true);
+        // Nửa dưới: swipe menu — CHỈ khai báo có thể nhận gesture, không set
+        // state ở đây (should-set là hàm truy vấn thuần, có thể bị gọi cho cả
+        // những chạm không bao giờ trở thành gesture thật, ví dụ tap/scroll dọc)
+        if (y >= boundary) {
           return true;
         }
 
@@ -139,6 +163,7 @@ const SwipeBackContainer = ({
       onMoveShouldSetPanResponder: (evt, gestureState) => {
         const x0 = gestureState.x0 ?? evt.nativeEvent.pageX;
         const y0 = gestureState.y0 ?? evt.nativeEvent.pageY;
+        const boundary = getBoundaryY();
 
         // Chỉ bắt gesture từ mép trái
         if (x0 > EDGE_WIDTH) return false;
@@ -150,12 +175,12 @@ const SwipeBackContainer = ({
         if (!isHorizontal) return false;
 
         // Nửa trên: swipe back
-        if (y0 < HALF_SCREEN && enabled && !menuVisible && gestureState.dx > 8) {
+        if (y0 < boundary && enabled && !menuVisible && gestureState.dx > 8) {
           return true;
         }
 
         // Nửa dưới: swipe menu
-        if (y0 >= HALF_SCREEN && gestureState.dx > 0) {
+        if (y0 >= boundary && gestureState.dx > 0) {
           return true;
         }
 
@@ -163,27 +188,45 @@ const SwipeBackContainer = ({
       },
 
       onPanResponderGrant: (evt, gestureState) => {
+        const x0 = gestureState.x0 ?? evt.nativeEvent.pageX;
         const y0 = gestureState.y0 ?? evt.nativeEvent.pageY;
+        const boundary = getBoundaryY();
 
-        if (y0 < HALF_SCREEN && enabled && !menuVisible) {
+        // Chốt chặn dự phòng: dù Start/Move đã lọc theo EDGE_WIDTH, vẫn kiểm
+        // tra lại x0 ở đây trước khi kích hoạt bất kỳ zone nào. GestureHandlerRootView
+        // (bọc toàn app) đôi khi khiến PanResponder cổ điển nhận Grant cho gesture
+        // mà điều kiện mép ban đầu không thật sự thoả — nếu không chặn lại, sidemenu
+        // có thể mở dù vuốt xa mép trái.
+        if (x0 > EDGE_WIDTH) {
+          activeZone.current = null;
+          return;
+        }
+
+        // Quyết định zone DUY NHẤT một lần tại đây — move/release/terminate
+        // phía sau chỉ đọc lại activeZone.current, không so sánh y0 lần nữa,
+        // nên 2 nhánh xử lý không bao giờ chạy chồng lên nhau giữa chừng.
+        if (y0 < boundary && enabled && !menuVisible) {
+          activeZone.current = "back";
           // Swipe back logic
           translateX.stopAnimation((v: number) => {
             startX.current = v;
             translateX.setOffset(v);
             translateX.setValue(0);
           });
-        } else if (y0 >= HALF_SCREEN) {
+        } else if (y0 >= boundary) {
+          activeZone.current = "menu";
           // Swipe menu logic - bắt đầu ngay lập tức
+          setMenuVisible(true);
           pressStartTime.current = Date.now();
           isLongPressActive.current = true;
           clearLongPress();
+        } else {
+          activeZone.current = null;
         }
       },
 
       onPanResponderMove: (evt, gestureState) => {
-        const y0 = gestureState.y0 ?? evt.nativeEvent.pageY;
-
-        if (y0 < HALF_SCREEN && enabled && !menuVisible) {
+        if (activeZone.current === "back") {
           // Swipe back move
           const gestureX = Math.max(0, gestureState.dx);
           translateX.setValue(gestureX);
@@ -191,7 +234,7 @@ const SwipeBackContainer = ({
           const total = Math.max(0, startX.current + gestureState.dx);
           const opacity = 0.4 * (1 - total / SCREEN_WIDTH);
           overlayOpacity.setValue(Math.max(0, Math.min(0.4, opacity)));
-        } else if (y0 >= HALF_SCREEN && isLongPressActive.current) {
+        } else if (activeZone.current === "menu" && isLongPressActive.current) {
           // Swipe menu move
           const dx = Math.max(0, gestureState.dx);
           menuPan.setValue(dx);
@@ -202,9 +245,7 @@ const SwipeBackContainer = ({
       },
 
       onPanResponderRelease: (evt, gestureState) => {
-        const y0 = gestureState.y0 ?? evt.nativeEvent.pageY;
-
-        if (y0 < HALF_SCREEN && enabled && backScreen && !menuVisible) {
+        if (activeZone.current === "back") {
           // Swipe back release
           translateX.flattenOffset();
           translateX.stopAnimation((v: number) => {
@@ -239,7 +280,7 @@ const SwipeBackContainer = ({
               ]).start();
             }
           });
-        } else if (y0 >= HALF_SCREEN) {
+        } else if (activeZone.current === "menu") {
           // Swipe menu release
           clearLongPress();
           const duration = Date.now() - pressStartTime.current;
@@ -248,6 +289,7 @@ const SwipeBackContainer = ({
 
           if (!isLongPressActive.current && isFastSwipeRight) {
             menuPan.setValue(0);
+            activeZone.current = null;
             return;
           }
 
@@ -269,14 +311,14 @@ const SwipeBackContainer = ({
 
           menuPan.setValue(0);
         }
+
+        activeZone.current = null;
       },
 
-      onPanResponderTerminate: (evt, gestureState) => {
-        const y0 = gestureState.y0 ?? evt.nativeEvent.pageY;
-
+      onPanResponderTerminate: () => {
         clearLongPress();
 
-        if (y0 < HALF_SCREEN && enabled && backScreen && !menuVisible) {
+        if (activeZone.current === "back") {
           translateX.flattenOffset();
           Animated.parallel([
             Animated.spring(translateX, {
@@ -288,9 +330,11 @@ const SwipeBackContainer = ({
               useNativeDriver: true,
             }),
           ]).start();
-        } else if (y0 >= HALF_SCREEN) {
+        } else if (activeZone.current === "menu") {
           menuPan.setValue(0);
         }
+
+        activeZone.current = null;
       },
     })
   ).current;
@@ -314,7 +358,13 @@ const SwipeBackContainer = ({
     <View style={[{ flex: 1}, style]}>
         {/* Đẩy CẢ TRANG (header + nội dung) sang phải theo mép phải SideMenu khi mở */}
         <Animated.View style={{ flex: 1, transform: [{ translateX: menuPushX }] }}>
-          {header}
+          <View
+            onLayout={(e) => {
+              headerHeightRef.current = e.nativeEvent.layout.height;
+            }}
+          >
+            {header}
+          </View>
           <View style={{ flex: 1 }}>
             {/* BACK SCREEN — PHẢI absolute, trượt nhẹ (parallax) theo tiến độ vuốt-back */}
             {backScreen && enabled && (
@@ -350,7 +400,13 @@ const SwipeBackContainer = ({
               </Animated.View>
             </Animated.View>
           </View>
-          {footer}
+          <View
+            onLayout={(e) => {
+              footerHeightRef.current = e.nativeEvent.layout.height;
+            }}
+          >
+            {footer}
+          </View>
         </Animated.View>
 
         {/* SIDE MENU */}

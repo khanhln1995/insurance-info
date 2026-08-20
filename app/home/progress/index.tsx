@@ -58,7 +58,7 @@ const Progress = () => {
     },
     {
       id: 3,
-      tabTitle: "BHTNLĐ-BNN",
+      tabTitle: "BHTNLĐ-\nBNN",
       tabIcon: require("@/assets/images/tab/bhtnldbnn-inactive.png"),
       tabActiveIcon: require("@/assets/images/tab/bhtnldbnn-active.png"),
       title: "Bảo hiểm tai nạn lao động, bệnh nghề nghiệp",
@@ -310,14 +310,14 @@ const Progress = () => {
             title="QUÁ TRÌNH THAM GIA"
             titleVariant="headingMdRegular"
             textColor="white"
-            textStyle={{ fontSize: 17.08 }}
+            textStyle={{ fontSize: 17.58 }}
             backTitle="QUẢN LÝ CÁ NHÂN"
-            onGoBack={() => (router.canGoBack() ? router.back() : router.replace("/home"))}
+            onGoBack={() => (router.replace("/home"))}
             backIconLeft={<Ionicons name="menu" size={33.33} color="white" />}
             backIconRight={
               <Image
                 source={require("@/assets/images/bell.png")}
-                style={{ width: 35.16, height: 23.11 }}
+                style={{ width: 35.56, height: 24.11 }}
                 resizeMode="contain"
               />
             }
@@ -400,7 +400,7 @@ const Progress = () => {
                           <ScrollView
                             style={{ flex: 1 }}
                             contentContainerStyle={{
-                              paddingHorizontal: 7,
+                              paddingHorizontal: 7.56,
                               paddingTop: 18,
                               paddingBottom: BOTTOM_BAR_HEIGHT + 24,
                             }}
@@ -420,7 +420,7 @@ const Progress = () => {
                               </AppText>
 
                               {!(tab.id == 4 || tab.id == 3) && (
-                                <AppText variant="small" style={{ color: "#CE0301" }}>
+                                <AppText variant="small" style={{ color: "#E01A0A" }}>
                                   Tổng thời gian chậm đóng : {tab?.data?.totalDueTime}
                                 </AppText>
                               )}
