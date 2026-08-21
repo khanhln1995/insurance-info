@@ -347,7 +347,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-between",
     paddingTop: 10.05,
-    paddingHorizontal: 19,
+    paddingHorizontal: 14,
     paddingBottom: 10.05,
   },
   tabItem: {

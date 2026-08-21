@@ -108,7 +108,7 @@ const SwipeBackContainer = ({
   const isLongPressActive = React.useRef(false);
   const pressStartTime = React.useRef(0);
 
-  const EDGE_WIDTH = 20;
+  const EDGE_WIDTH = 40;
 
   // Đo chiều cao thực tế của header/footer để tính ranh giới nửa-trên/nửa-dưới
   // dựa trên vùng NỘI DUNG thực sự vuốt được, thay vì SCREEN_HEIGHT / 2 (không
