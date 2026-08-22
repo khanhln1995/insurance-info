@@ -2,7 +2,7 @@ import { useRef } from "react";
 import { Animated, Dimensions, PanResponder } from "react-native";
 
 const SCREEN_WIDTH = Dimensions.get("window").width;
-const EDGE_WIDTH = 20;
+const EDGE_WIDTH = 40;
 
 type UseSwipeBackParams = {
   onBack: () => void;

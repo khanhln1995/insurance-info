@@ -36,8 +36,8 @@ const InfoCard = ({ type }: Props) => {
           alignItems: alignTop ? "flex-start" : "center",
           borderBottomColor: isBorderBottom ? '#C5CED3' : '',
           borderBottomWidth: isBorderBottom ? 0.67 : 0,
-          paddingBottom: 8,
-          paddingTop: 8
+          paddingBottom: 9.2,
+          paddingTop: 9.2
         }}
       >
         <AppText variant="label" style={{
@@ -153,7 +153,7 @@ const InfoCard = ({ type }: Props) => {
             />
           )}
         </View>
-        <View style={{ gap: 4 }}>
+        <View >
           <AppText variant="headingMdBold" style={{ fontWeight: '600' }}>
             {name}
           </AppText>

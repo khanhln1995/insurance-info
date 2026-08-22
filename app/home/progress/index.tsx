@@ -280,7 +280,7 @@ const Progress = () => {
                           <ScrollView
                             style={{ flex: 1 }}
                             contentContainerStyle={{
-                              paddingHorizontal: 7.56,
+                              paddingHorizontal: 8,
                               paddingTop: 18,
                               paddingBottom: BOTTOM_BAR_HEIGHT + 24,
                             }}
@@ -346,9 +346,8 @@ const styles = StyleSheet.create({
   tabsRow: {
     flexDirection: "row",
     justifyContent: "space-between",
-    paddingTop: 10.05,
-    paddingHorizontal: 14,
-    paddingBottom: 10.05,
+    paddingVertical: 10,
+    paddingHorizontal: 12,
   },
   tabItem: {
     width: TAB_ITEM_WIDTH,
@@ -369,7 +368,7 @@ const styles = StyleSheet.create({
   },
   description: {
     backgroundColor: "#F3F3F3",
-    padding: 8.82,
+    padding: 10,
     borderWidth: 0.67,
     borderColor: "#D3D3D3",
   },

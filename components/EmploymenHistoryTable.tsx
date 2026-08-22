@@ -102,7 +102,7 @@ const EmploymentHistoryTable: React.FC<Props> = ({
           style={[
             {
               flex: col.flex ?? 1,
-              padding: 7.56,
+              padding: 6.56,
               justifyContent: "center",
             },
             idx !== 0 && isBHYT && styles.borderLeftWhite,

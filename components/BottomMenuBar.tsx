@@ -11,7 +11,7 @@ const BottomMenuBar = () => {
   return (
     <View
       style={{
-        borderTopWidth: 0.6,
+        borderTopWidth: 0.5,
         borderTopColor: "#C6C6C6",
         flexDirection: "row",
         // alignItems: "center",
@@ -24,15 +24,15 @@ const BottomMenuBar = () => {
       <TouchableOpacity
         style={{ alignItems: "center" }}
       >
-        <SettingUser width={20.53} height={20.6}/>
-        <AppText variant="captionBold" style={{ color: Colors.primary, marginTop: 4, fontSize: 10 }}>
+        <SettingUser width={21.53} height={21.6}/>
+        <AppText variant="captionBold" style={{ color: "#000", marginTop: 4, fontSize: 10 }}>
           QL cá nhân
         </AppText>
       </TouchableOpacity>
       <TouchableOpacity
         style={{ alignItems: "center" }}
       >
-        <ListInactive width={14.41} height={20.93} />
+        <ListInactive width={15} height={21} />
         <AppText variant="captionBold" style={{ color: "#000", marginTop: 4, fontSize: 10 }}>
           Dịch vụ công
         </AppText>
@@ -40,7 +40,7 @@ const BottomMenuBar = () => {
       <TouchableOpacity
         style={{ alignItems: "center" }}
       >
-        <GlobalSearchInactive width={19.79} height={20.63} />
+        <GlobalSearchInactive width={20.2} height={21} />
         <AppText variant="captionBold" style={{ color: "#000", marginTop: 4, fontSize: 10 }}>
           Tra cứu
         </AppText>

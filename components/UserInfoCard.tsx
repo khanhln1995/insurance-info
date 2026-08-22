@@ -26,8 +26,8 @@ const RenderInfoLine = ({
         alignItems: alignTop ? "flex-start" : "center",
         borderBottomColor: isBorderBottom ? '#C5CED3' : '',
         borderBottomWidth: isBorderBottom ? 0.67 : 0,
-        paddingBottom: 9,
-        paddingTop: 9
+        paddingBottom: 9.2,
+        paddingTop: 9.2
       }}
     >
       <AppText variant="label" style={{ color: "#4E4E4E", marginRight: 24 }}>
@@ -66,7 +66,7 @@ const UserInfoCard = () => {
           gap: 12,
           alignItems: "center",
           borderBottomColor: '#949899',
-          borderBottomWidth: 0.67,
+          borderBottomWidth: 1,
           paddingBottom: 14.82,
           paddingTop: 12,
         }}
@@ -74,8 +74,8 @@ const UserInfoCard = () => {
         <View
           style={{
             backgroundColor: "white",
-            width: 60,
-            height: 60,
+            width: 57,
+            height: 57,
             borderRadius: 50,
             justifyContent: "center",
             alignItems: "center",
@@ -95,8 +95,8 @@ const UserInfoCard = () => {
             />
           )}
         </View>
-        <View style={{ gap: 4 }}>
-          <AppText variant="headingMdBold" style={{ fontWeight: '600' }}>
+        <View style={{ gap: 6 }}>
+          <AppText variant="headingMdBold" style={{ fontSize: 14}}>
             {userInfo?.ten}
           </AppText>
           <AppText variant="small" style={styles.txtSubInfo}>

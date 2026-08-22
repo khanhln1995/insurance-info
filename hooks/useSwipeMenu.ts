@@ -14,7 +14,7 @@ type UseSwipeMenuParams = {
   onRequestMenuVisible?: (visible: boolean) => void;
 };
 
-const EDGE_WIDTH = 20;
+const EDGE_WIDTH = 40;
 
 export const useSwipeMenu = ({
   onOpenMenu,

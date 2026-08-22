@@ -26,8 +26,10 @@ const RenderInfoLine = ({
         alignItems: alignTop ? "flex-start" : "center",
         borderBottomColor: isBorderBottom ? '#C5CED3' : '',
         borderBottomWidth: isBorderBottom ? 0.67 : 0,
-        paddingBottom: 8,
-        paddingTop: 8
+        paddingBottom: 9.2, 
+        paddingTop: 9.2, 
+        // height: 36,
+
       }}
     >
       <AppText variant="label" style={{ color: "#4E4E4E", marginRight: 24 }}>
@@ -56,7 +58,7 @@ const MedInsuranceCard = () => {
       colors={[Colors.bgInfoGradientStart, Colors.bgInfoGradientEnd]}
       start={{ x: 0, y: 0 }}
       end={{ x: 1, y: 0 }}
-      style={{ padding: 8, borderRadius: 5, paddingBottom: 10 }}
+      style={{ paddingHorizontal: 10, paddingTop: 14, borderRadius: 5, paddingBottom: 12 }}
     >
       <View
         style={{
@@ -64,16 +66,16 @@ const MedInsuranceCard = () => {
           gap: 12,
           alignItems: "center",
           borderBottomColor: '#949899',
-          borderBottomWidth: 0.67,
-          paddingBottom: 6,
+          borderBottomWidth: 1,
+          paddingBottom: 12,
           marginTop: -4,
         }}
       >
         <View
           style={{
             backgroundColor: "white",
-            width: 60,
-            height: 60,
+            width: 57,
+            height: 57,
             borderRadius: 50,
             justifyContent: "center",
             alignItems: "center",
@@ -93,8 +95,8 @@ const MedInsuranceCard = () => {
             />
           )}
         </View>
-        <View style={{ gap: 4 }}>
-          <AppText variant="headingMdBold" style={{ fontWeight: '600' }}>
+        <View style={{ gap: 3}}>
+          <AppText variant="headingMdBold" style={{ fontSize: 14}}>
             {medInsurance?.ten}
           </AppText>
           <AppText variant="small" style={styles.txtSubInfo}>
@@ -106,13 +108,14 @@ const MedInsuranceCard = () => {
         </View>
       </View>
       <View>
-        <RenderInfoLine title="Ngày sinh" value={medInsurance?.ngaysinh} />
-        <RenderInfoLine title="Giới tính" value={medInsurance?.gioitinh} />
-        <RenderInfoLine title="Số thẻ BHYT" value={medInsurance?.sothebhyt} />
+        <RenderInfoLine title="Ngày sinh" value={medInsurance?.ngaysinh} alignTop/>
+        <RenderInfoLine title="Giới tính" value={medInsurance?.gioitinh} alignTop/>
+        <RenderInfoLine title="Số thẻ BHYT" value={medInsurance?.sothebhyt} alignTop/>
         <RenderInfoLine title="Nơi ĐKKCB BĐ" value={medInsurance?.noidk} alignTop />
         <RenderInfoLine
           title="Thời điểm 5 năm liên tục"
           value={medInsurance?.thoidiem5namlientuc}
+          alignTop
         />
       </View>
     </LinearGradient>
