@@ -227,21 +227,14 @@ const Progress = () => {
                         style={[
                           styles.tab,
                           {
-                            borderColor: isSelected
-                              ? tab.id === 5
-                                ? "#0574CE"
-                                : ""
-                              : tab.id === 5
-                                ? Colors.border
-                                : "",
-                            borderWidth: tab.id === 5 ? 2 : 0,
-                          },
+                            opacity: tab.id === 5 ? 0.72 : 1,
+                          }
                         ]}
                         onPress={() => setSelectedTab(tab)}
                       >
                         <Image
                           source={isSelected ? tab.tabActiveIcon : tab.tabIcon}
-                          style={ tab.id === 5 ? { width: 38.89, height: 40.89 } : { width: 47.89, height: 47.89 }}
+                          style={ tab.id === 5 ? { width: 55, height: 55 } : { width: 47.89, height: 47.89 }}
                           resizeMode="contain"
                         />
                       </TouchableOpacity>
@@ -252,11 +245,12 @@ const Progress = () => {
                           styles.tabLabel,
                           { color: isSelected ? "#0574CE" : Colors.border },
                           { fontSize: 13.4 },
+                          tab.id === 3 && { width: 90, alignSelf: "center" },
                         ]}
                         numberOfLines={2}
                         ellipsizeMode="tail"
                       >
-                        {tab.tabTitle}
+                        {tab.id === 3 ? "BHTNLĐ-\nBNN" : tab.tabTitle}
                       </AppText>
                     </View>
                   );
@@ -348,6 +342,7 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     paddingVertical: 10,
     paddingHorizontal: 12,
+    paddingBottom: 8,
   },
   tabItem: {
     width: TAB_ITEM_WIDTH,
@@ -355,8 +350,8 @@ const styles = StyleSheet.create({
   },
   tab: {
     borderRadius: 99,
-    width: 50,
-    height: 50,
+    width: 52,
+    height: 52,
     justifyContent: "center",
     alignItems: "center",
   },
