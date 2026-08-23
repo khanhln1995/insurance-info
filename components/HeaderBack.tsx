@@ -9,12 +9,11 @@ import {
 } from "react-native";
 
 import { TextVariant } from "@/components/AppText";
+import { SwipeBackContext } from "@/components/SwipeBackContainer";
 import { useHeaderBackFade } from "@/hooks/useHeaderBackFade";
-import { RootState } from "@/store";
 import Entypo from "@expo/vector-icons/Entypo";
 import { LinearGradient } from "expo-linear-gradient";
 import { usePathname, useRouter } from "expo-router";
-import { useSelector } from "react-redux";
 
 export interface HeaderBackProps {
   title?: string;
@@ -75,9 +74,7 @@ const HeaderBack = (props: HeaderBackProps) => {
   } = props;
   console.log(pathName);
 
-  const translateX = useSelector(
-    (state: RootState) => state.swipeBack.translateX
-  );
+  const translateX = React.useContext(SwipeBackContext);
   const { currentHeaderOpacity, backHeaderOpacity } =
     useHeaderBackFade(translateX);
   const [currentTranslateX, setCurrentTranslateX] = React.useState(0);

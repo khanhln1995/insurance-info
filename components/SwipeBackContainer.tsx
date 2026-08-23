@@ -1,11 +1,16 @@
 import SideMenu, { DRAWER_W } from "@/components/SideMenu";
-import { clearTranslateX, setTranslateX } from "@/store/slices/swipeBackSlice";
 import { useRouter } from "expo-router";
 import React from "react";
 import { Animated, Dimensions, PanResponder, StyleSheet, View, ViewStyle } from "react-native";
-import { useDispatch } from "react-redux";
 
 const SCREEN_HEIGHT = Dimensions.get("window").height;
+
+// translateX của mỗi SwipeBackContainer PHẢI được scope riêng cho đúng cây
+// header của chính nó — dùng Context thay vì 1 slot Redux dùng chung, vì màn
+// hình trước đó thường vẫn còn mounted (đặc biệt trên iOS) khi màn hiện tại
+// bị pop, nên nếu share qua Redux thì header của màn trước sẽ bị "ăn theo"
+// animation vuốt-back của màn hiện tại, kẹt luôn ở opacity 0.
+export const SwipeBackContext = React.createContext<Animated.Value | null>(null);
 
 type SwipeBackContainerProps = {
   children: React.ReactNode;
@@ -39,7 +44,6 @@ const SwipeBackContainer = ({
   style,
 }: SwipeBackContainerProps) => {
   const router: any = useRouter();
-  const dispatch = useDispatch();
   const [menuVisible, setMenuVisible] = React.useState(false);
   const menuTranslateX = React.useRef(new Animated.Value(-DRAWER_W)).current;
   // Đẩy nội dung màn hình sang phải theo mép phải của SideMenu khi mở
@@ -88,14 +92,6 @@ const SwipeBackContainer = ({
     outputRange: [-SCREEN_WIDTH * BACK_SCREEN_PARALLAX_RATIO, 0],
     extrapolate: "clamp",
   });
-
-  // Set translateX to store when component mounts, clear when unmounts
-  React.useEffect(() => {
-    dispatch(setTranslateX(translateX));
-    return () => {
-      dispatch(clearTranslateX());
-    };
-  }, [translateX]);
 
   // State cho swipe menu
   const menuPan = React.useRef(new Animated.Value(0)).current;
@@ -344,7 +340,9 @@ const SwipeBackContainer = ({
               headerHeightRef.current = e.nativeEvent.layout.height;
             }}
           >
-            {header}
+            <SwipeBackContext.Provider value={translateX}>
+              {header}
+            </SwipeBackContext.Provider>
           </View>
           <View style={{ flex: 1 }}>
             {/* BACK SCREEN — PHẢI absolute, trượt nhẹ (parallax) theo tiến độ vuốt-back */}

@@ -3,7 +3,6 @@ import { combineReducers, configureStore } from "@reduxjs/toolkit";
 import { persistReducer, persistStore } from "redux-persist";
 
 import userReducer from "./slices/userSlice";
-import swipeBackReducer from "./slices/swipeBackSlice";
 
 const persistConfig = {
   key: "root",
@@ -13,7 +12,6 @@ const persistConfig = {
 
 const rootReducer = combineReducers({
   user: userReducer,
-  swipeBack: swipeBackReducer,
 });
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);
