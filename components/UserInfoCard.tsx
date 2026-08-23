@@ -26,8 +26,8 @@ const RenderInfoLine = ({
         alignItems: alignTop ? "flex-start" : "center",
         borderBottomColor: isBorderBottom ? '#C5CED3' : '',
         borderBottomWidth: isBorderBottom ? 0.67 : 0,
-        paddingBottom: 9.2,
-        paddingTop: 9.2
+        paddingBottom: 9.4,
+        paddingTop: 9.4
       }}
     >
       <AppText variant="label" style={{ color: "#4E4E4E", marginRight: 24 }}>
@@ -56,7 +56,7 @@ const UserInfoCard = () => {
       colors={[Colors.bgInfoGradientStart, Colors.bgInfoGradientEnd]}
       start={{ x: 0, y: 0 }}
       end={{ x: 1, y: 0 }}
-      style={{ paddingTop: 8, borderRadius: 5, paddingBottom: 22,
+      style={{ paddingTop: 8, borderRadius: 5, paddingBottom: 24,
         paddingHorizontal: 17.41 
       }}
     >
@@ -96,7 +96,7 @@ const UserInfoCard = () => {
           )}
         </View>
         <View style={{ gap: 6 }}>
-          <AppText variant="headingMdBold" style={{ fontSize: 14}}>
+          <AppText variant="headingMdBold" style={{ fontSize: 14, marginBottom:1 }}>
             {userInfo?.ten}
           </AppText>
           <AppText variant="small" style={styles.txtSubInfo}>
@@ -119,5 +119,6 @@ export default UserInfoCard;
 const styles = StyleSheet.create({
   txtSubInfo: {
     color: Colors.txtDark,
+    fontSize: 14
   },
 });

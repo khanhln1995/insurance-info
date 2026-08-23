@@ -11,8 +11,8 @@ const BottomMenuBar = () => {
   return (
     <View
       style={{
-        borderTopWidth: 0.5,
-        borderTopColor: "#C6C6C6",
+        borderTopWidth: 0.3,
+        borderTopColor: "#dad7d7",
         flexDirection: "row",
         // alignItems: "center",
         justifyContent: "space-around",

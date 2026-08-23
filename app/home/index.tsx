@@ -62,7 +62,7 @@ export const HomeContent = ({
           flexDirection: "row",
           alignItems: "center",
           gap: 20.43,
-          marginBottom: 2,
+          marginBottom: 3,
         }}
       >
         <View
@@ -108,7 +108,7 @@ export const HomeContent = ({
             <AppText
               variant="headingMdRegular"
               numberOfLines={1}
-              style={{ color: Colors.txtSecondary, fontSize: 17.08 }}
+              style={{ color: Colors.txtSecondary, fontSize: 17.5 }}
             >
               {text}
             </AppText>

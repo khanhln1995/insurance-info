@@ -47,7 +47,7 @@ const SideMenu: React.FC<Props> = ({
   const slideX = useRef(new Animated.Value(-DRAWER_W)).current;
   const startTranslateX = useRef(0);
   const MENU_EDGE_WIDTH = 300; // vùng mép phải để bắt gesture kéo đóng menu
-  const { userInfo, avatar } = useUser();
+  const { userInfo, avatar, appVersion } = useUser();
 
   // Nếu không có translateX bên ngoài thì giữ behavior cũ: tự animate theo visible
   useEffect(() => {
@@ -318,8 +318,8 @@ const SideMenu: React.FC<Props> = ({
               </View>
             </View>
             <View style={styles.footerWrap}>
-              <AppText variant="label" style={{fontSize: 14.4,marginBottom: 12, color: "white",}}>
-                Phiên bản 2.7
+              <AppText variant="label" style={{fontSize: 15,marginBottom: 14, color: "white",}}>
+                Phiên bản {appVersion || "2.8"}
               </AppText>
               <AppText variant="label" style={ { fontSize: 14.4, color: "white",}}>
                 © Bản quyền thuộc về Bảo hiểm xã hội Việt Nam.
@@ -371,21 +371,23 @@ const styles = StyleSheet.create({
     color: "white",
     marginTop: 10,
     shadowColor: '#0A3D66',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.45,
+    shadowOffset: { width: 0, height: 3 },
+    shadowOpacity: 0.5,
     shadowRadius: 3,
     fontWeight: '600',
     elevation: 3,
+    fontSize: 14.74,
   },
   phone: {
     color: "white",
     marginTop: 2,
     shadowColor: '#0A3D66',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.45,
+    shadowOffset: { width: 0, height: 3 },
+    shadowOpacity: 0.5,
     shadowRadius: 3,
     fontWeight: '600',
     elevation: 3,
+    fontSize: 14.74,
   },
   hr: {
     height: 4.5,
@@ -406,7 +408,7 @@ const styles = StyleSheet.create({
   },
   footerWrap: {
     // paddingVertical: 12,
-    marginBottom: -16,
+    marginBottom: -18,
     paddingHorizontal: 13.47,
   },
 });

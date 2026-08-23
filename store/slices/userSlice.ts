@@ -36,6 +36,7 @@ interface userState {
   progressList: progress[];
   avatar: any;
   medCardImage: any;
+  appVersion: string;
 }
 
 const initialUserState: userState = {
@@ -70,6 +71,7 @@ const initialUserState: userState = {
   ],
   avatar: null,
   medCardImage: null,
+  appVersion: "2.7",
 };
 
 const userSlice = createSlice({
@@ -106,6 +108,12 @@ const userSlice = createSlice({
         medCardImage: action.payload,
       };
     },
+    updateAppVersion: (state, action) => {
+      return {
+        ...state,
+        appVersion: action.payload,
+      };
+    },
   },
 });
 
@@ -115,5 +123,6 @@ export const {
   updateUserInfo,
   updateAvatar,
   updateMedCardImage,
+  updateAppVersion,
 } = userSlice.actions;
 export default userSlice.reducer;

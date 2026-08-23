@@ -36,6 +36,7 @@ const DataInput = () => {
   const [userInfoInput, setUserInfoInput] = useState("");
   const [progressInput, setProgressInput] = useState("");
   const [medInsuranceInput, setMedInsuranceInput] = useState("");
+  const [appVersionInput, setAppVersionInput] = useState("");
 
   // --- photo states ---
   const [avatar, setAvatar] = useState<null | { uri: string; base64?: string }>(
@@ -67,6 +68,7 @@ const DataInput = () => {
     setMedInsurance,
     setUserAvatar,
     setMedCardImage,
+    setAppVersion,
   } = useUser();
 
   // --- pick image from camera/gallery ---
@@ -166,7 +168,7 @@ const DataInput = () => {
     if (!m.ok) return Alert.alert("Lỗi", m.error);
 
     const changed = Boolean(
-      userInfoInput || progressInput || medInsuranceInput
+      userInfoInput || progressInput || medInsuranceInput || appVersionInput
     );
     if (!changed) return Alert.alert("Chưa nhập dữ liệu");
 
@@ -174,6 +176,7 @@ const DataInput = () => {
     if (p.value) setProgressList(p.value);
     if (m.value && typeof setMedInsurance === "function")
       setMedInsurance(m.value);
+    if (appVersionInput.trim()) setAppVersion(appVersionInput.trim());
 
     if (avatar) setUserAvatar(avatar);
     if (medCardPhoto) setMedCardImage(medCardPhoto);
@@ -230,6 +233,16 @@ const DataInput = () => {
             value={medInsuranceInput}
             onChangeText={setMedInsuranceInput}
             multiline
+            autoCapitalize="none"
+            autoCorrect={false}
+            placeholderTextColor={Colors.border}
+          />
+          <Spacer size={20} />
+          <TextInput
+            style={styles.textArea}
+            placeholder="Phiên bản"
+            value={appVersionInput}
+            onChangeText={setAppVersionInput}
             autoCapitalize="none"
             autoCorrect={false}
             placeholderTextColor={Colors.border}

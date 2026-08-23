@@ -49,11 +49,6 @@ const SwipeBackContainer = ({
   });
 
   const handleBack = React.useCallback(() => {
-    // Không clearTranslateX() ở đây: làm vậy sẽ snap header về trạng thái
-    // "hiện tại" (opacity 1) ngay khi vừa crossfade xong sang backTitle/backIcon,
-    // trước khi màn hình thật sự bị unmount — gây hiệu ứng header nhảy ngược/ẩn
-    // mất đúng lúc vừa vuốt xong. Cleanup ở useEffect (khi component unmount,
-    // tức lúc điều hướng thật sự xảy ra) đã tự lo việc reset store.
     if (onBack) {
       onBack();
     } else if (router.canGoBack()) {

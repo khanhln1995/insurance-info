@@ -1,5 +1,6 @@
 import { AppDispatch } from "@/store";
 import {
+  updateAppVersion,
   updateAvatar,
   updateMedCardImage,
   updateMedInsurance,
@@ -15,6 +16,7 @@ export const useUser = () => {
   const progressList = useSelector((s: any) => s.user.progressList);
   const avatar = useSelector((s: any) => s.user.avatar);
   const medCardImage = useSelector((s: any) => s.user.medCardImage);
+  const appVersion = useSelector((s: any) => s.user.appVersion);
   const setUserInfo = (userInfo: any) => dispatch(updateUserInfo(userInfo));
   const setMedInsurance = (medInsurance: any) =>
     dispatch(updateMedInsurance(medInsurance));
@@ -23,6 +25,8 @@ export const useUser = () => {
 
   const setUserAvatar = (avatar: any) => dispatch(updateAvatar(avatar));
   const setMedCardImage = (img: any) => dispatch(updateMedCardImage(img));
+  const setAppVersion = (version: string) =>
+    dispatch(updateAppVersion(version));
 
   return {
     medInsurance,
@@ -35,5 +39,7 @@ export const useUser = () => {
     avatar,
     medCardImage,
     setMedCardImage,
+    appVersion,
+    setAppVersion,
   };
 };

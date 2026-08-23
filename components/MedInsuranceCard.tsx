@@ -26,8 +26,8 @@ const RenderInfoLine = ({
         alignItems: alignTop ? "flex-start" : "center",
         borderBottomColor: isBorderBottom ? '#C5CED3' : '',
         borderBottomWidth: isBorderBottom ? 0.67 : 0,
-        paddingBottom: 9.2, 
-        paddingTop: 9.2, 
+        paddingBottom: 9.4, 
+        paddingTop: 9.4, 
         // height: 36,
 
       }}
@@ -95,7 +95,7 @@ const MedInsuranceCard = () => {
             />
           )}
         </View>
-        <View style={{ gap: 3}}>
+        <View style={{ gap: 4}}>
           <AppText variant="headingMdBold" style={{ fontSize: 14}}>
             {medInsurance?.ten}
           </AppText>
@@ -127,5 +127,6 @@ export default MedInsuranceCard;
 const styles = StyleSheet.create({
   txtSubInfo: {
     color: Colors.txtDark,
+    fontSize: 14,
   },
 });
