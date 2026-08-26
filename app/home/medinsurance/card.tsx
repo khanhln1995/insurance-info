@@ -68,7 +68,7 @@ const MedCardImageScreen = () => {
           <HeaderBack
             title="Thẻ bảo hiểm y tế"
             textColor="#34689E"
-            textStyle={{ fontSize: 18.95 }}
+            textStyle={{ fontSize: 17.58 }}
             onGoBack={() => router.replace("/home/medinsurance")}
             styleContainer={{ backgroundColor: "#fff" }}
             colors={['#fff', '#fff']}
