@@ -35,7 +35,7 @@ const MedInSurance = () => {
             title="THẺ BẢO HIỂM Y TẾ"
             titleVariant="headingMdRegular"
             textColor="white"
-            textStyle={{ fontSize: 17.08 }}
+            textStyle={{ fontSize: 17.58 }}
             backTitle="QUẢN LÝ CÁ NHÂN"
             onGoBack={() => (router.replace("/home"))}
             backIconLeft={<Ionicons name="menu" size={33.33} color="white" />}
@@ -88,13 +88,13 @@ const MedInSurance = () => {
                         paddingBottom: 40.02,
                       }}
                     >
-                      <AppText variant="headingMdBold" style={{ color: "#426EA2", fontSize: 13.74 }}>
+                      <AppText variant="headingMdBold" style={{ color: "#426EA2", fontSize: 14 }}>
                         Thông tin quyền lợi:
                       </AppText>
                       <Spacer size={10} />
                       <AppText
                         variant="small"
-                        style={{ paddingHorizontal: 8  , lineHeight: 17.4, fontSize: 13 }}
+                        style={{ paddingHorizontal: 8  , lineHeight: 17.4, fontSize: 13.74 }}
                       >
                         Được hưởng 80% chi phí khám bệnh, chữa bệnh trong phạm vi được
                         hưởng BHYT (áp dụng tỷ lệ thanh toán một số thuốc, hoá chất, vật
@@ -102,7 +102,7 @@ const MedInSurance = () => {
                       </AppText>
                       <AppText
                         variant="small"
-                        style={{ paddingHorizontal: 8, lineHeight: 17.4, fontSize: 13 }}
+                        style={{ paddingHorizontal: 8, lineHeight: 17.4, fontSize: 13.74 }}
                       >
                         Trong trường hợp điều trị nội trú trái tuyến tại CSKCB tuyến TW sẽ
                         được hưởng 32% (TH trên thẻ có mã nơi sinh sống là K1 hoặc K2 hoặc

@@ -25,7 +25,7 @@ const BottomMenuBar = () => {
         style={{ alignItems: "center" }}
       >
         <SettingUser width={21.53} height={21.6}/>
-        <AppText variant="captionBold" style={{ color: "#000", marginTop: 4, fontSize: 10 }}>
+        <AppText variant="captionBold" style={{ color: "#000", marginTop: 5, fontSize: 10 }}>
           QL cá nhân
         </AppText>
       </TouchableOpacity>
@@ -33,7 +33,7 @@ const BottomMenuBar = () => {
         style={{ alignItems: "center" }}
       >
         <ListInactive width={15} height={21} />
-        <AppText variant="captionBold" style={{ color: "#000", marginTop: 4, fontSize: 10 }}>
+        <AppText variant="captionBold" style={{ color: "#000", marginTop: 5, fontSize: 10 }}>
           Dịch vụ công
         </AppText>
       </TouchableOpacity>
@@ -41,7 +41,7 @@ const BottomMenuBar = () => {
         style={{ alignItems: "center" }}
       >
         <GlobalSearchInactive width={20.2} height={21} />
-        <AppText variant="captionBold" style={{ color: "#000", marginTop: 4, fontSize: 10 }}>
+        <AppText variant="captionBold" style={{ color: "#000", marginTop: 5, fontSize: 10 }}>
           Tra cứu
         </AppText>
       </TouchableOpacity>
@@ -49,7 +49,7 @@ const BottomMenuBar = () => {
         style={{ alignItems: "center" }}
       >
         <SupportInactive width={16.74} height={16.26} />
-        <AppText variant="captionBold" style={{ color: "#000", marginTop: 4, fontSize: 10 }}>
+        <AppText variant="captionBold" style={{ color: "#000", marginTop: 5, fontSize: 10 }}>
           Trợ giúp
         </AppText>
       </TouchableOpacity>

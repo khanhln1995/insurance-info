@@ -30,7 +30,7 @@ const HomeHeader = ({ onOpenMenu }: { onOpenMenu: () => void }) => {
         />
       }
       textColor="white"
-      textStyle={{ fontSize: 17.08 }}
+      textStyle={{ fontSize: 17.58 }}
       onGoBack={onOpenMenu}
     />
   );
