@@ -6,76 +6,119 @@ import { useUser } from "@/hooks/user";
 import { Entypo } from "@expo/vector-icons";
 import { useRouter } from "expo-router";
 import React, { useEffect, useState } from "react";
-import { Image, SafeAreaView, StyleSheet, TouchableOpacity, View } from "react-native";
-// import MedInSurance from "./index";
+import {
+  Image,
+  StyleSheet,
+  View,
+} from "react-native";
 
-const MAX_WIDTH = 314
+const MAX_WIDTH = 314;
 const MAX_HEIGHT = 498;
 const MIN_HEIGHT = 198;
 
 const MedCardImageScreen = () => {
   const { medCardImage } = useUser();
-  const [rotation, setRotation] = useState(0);
-  const [imgSize, setImgSize] = useState<{ width: number; height: number } | null>(null);
 
-  const toggleRotation = () => {
-    setRotation((prev) => (prev + 90) % 360);
-  };
+  const [imgSize, setImgSize] = useState<{
+    width: number;
+    height: number;
+  } | null>(null);
 
   useEffect(() => {
     const loadLocal = () => {
+      if (!medCardImage?.uri) return;
+
       const src = medCardImage.uri;
-      const resolved = Image.resolveAssetSource(src);
-      setImgSize({ width: resolved.width, height: resolved.height });
+
+      try {
+        const resolved = Image.resolveAssetSource(src);
+
+        if (resolved?.width && resolved?.height) {
+          setImgSize({
+            width: resolved.width,
+            height: resolved.height,
+          });
+        }
+      } catch (error) {
+        console.log("Cannot resolve local image:", error);
+      }
     };
 
-    if (medCardImage?.uri) {
-      Image.getSize(
-        medCardImage.uri,
-        (w, h) => setImgSize({ width: w, height: h }),
-        () => loadLocal()
-      );
+    if (!medCardImage?.uri) {
+      setImgSize(null);
+      return;
     }
-    // else {
-      // loadLocal();
-    // }
+
+    Image.getSize(
+      medCardImage.uri,
+      (width, height) => {
+        setImgSize({
+          width,
+          height,
+        });
+      },
+      () => {
+        loadLocal();
+      }
+    );
   }, [medCardImage]);
 
   const getScaledSize = () => {
-    if (!imgSize) return { width: MAX_WIDTH, height: MAX_HEIGHT, resizeMode: "stretch" };
+    if (!imgSize) {
+      return {
+        frameWidth: MAX_WIDTH,
+        frameHeight: MIN_HEIGHT,
+        imageWidth: MAX_WIDTH,
+        imageHeight: MIN_HEIGHT,
+        rotation: 0,
+      };
+    }
 
     const { width: iw, height: ih } = imgSize;
-    const rotated = rotation % 180 !== 0;
-    const isNatPortrait = ih >= iw;
-    const isDisplayPortrait = rotated ? !isNatPortrait : isNatPortrait;
 
+    const isPortrait = ih > iw;
+
+    if (isPortrait) {
+      return {
+        frameWidth: MAX_WIDTH,
+        frameHeight: MIN_HEIGHT,
+        imageWidth: MIN_HEIGHT,
+        imageHeight: MAX_WIDTH,
+        rotation: 90,
+      };
+    }
     return {
-      width: MAX_WIDTH,
-      height: isDisplayPortrait ? MAX_HEIGHT : MIN_HEIGHT,
-      resizeMode: "stretch",
+      frameWidth: MAX_WIDTH,
+      frameHeight: MIN_HEIGHT,
+      imageWidth: MAX_WIDTH,
+      imageHeight: MIN_HEIGHT,
+      rotation: 0,
     };
   };
 
   const scaledSize = getScaledSize();
+
   const router: any = useRouter();
 
   return (
     <>
-      {/* <SafeAreaView /> */}
-    
       <SwipeBackContainer
         header={
           <HeaderBack
-            title="Thẻ bảo hiểm y tế"
+            title="THẺ BHYT BẢN ĐIỆN TỬ"
             textColor="#34689E"
             textStyle={{ fontSize: 17.58 }}
             onGoBack={() => router.replace("/home/medinsurance")}
-            styleContainer={{ backgroundColor: "#fff" }}
-            colors={['#fff', '#fff']}
+            styleContainer={{ backgroundColor: "#fff", marginBottom: 20  }}
+            colors={["#fff", "#fff"]}
             isGoBack={true}
             titleVariant="subheading"
             iconLeft={
-              <Entypo name="chevron-left" size={33} color={Colors.primary} />
+              <Entypo
+                name="chevron-left"
+                size={33}
+                color={Colors.primary}
+              />
             }
           />
         }
@@ -86,36 +129,40 @@ const MedCardImageScreen = () => {
         <View style={styles.container}>
           <View style={styles.content}>
             {medCardImage?.uri ? (
-              <>
-                <TouchableOpacity style={styles.rotateBtn} onPress={toggleRotation}>
-                  <Image
-                    source={require("../../../assets/images/clip.png")}
-                    style={{ width: 33.49, height: 33.49 }}
-                  />
-                </TouchableOpacity>
-                <View style={[styles.cardFrame, {
-                  width: scaledSize?.width,
-                  height: scaledSize?.height
-                }]}>
-                  <Image
-                    source={{ uri: medCardImage.uri }}
-                    // source={require("../../../assets/images/1111111.png")}
-                    style={{
-                      width: rotation % 180 === 0 ? scaledSize.width : scaledSize.height,
-                      height: rotation % 180 === 0 ? scaledSize.height : scaledSize.width,
-                      transform: [{ rotate: `${rotation}deg` }],
-                    }}
-                    resizeMode={scaledSize.resizeMode as any}
-                  />
-                </View>
-              </>
+              <View
+                style={[
+                  styles.cardFrame,
+                  {
+                    width: scaledSize.frameWidth,
+                    height: scaledSize.frameHeight,
+                  },
+                ]}
+              >
+                <Image
+                  source={{ uri: medCardImage.uri }}
+                  style={{
+                    width: scaledSize.imageWidth,
+                    height: scaledSize.imageHeight,
+                    transform: [
+                      {
+                        rotate: `${scaledSize.rotation}deg`,
+                      },
+                    ],
+                  }}
+                  resizeMode="stretch"
+                />
+              </View>
             ) : (
-              <AppText variant="label" style={styles.emptyText}>
-              Chưa có ảnh thẻ bảo hiểm y tế. Vui lòng thêm ảnh trong phần nhập dữ liệu.
-            </AppText>
-          )}
+              <AppText
+                variant="label"
+                style={styles.emptyText}
+              >
+                Chưa có ảnh thẻ bảo hiểm y tế. Vui lòng thêm ảnh trong phần
+                nhập dữ liệu.
+              </AppText>
+            )}
+          </View>
         </View>
-      </View>
       </SwipeBackContainer>
     </>
   );
@@ -126,28 +173,22 @@ export default MedCardImageScreen;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#fff",
+    backgroundColor: Colors.bgScreen,
   },
+
   content: {
     flex: 1,
     alignItems: "center",
     justifyContent: "center",
   },
+
   cardFrame: {
     marginTop: 82,
     alignItems: "center",
     justifyContent: "center",
     overflow: "hidden",
   },
-  rotateBtn: {
-    position: "absolute",
-    top: 24,
-    left: 12,
-    backgroundColor: "rgba(255,255,255,0.9)",
-    borderRadius: 20,
-    padding: 8,
-    zIndex: 10,
-  },
+
   emptyText: {
     textAlign: "center",
     color: Colors.txtDark,

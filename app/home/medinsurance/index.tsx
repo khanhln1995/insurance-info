@@ -32,7 +32,7 @@ const MedInSurance = () => {
       <SwipeBackContainer
         header={
           <HeaderBack
-            title="THẺ BẢO HIỂM Y TẾ"
+            title="THẺ BHYT BẢN ĐIỆN TỬ"
             titleVariant="headingMdRegular"
             textColor="white"
             textStyle={{ fontSize: 17.58 }}
@@ -145,7 +145,7 @@ const MedInSurance = () => {
                         style={{ width: 31.48, height: 21.52 }}
                       />
                       <AppText variant="label" style={{ color: "#306BA3" }}>
-                        Hình ảnh thẻ
+                        Thẻ điện tử
                       </AppText>
                     </TouchableOpacity>
                   </View>

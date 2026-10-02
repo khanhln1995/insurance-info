@@ -1,5 +1,6 @@
 import Card from "@/assets/images/icon/card.svg";
 import ChevronRight from "@/assets/images/icon/chevron-right.svg";
+import SoBHYT from "@/assets/images/icon/tay1.svg";
 import MedPlus from "@/assets/images/icon/med-plus.svg";
 import UserInfo from "@/assets/images/icon/user-info.svg";
 import AppText from "@/components/AppText";
@@ -145,9 +146,15 @@ export const HomeContent = ({
           <Spacer size={24} />
           <View style={{ padding:4 }}>
             <RenderSelect
-              text="THẺ BHYT"
+              text="THẺ BHYT BẢN ĐIỆN TỬ"
               source={Card}
               route="/home/medinsurance"
+              isTop={false}
+            />
+            <RenderSelect
+              text="SỔ BHXH BẢN ĐIỆN TỬ"
+              source={SoBHYT}
+              // route="/home/medinsurance"
               isTop={false}
             />
 

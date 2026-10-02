@@ -22,7 +22,7 @@ import {
 } from "react-native";
 
 const { width, height } = Dimensions.get("window");
-const HEADER_HEIGHT = height / 1.4;
+const HEADER_HEIGHT = 'auto';
 const LoginScreen = () => {
   const { userInfo } = useUser();
   const [masoBHXH, setMasoBHXH] = React.useState(userInfo?.masoBHXH || "");
