@@ -5,6 +5,7 @@ import Location from "@/assets/images/icon/location.svg";
 import Sheet from "@/assets/images/icon/sheet.svg";
 import Tivi from "@/assets/images/icon/tivi.svg";
 import AppText from "@/components/AppText";
+import FaceIDOverlay from "@/components/FaceIDOverlay";
 import Input from "@/components/Input";
 import RoundAvatar from "@/components/RoundAvatar";
 import Spacer from "@/components/Spacer";
@@ -26,6 +27,7 @@ const HEADER_HEIGHT = 'auto';
 const LoginScreen = () => {
   const { userInfo } = useUser();
   const [masoBHXH, setMasoBHXH] = React.useState(userInfo?.masoBHXH || "");
+  const [showFaceID, setShowFaceID] = React.useState(false);
   const router = useRouter();
   return (
     <View
@@ -35,6 +37,13 @@ const LoginScreen = () => {
         justifyContent: "space-between",
       }}
     >
+      <FaceIDOverlay
+        visible={showFaceID}
+        onComplete={() => {
+          setShowFaceID(false);
+          router.replace("/home");
+        }}
+      />
       <ImageBackground
         source={require("../../assets/images/bg-auth.png")}
         resizeMode="cover"
@@ -144,7 +153,7 @@ const LoginScreen = () => {
             <TouchableOpacity
               activeOpacity={0.7}
               style={styles.button}
-              onPress={() => router.replace("/home")}
+              onPress={() => setShowFaceID(true)}
             >
               <AppText
                 variant="textLoginBtn"
