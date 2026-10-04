@@ -102,7 +102,7 @@ const HeaderBack = (props: HeaderBackProps) => {
             "/home/medinsurance/card",
             "/home/progress/detail",
           ].includes(pathName)
-          ? 66 :
+          ? 60 :
             ["/home", "/home/progress", "/home/medinsurance"
           ].includes(pathName)
             ? 106

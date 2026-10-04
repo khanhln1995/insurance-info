@@ -57,7 +57,7 @@ const variantMap: Record<TextVariant, TextStyle> = {
     fontSize: 15.4,
   },
   textLoginBtn: {
-    fontWeight: "600",
+    fontWeight: "700",
     fontSize: 17.41,
   },
   micro: {

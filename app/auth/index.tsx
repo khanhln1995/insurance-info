@@ -155,8 +155,8 @@ const LoginScreen = () => {
                 Đăng Nhập
               </AppText>
             </TouchableOpacity>
-            <TouchableOpacity activeOpacity={0.7}>
-              <FaceId width={40.69} height={41.02} />
+            <TouchableOpacity activeOpacity={1.3}>
+              <FaceId width={44} height={44} />
             </TouchableOpacity>
           </View>
           <Spacer size={17.64} />
@@ -179,7 +179,7 @@ const LoginScreen = () => {
                 textAlign: "center",
                 flex: 1,
                 fontSize: 15.44,
-                fontWeight: "500",
+                fontWeight: "700",
               }}
             >
               {"Đăng nhập bằng tài khoản\n định danh điện tử"}
@@ -266,7 +266,7 @@ const styles = StyleSheet.create({
     alignSelf: "center",
   },
   button: {
-    borderWidth: 1.76,
+    borderWidth: 2,
     borderColor: Colors.primary,
     borderRadius: 4.41,
     alignItems: "center",
