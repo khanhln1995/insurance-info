@@ -164,7 +164,7 @@ const LoginScreen = () => {
                 Đăng Nhập
               </AppText>
             </TouchableOpacity>
-            <TouchableOpacity activeOpacity={1.3}>
+            <TouchableOpacity activeOpacity={0.7} onPress={() => setShowFaceID(true)}>
               <FaceId width={44} height={44} />
             </TouchableOpacity>
           </View>

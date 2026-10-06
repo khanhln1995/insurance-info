@@ -62,34 +62,10 @@ const MedCardImageScreen = () => {
       };
     }
 
-    const { width: originalWidth, height: originalHeight } = imageSize;
-
-    /**
-     * ẢNH DỌC
-     *
-     * Ví dụ:
-     * original = 800 x 1200
-     *
-     * Sau khi xoay:
-     *          1200
-     *        ┌────────┐
-     *    800 │        │
-     *        │        │
-     *        └────────┘
-     *
-     * Chiều ngang sau xoay chính là originalHeight.
-     *
-     * Vì vậy:
-     * originalHeight -> screenWidth
-     *
-     * Image trước khi rotate:
-     * width  = screenWidth * originalWidth / originalHeight
-     * height = screenWidth
-     *
-     * Sau rotate:
-     * width  = screenWidth
-     * height = screenWidth * originalWidth / originalHeight
-     */
+    const {
+      width: originalWidth,
+      height: originalHeight,
+    } = imageSize;
 
     const isPortrait = originalHeight > originalWidth;
 
@@ -149,7 +125,7 @@ const MedCardImageScreen = () => {
           iconLeft={
             <Entypo
               name="chevron-left"
-              size={33}
+              size={36}
               color={Colors.primary}
             />
           }
@@ -168,6 +144,9 @@ const MedCardImageScreen = () => {
                 height: imageStyle.containerHeight,
                 alignItems: "center",
                 justifyContent: "center",
+
+                // Dịch toàn bộ ảnh lên trên 8px
+                transform: [{ translateY: -8 }],
               }}
             >
               <Image

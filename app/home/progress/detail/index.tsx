@@ -39,6 +39,7 @@ const DetailProgress = () => {
           <HeaderBack
             title="Chi tiết"
             textColor={Colors.primary}
+            textStyle={{ fontSize: 17.58, color: "#3667a1" }}
             titleVariant="subheading"
             onGoBack={() => {
               router.replace({
@@ -49,7 +50,7 @@ const DetailProgress = () => {
             styleContainer={{ backgroundColor: "#fff" }}
             colors={['#fff', '#fff']}
             iconLeft={
-              <Entypo name="chevron-left" size={33} color={Colors.primary} />
+              <Entypo name="chevron-left" size={36} color="#3667a1" />
             }
           />
         }
@@ -120,20 +121,20 @@ const styles = StyleSheet.create({
   },
 
   infoCard: {
-    backgroundColor: '#3566A0', // matches the blue block in your screenshot
+    backgroundColor: '#3667a1', // matches the blue block in your screenshot
     marginHorizontal: 20.43,
     paddingHorizontal: 10.72,
     paddingVertical: 8,
   },
   infoLine: {
-    color: "#E6F0FF",
+    color: "#ECF7FF",
     lineHeight: 22,
   },
   infoLabel: {
-    color: "#E6F0FF",
+    color: "#ECF7FF",
   },
   infoValue: {
-    color: "#ffffff",
+    color: "#FEFFFF",
   },
 
   table: {
@@ -161,6 +162,7 @@ const styles = StyleSheet.create({
   },
   cellRight: {
     textAlign: "right",
+    fontSize: 12.8,
   },
   cellLeftWrapper: {
     flex: 1,
